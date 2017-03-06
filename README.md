@@ -30,45 +30,45 @@ Os conhecimentos básicos de linguagem de programação e estatística básica s
   * Simulação
 
 3.	Aquisição e análise exploratória de dados
-* Coleção de Dados (Datasets)
-* Arquivos do tipo Raw (.xls, .csv)
-* Bases de dados (mySQL, MongoDB)
-* API
-* Formato dos dados
-* Flat Files (.csv, .txt)
-* XML
-* JSON
+ * Coleção de Dados (Datasets)
+ * Arquivos do tipo Raw (.xls, .csv)
+ * Bases de dados (mySQL, MongoDB)
+ * API
+ * Formato dos dados
+ * Flat Files (.csv, .txt)
+ * XML
+ * JSON
 
 4.	Gráficos exploratórios
-* Princípios da análise em gráficos
-* Plotando em dispositivos gráficos em R
-* Base, Lattice e ggplot2
-* Técnicas de redução de dimensionalidade
-* Publicação dos resultados
+ * Princípios da análise em gráficos
+ * Plotando em dispositivos gráficos em R
+ * Base, Lattice e ggplot2
+ * Técnicas de redução de dimensionalidade
+ * Publicação dos resultados
 
 5.	Estatística Inferencial e Modelos de Regressão
-* Probabilidade
-* Expectativas
-* Independência
-* Probabilidade Condicional
-* Inferência Estatística
-* Distribuição de Probabilidade
-* Likelihood
-* Inferência Bayesiana
-* Teste de Hipótese
-* P-value
-* Testes múltiplos
+ * Probabilidade
+ * Expectativas
+ * Independência
+ * Probabilidade Condicional
+ * Inferência Estatística
+ * Distribuição de Probabilidade
+ * Likelihood
+ * Inferência Bayesiana
+ * Teste de Hipótese
+ * P-value
+ * Testes múltiplos
 
 6.	Machine Learning
-* Predição – Estudo e design
-* Tipos de erro
-* Funções objetivo
-* Cross-validation
-* Fitting models em R
-* Predição e regressão
-* Predição por árvore de decisão (Bayes)
-* Predição com boosting e bagging
-* Combinando Preditores
-* Diagnostico
+ * Predição – Estudo e design
+ * Tipos de erro
+ * Funções objetivo
+ * Cross-validation
+ * Fitting models em R
+ * Predição e regressão
+ * Predição por árvore de decisão (Bayes)
+ * Predição com boosting e bagging
+ * Combinando Preditores
+ * Diagnostico
 
 [The Scientist](http://www.thescientist.com.br)
