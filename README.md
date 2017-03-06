@@ -15,19 +15,19 @@ Os conhecimentos básicos de linguagem de programação e estatística básica s
 ### Conteúdo Detalhado:
 
 1.  As Ferramentas do Cientista de Dados
-* Introdução em Ciência de Dados e Big data
-* Obtendo ajuda (git, Stackoverflow e etc)
-* Introdução a linguagem R
-* RStudio
-* Github
-* Análise de Datasets
+  * Introdução em Ciência de Dados e Big data
+  * Obtendo ajuda (git, Stackoverflow e etc)
+  * Introdução a linguagem R
+  * RStudio
+  * Github
+  * Análise de Datasets
 
 2.  Linguagem R
-* Tipos de dados e objetos em R
-* Lendo e gravando Dados
-* Estruturas de controle, funções e regras
-* Laços e ferramentas de depuração
-* Simulação
+  * Tipos de dados e objetos em R
+  * Lendo e gravando Dados
+  * Estruturas de controle, funções e regras
+  * Laços e ferramentas de depuração
+  * Simulação
 
 3.	Aquisição e análise exploratória de dados
 * Coleção de Dados (Datasets)
