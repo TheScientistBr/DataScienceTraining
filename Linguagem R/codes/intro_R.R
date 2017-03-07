@@ -5,7 +5,6 @@ programadas por outras pessoas
 Zuur et. al. (2009) A Beginner’s Guide to R. Use R! Springer'
 
 
-
 # Iniciando 
 'Em cada caso, uma expressão matemática é inserida, avalida e o
 resultado da operação é impresso na tela.
