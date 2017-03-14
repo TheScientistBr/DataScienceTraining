@@ -1,0 +1,90 @@
+---
+title: "Introdução a Linguagem R"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Funções de Repetição - mapply
+job: The Scientist
+---
+
+## mapply
+
+`mapply` É uma aplicação multivariada de tipos que aplicam uma função em paralelo sobre um conjunto de argumentos.
+
+```r
+> str(mapply)
+function (FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE,
+          USE.NAMES = TRUE)
+```
+
+- `FUN` é uma função a ser aplicada
+- ... contém argumentos a serem aplicados
+- `MoreArgs` é uma lista de outros argumentos para` FUN`.
+- `SIMPLIFY` indica se o resultado deve ser simplificado
+
+---
+
+## mapply
+
+Simplificando uma digitação difícil
+
+list(rep(1, 4), rep(2, 3), rep(3, 2), rep(4, 1))`
+
+
+```{r}
+list(rep(1, 4), rep(2, 3), rep(3, 2), rep(4, 1))
+
+# Ao contrário
+
+mapply(rep, 1:4, 4:1)
+```
+
+---
+
+## Vectorizing a Function
+
+```r
+> noise <- function(n, mean, sd) {
++ rnorm(n, mean, sd)
++ }
+> noise(5, 1, 2)
+[1]  2.4831198  2.4790100  0.4855190 -1.2117759
+[5] -0.2743532
+
+> noise(1:5, 1:5, 2)
+[1] -4.2128648 -0.3989266  4.2507057  1.1572738
+[5]  3.7413584
+```
+
+---
+
+## Instant Vectorization
+
+```r
+> mapply(noise, 1:5, 1:5, 2)
+[[1]]
+[1] 1.037658
+
+[[2]]
+[1] 0.7113482 2.7555797
+
+[[3]]
+[1] 2.769527 1.643568 4.597882
+
+[[4]]
+[1] 4.476741 5.658653 3.962813 1.204284
+
+[[5]]
+[1] 4.797123 6.314616 4.969892 6.530432 6.723254
+```
+
+---
+
+## Instant Vectorization
+
+Which is the same as
+
+```r
+list(noise(1, 1, 2), noise(2, 2, 2),
+     noise(3, 3, 2), noise(4, 4, 2),
+     noise(5, 5, 2))
+```
