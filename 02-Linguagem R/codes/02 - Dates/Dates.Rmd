@@ -1,0 +1,148 @@
+---
+title: "Introdução a Linguagem R"
+author: "Delermando Branquinho Filho"
+output:
+  pdf_document: default
+  html_document: default
+subtitle: Datas e horários
+job: The Scientist
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Dates e Times em R
+
+R desenvolveu uma representação especial de datas e horários
+- As datas são representadas pela classe `Date`
+- Os tempos são representados pela classe `POSIXct` ou` POSIXlt`
+- As datas são armazenadas internamente como o número de dias desde 1970-01-01
+- Tmes são armazenados internamente como o número de segundos desde 1970-01-01
+
+---
+
+## Datas em R
+
+As datas são representadas pela classe Date e podem ser coagidas a partir de uma string usando a função `as.Date ()`.
+
+```r
+x <- as.Date("1970-01-01")
+x
+## [1] "1970-01-01"
+unclass(x)
+## [1] 0
+unclass(as.Date("1970-01-02"))
+## [1] 1
+```
+
+---
+
+## Tempo em R
+
+Os tempos são representados usando a classe `POSIXct` ou` POSIXlt`
+
+- `POSIXct` é apenas um inteiro muito grande encapsulado; Ele usa uma classe útil quando você deseja armazenar tempos em algo como um data frame
+
+- 'POSIXlt` é uma lista embaixo dos dados e armazena um monte de outras informações úteis como o dia da semana, dia do ano, mês, dia do mês
+
+Há uma série de funções genéricas que funcionam em datas e horários
+
+- `weekdays`: indica o dia da semana
+- `months`: indicar o nome do mês
+- `quarters`: indica o número de quarto («Q1», «Q2», «Q3» ou «Q4»)
+
+---
+
+Os tempos podem ser coagidos a partir de uma seqüência de caracteres usando a função `as.POSIXlt` ou` as.POSIXct`.
+
+```{r,warning=FALSE,message=FALSE}
+x <- Sys.time()
+x
+## [1] "2013-01-24 22:04:14 EST"
+p <- as.POSIXlt(x)
+names(unclass(p))
+## [1] "sec"   "min"   "hour"  "mday"  "mon"
+## [6] "year"  "wday"  "yday"  "isdst"
+p$sec
+## [1] 14.34
+```
+
+---
+
+
+Você também pode usar o formato `POSIXct`.
+
+```{r,warning=FALSE,message=FALSE}
+x <- Sys.time()
+x  ## Already in ‘POSIXct’ format
+## [1] "2013-01-24 22:04:14 EST"
+unclass(x)
+## [1] 1359083054
+x
+## Error: $ operator is invalid for atomic vectors
+p <- as.POSIXlt(x)
+p$sec
+## [1] 14.37
+```
+
+---
+
+
+Finalmente, existe a função `strptime` caso as suas datas sejam escritas em um formato diferente.
+
+```{r}
+datestring <- c("January 10, 2012 10:40", "December 9, 2011 9:10")
+x <- strptime(datestring, "%B %d, %Y %H:%M")
+x
+class(x)
+```
+Eu nunca me lembro do formato das strings. Verifique `? Strptime` para obter detalhes.
+
+---
+## Operações em Datas e Horários
+
+Você pode usar operações matemáticas em datas e horários. Bem, realmente apenas + e -. Você pode fazer comparações também (ou seja, ==, <=).
+
+```r
+x <- as.Date("2012-01-01")
+y <- strptime("9 Jan 2011 11:34:21", "%d %b %Y %H:%M:%S") 
+x-y
+## Warning: Incompatible methods ("-.Date",
+## "-.POSIXt") for "-"
+## Error: non-numeric argument to binary operator
+x <- as.POSIXlt(x) 
+x-y
+## Time difference of 356.3 days
+```
+
+---
+
+Anos bissextos, horário de verão e fusos horários.
+```r
+x <- as.Date("2012-03-01") y <- as.Date("2012-02-28") 
+x-y
+## Time difference of 2 days
+x <- as.POSIXct("2012-10-25 01:00:00")
+y <- as.POSIXct("2012-10-25 06:00:00", tz = "GMT") 
+y-x
+## Time difference of 1 hours
+```
+
+---
+
+## Resumo
+
+- Datas e horários têm classes especiais em R que permitem cálculos numéricos e estatísticos
+- Datas use a classe `Date`
+- Os tempos utilizam a classe `POSIXct` e` POSIXlt`
+- As cadeias de caracteres podem ser coagidas às classes Date / Time usando a função `strptime` ou` as.Date`, `as.POSIXlt` ou` as.POSIXct`
+
+
+
+.
+
+
+
+[The Scientist](http://www.thescientist.com.br)
