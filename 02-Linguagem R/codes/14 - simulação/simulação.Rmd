@@ -1,0 +1,165 @@
+---
+title: "Introdução a Linguagem R"
+author: "Delermando Branquinho Filho"
+mode: selfcontained
+output:
+  html_document: default
+  pdf_document: default
+subtitle: Simulação
+framework: io2012
+widgets: mathjax
+---
+
+
+
+## Gerando Números Aleatórios
+
+Funções para distribuições de probabilidade em R
+- `rnorm`: gerar variáveis aleatórias normais com uma dada média e desvio padrão
+- `dnorm`: avalie a densidade de probabilidade Normal (com uma dada média / SD) em um ponto (ou vetor de pontos)
+- `pnorm`: avaliar a função de distribuição cumulativa para uma distribuição Normal
+- `rpois`: gerar variáveis aleatórias de Poisson com uma determinada taxa
+
+
+As funções de distribuição de probabilidade geralmente têm quatro funções associadas a elas. As funções são prefixadas com um
+- `d` para densidade
+- `r` para geração de números aleatórios
+- `p` para distribuição cumulativa
+- `q` para a função quantile
+
+
+Trabalhar com as distribuições Normal requer a utilização destas quatro funções
+
+```r
+dnorm(x, mean = 0, sd = 1, log = FALSE)
+pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+qnorm(p, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)
+rnorm(n, mean = 0, sd = 1)
+```
+
+Se $\Phi$ é a função de distribuição cumulativa para um padrão
+
+Distribuição normal, então `pnorm(q)` = $\Phi(q)$ e `qnorm(p)` =
+
+$Phi^{-1}(p)$.
+
+Trabalhar com as distribuições Normal requer a utilização destas quatro funções
+
+
+```{r}
+x <- rnorm(10) 
+hist(x)
+x <- rnorm(10, 20, 2) 
+summary(x)
+hist(x)
+```
+
+A definição da semente de número aleatório com `set.seed` assegura a reprodutibilidade
+
+```{r}
+set.seed(1)
+rnorm(5)
+rnorm(5)
+set.seed(1)
+rnorm(5)
+```
+
+Always set the random number seed when conducting a simulation!
+
+Gerando dados de Poisson
+
+```{r}
+rpois(10, 1)
+rpois(10, 2)
+rpois(10, 20)
+ppois(10, 1)  ## Cumulative distribution
+ppois(10, 2)
+ppois(10, 3)
+```
+
+
+## Gerando números aleatórios a partir de um modelo linear
+
+Suponha que queremos simular a partir do seguinte modelo linear
+
+\[y = \beta_0 + \beta_1 x + \varepsilon\]
+
+Onde
+
+$\varepsilon\sim\mathcal{N}(0, 2^2)$
+
+Assume
+
+$x\sim\mathcal{N}(0,1^2)$, $\beta_0 = 0.5$ and $\beta_1 = 2$
+
+```{r}
+set.seed(20)
+x <- rnorm(100)
+e <- rnorm(100, 0, 2)
+y <- 0.5 + 2 * x + e
+summary(y)
+plot(x, y)
+```
+
+E se `x` for binário?
+
+```{r}
+set.seed(10)
+x <- rbinom(100, 1, 0.5)
+e <- rnorm(100, 0, 2)
+y <- 0.5 + 2 * x + e
+summary(y)
+plot(x, y)
+```
+
+## Gerando números aleatórios a partir de um modelo linear generalizado
+
+Suponha que queremos simular a partir de um modelo de Poisson onde
+
+Y ~ Poisson(μ)
+
+log μ = $\beta_0 + \beta_1x$
+
+e $\beta_0 = 0.5$ and $\beta_1 = 0.3$ 
+
+Precisamos usar a função `rpois` para este
+
+
+```{r}
+set.seed(1)
+x <- rnorm(100)
+log.mu <- 0.5 + 0.3 * x
+y <- rpois(100, exp(log.mu))
+summary(y)
+plot(x, y)
+```
+
+## Amostra randômica
+
+A função `sample` desenha aleatoriamente a partir de um conjunto especificado de objetos (escalares), permitindo que você amostra de distribuições arbitrárias.
+
+```{r}
+set.seed(1)
+sample(1:10, 4)
+sample(1:10, 4)
+sample(letters, 5)
+sample(1:10)  ## permutação
+sample(1:10)
+sample(1:10, replace = TRUE)  ## Amostra com substituição
+```
+
+**Resumo**
+
+- As amostras de desenho de distribuições de probabilidade específicas podem ser feitas com funções `r*`
+- As distribuições padrão são construídas em: Normal, Poisson, Binomial, Exponencial, Gamma, etc.
+- A função `sample` pode ser usada para desenhar amostras aleatórias a partir de vetores arbitrários
+- Definir a semente do gerador de números aleatórios via set.seed é crítico para a reprodutibilidade
+
+
+.
+
+
+
+[The Scientist](http://www.thescientist.com.br)
+
+

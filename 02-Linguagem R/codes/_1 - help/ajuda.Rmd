@@ -1,0 +1,125 @@
+---
+title: "Introdução a Linguagem R"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Ajuda
+job: The Scientist
+---
+
+## Fazendo perguntas
+
+- Fazer perguntas por e-mail é diferente de fazer perguntas pessoalmente
+- As pessoas do outro lado não têm a informação profundas comparadas a você
+- Outras pessoas estão ocupadas; Seu tempo é limitado
+- O instrutor (eu) está aqui para ajudar em todas as circunstâncias, mas pode não ser capaz de responder a todas as perguntas!
+
+
+
+## Encontrar Respostas
+
+- Tente encontrar uma resposta pesquisando os arquivos do fórum que pretende publicar.
+- Tente encontrar uma resposta pesquisando na Web.
+- Tente encontrar uma resposta lendo o manual.
+- Tente encontrar uma resposta lendo um FAQ.
+- Tente encontrar uma resposta por inspeção ou experimentação.
+- Tente encontrar uma resposta perguntando a um amigo habilidoso.
+- Se você é um programador, tente encontrar uma resposta lendo o código-fonte.
+
+---
+## Fazendo perguntas
+
+- É importante que as outras pessoas saibam que você já fez todas as coisas anteriores
+- Se a resposta está na documentação, a resposta será "Leia a documentação"
+- +um e-mail perdido
+
+
+
+## Exemplo: Mensagens de erro
+
+```r
+> library(datasets) 
+> data(airquality) 
+> cor(airquality)
+Error in cor(airquality) : missing observations in cov/cor
+```
+
+
+## Google 
+
+## Fazendo perguntas
+
+- Quais passos vão reproduzir o problema?
+- Qual é o resultado esperado?
+- O que você vê ao invés disso?
+- Que versão do produto (por exemplo, R, pacotes, etc.) você está usando?
+- Que sistema operacional?
+- Informação adicional
+
+
+
+## Cabeçalhos de Assunto
+
+- Estúpido: "Ajuda! Não consigo o fit do modelo linear!"
+
+- Smart: "R 3.0.2 função lm() produz seg falha com grandes data frames, Mac OS X 10.9.1"
+
+- Mais Inteligente: "R 3.0.2 função lm() no Mac OS X 10.9.1 - falha de segmentação em grande base de dados"
+
+
+
+## O que fazer
+- Descreva o objetivo, não o passo
+- Seja explícito sobre a sua pergunta
+- Fornecer o mínimo de informação necessária (o volume não é precisão)
+- Seja cortês (nunca dói)
+- Acompanhamento com a solução (se encontrada)
+
+
+
+## Não faça
+- Afirmar que encontrou um bug
+- Grovel como um substituto para fazer sua lição de casa
+- Poste as perguntas sobre as listas de discussão (nós as vimos todas)
+- E-mail várias listas de e-mail de uma vez
+- Peça aos outros para depurar seu código quebrado, sem dar uma dica sobre o tipo de problema que eles devem estar procurando
+
+## Estudo de caso: um post recente para a lista de discussão R-devel
+
+```markdown
+Assunto: dataset grande - confuso
+Mensagem:
+Estou tentando carregar um conjunto de dados em R, mas
+estou completamente perdido. Isto é provavelmente
+devido principalmente ao fato de que eu sou um
+complete R newb, mas isso me deixou preso
+em um projeto de pesquisa.
+```
+
+## Resposta
+
+```markdown
+Sim, você está perdido. O guia de postagem R é
+Em http://www.r-project.org/posting-
+guide.html e irá apontar para o
+direita e também os manuais (em
+por exemplo. Http://cran.r-project.org/Manuals.html, 
+e um deles parece exatamente o que você precisa).
+```
+
+## Análise: O que aconteceu de errado?
+
+- A pergunta foi enviada para a lista errada (R-devel em vez de R-help)
+- O assunto do email era muito vago
+- A pergunta foi muito vaga
+- Problema não reproduzível
+- Nenhuma evidência de qualquer esforço feito para resolver o problema
+- RESULTADO: Receita para o desastre!
+
+
+
+## Lugares para visitar
+
+- Quadro de discussão de classe; Seus colegas estudantes
+- r-help@r-project.org
+- Outras listas de discussão específicas do projeto
+

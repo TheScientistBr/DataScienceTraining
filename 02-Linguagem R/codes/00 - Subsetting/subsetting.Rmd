@@ -1,0 +1,192 @@
+---
+title: "Introdução a Linguagem R"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Tipos de dados e operaç~~oes básicas
+---
+
+## Subsetting
+
+Existem vários operadores que podem ser usados para extrair subconjuntos de objetos R.
+- `[` sempre retorna um objeto da mesma classe que o original; Pode ser usado para selecionar mais de um elemento (há uma exceção)
+
+- `[[` é usado para extrair elementos de uma lista ou de um data frame; Ele só pode ser usado para extrair um único elemento e a classe do objeto retornado não será necessariamente uma lista ou um data frame.
+
+- `$` é usado para extrair elementos de uma lista ou quadro de dados pelo nome; Semântica são semelhantes às de `[[.
+
+
+## Subsetting
+
+```r
+> x <- c("a", "b", "c", "c", "d", "a")
+> x[1]
+[1] "a"
+> x[2]
+[1] "b"
+> x[1:4]
+[1] "a" "b" "c" "c"
+> x[x > "a"]
+[1] "b" "c" "c" "d"
+> u <- x > "a"
+> u
+[1] FALSE TRUE TRUE TRUE TRUE FALSE 
+> x[u]
+[1] "b" "c" "c" "d"
+```
+
+---
+
+## Subsetting de uma Matriz
+
+Matrizes podem ser subdivididas da maneira usual com índices de tipo (_i, j_).
+
+```{r}
+x <- matrix(1:6, 2, 3)
+x
+x[1, 2]
+x[2, 1]
+```
+
+Os índices também podem estar ausentes.
+
+```{r}
+x[1, ]
+x[, 2]
+```
+
+
+Por padrão, quando um único elemento de uma matriz é recuperado, ele é retornado como um vetor de comprimento 1 ao invés de uma matriz 1 × 1. Esse comportamento pode ser desativado definindo `drop = FALSE`.
+
+```{r}
+x <- matrix(1:6, 2, 3)
+x[1, 2]
+x[1, 2, drop = FALSE]
+```
+
+
+Da mesma forma, subconjunto de uma única coluna ou uma única linha lhe dará um vetor, não uma matriz (por padrão).
+
+```{r}
+x <- matrix(1:6, 2, 3)
+print("x[1,]")
+x[1, ]
+print("imprimindo x",quote = TRUE)
+x
+print("Com drop")
+x[1, , drop = FALSE]
+```
+
+---
+
+## Subsetting Lists
+
+```{r}
+x <- list(foo = 1:4, bar = 0.6)
+print("---")
+x[1]
+print("---")
+x$foo
+
+print("---")
+x[[1]]
+print("---")
+x$bar
+print("---")
+x[["bar"]]
+print("---")
+x["bar"]
+```
+
+---
+
+## Subsetting Lists
+
+```{r}
+x <- list(foo = 1:4, bar = 0.6, baz = "hello")
+x
+x[c(1, 3)]
+x$foo
+x$baz
+```
+
+---
+
+## Subsetting Lists
+
+O operador `[[` pode ser usado com índices computados, ou calculados; `$` Só pode ser usado com nomes literais.
+
+```{r}
+x <- list(foo = 1:4, bar = 0.6, baz = "hello")
+name <- "foo"
+x[[name]]  ## Índice computado para 'foo'
+x$name     ## Elemento 'nome' não existe!
+x$foo
+```
+
+---
+
+## Subsetting elementos aninhados em uma lista
+
+O `[[` pode ter uma sequência inteira.
+
+```{r}
+x <- list(a = list(10, 12, 14), b = c(3.14, 2.81))
+x
+x[[c(1, 3)]]
+x[[1]][[3]]
+x[[c(2, 1)]]
+```
+
+---
+
+## Correspondência parcial
+
+A correspondência parcial de nomes é permitida com `[[` e `$`.
+
+```{r}
+x <- list(aardvark = 1:5)
+x
+x$a
+x[["a"]]
+x[["a", exact = FALSE]]
+```
+
+---
+
+## Removendo Valores NA (not available)
+
+Uma tarefa comum é remover valores em falta (`NA`s).
+
+```{r}
+x <- c(1, 2, NA, 4, NA, 5)
+x
+bad <- is.na(x)
+bad
+x[!bad]
+x
+```
+
+
+E se houver várias coisas a fazer com subconjuntos sem NA?
+
+```{r}
+x <- c(1, 2, NA, 4, NA, 5)
+x
+y <- c("a", "b", NA, "d", NA, "f")
+y
+good <- complete.cases(x, y)
+good
+x[good]
+y[good]
+```
+
+---
+
+## Removendo valores NA
+
+```{r}
+data("airquality")
+airquality[1:6, ]
+good <- complete.cases(airquality)
+airquality[good, ][1:6, ]
+```
