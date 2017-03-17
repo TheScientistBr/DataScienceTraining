@@ -41,13 +41,13 @@ Funções têm _named argumentos_ que potencialmente têm valores _default_.
 Os argumentos de funções R podem ser combinados posicionalmente ou por nome. 
 Então as chamadas para `sd` são todas equivalentes
 
-```r
-> mydata <- rnorm(100)
-> sd(mydata)
-> sd(x = mydata)
-> sd(x = mydata, na.rm = FALSE)
-> sd(na.rm = FALSE, x = mydata)
-> sd(na.rm = FALSE, mydata)
+```{r}
+mydata <- rnorm(100)
+sd(mydata)
+sd(x = mydata)
+sd(x = mydata, na.rm = FALSE)
+sd(na.rm = FALSE, x = mydata)
+sd(na.rm = FALSE, mydata)
 ```
 
 Mesmo que seja legal, eu não recomendo mexer com o agumentos demasiado, uma vez que pode levar a alguma confusão.
@@ -59,18 +59,16 @@ Mesmo que seja legal, eu não recomendo mexer com o agumentos demasiado, uma vez
 Você pode misturar correspondência posicional com correspondência pelo nome. 
 Quando um argumento é correspondido por nome, ele é "retirado" da lista de argumentos e os argumentos não nomeados restantes são correspondidos na ordem em que são listados na função definition.usion.
 
-```r
-> args(lm)
-function (formula, data, subset, weights, na.action,
-          method = "qr", model = TRUE, x = FALSE,
-          y = FALSE, qr = TRUE, singular.ok = TRUE,
-          contrasts = NULL, offset, ...)
+```{r}
+args(lm)
+
 ```
 
 As duas chamadas a seguir são equivalentes.
 
 ```r
 lm(data = mydata, y ~ x, model = FALSE, 1:100)
+
 lm(y ~ x, mydata, 1:100, model = FALSE)
 ```
 

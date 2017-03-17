@@ -1,9 +1,9 @@
 ---
-title: "IntroduÃƒÂ§ÃƒÂ£o a Linguagem R"
+title: "Introdução a Linguagem R"
 author: "Delermando Branquinho Filho"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 subtitle: Escopo
 job: The Scientist
 ---
@@ -12,10 +12,12 @@ job: The Scientist
 
 Como R sabe qual valor atribuir a qual símbolo? Quando eu digito
 
-```r
-> m <- função (x) {x * x}
-> lm
-Função (x) {x * x}
+```{r}
+m <- function(x = 0) {
+        x * x
+}
+        
+m(2)
 ```
 
 Como R sabe qual valor atribuir ao símbolo `lm`? Por que ele não dá o valor de `lm` que está no pacote * stats *?
@@ -31,11 +33,8 @@ Quando R tenta vincular um valor a um símbolo, ele procura através de uma sér
 
 A lista de pesquisa pode ser encontrada usando a função `search`.
 
-```r
-> search()
-[1] ".GlobalEnv" "pacote: stats" "pacote: gráficos"
-[4] "package: grDevices" "pacote: utils" "pacote: conjuntos de dados"
-[7] "package: methods" "Autoloads" "package: base"
+```{r}
+search()
 ```
 
 ---
@@ -66,13 +65,15 @@ símbolo
 
 Considere a seguinte função.
 
-```r
-f <- função (x, y) {
-x ^ 2 + y / z
+```{r}
+f <- function(x, y) {
+        x ^ 2 + y / z
 }
+z <- 2
+f(2,3)
 ```
 
-Esta função tem 2 argumentos formais `x` e` y`. No corpo da função há outro símbolo "z". Nesse caso, `z` é chamado de variável _free.
+Esta função tem 2 argumentos formais `x` e` y`. No corpo da função há outro símbolo "z". Nesse caso, `z` é chamado de variável _free_.
 As regras de escopo de uma linguagem determinam como os valores são atribuídos a `variáveis livres`. As `variáveis livres` não são argumentos formais e não são variáveis `locais` (atribuídas no corpo da função).
 
 ---
@@ -97,7 +98,7 @@ O que é um ambiente?
 Procurando o valor para uma variável livre:
 
 - Se o valor de um símbolo não for encontrado no ambiente em que uma função foi definida, a pesquisa será continuada no ambiente _parent_.
-- A busca continua abaixo da seqüência de ambientes pai até atingir o _top-level environment_; Geralmente, o ambiente global (espaço de trabalho) ou o namespace de um pacote.
+- A busca continua abaixo da sequência de ambientes pai até atingir o _top-level environment_; Geralmente, o ambiente global (espaço de trabalho) ou o namespace de um pacote.
 - Após o ambiente de nível superior, a pesquisa continua abaixo da lista de pesquisa até atingir o ambiente _empty_.
 Se um valor para um dado símbolo não pode ser encontrado uma vez que o ambiente vazio é chegado, em seguida, um erro é lançado.
 
@@ -117,10 +118,10 @@ Por que isso tudo importa?
 
 ## Lexical Scoping
 
-```r
+```{r}
 make.power <- function(n) {
         pow <- function(x) {
-        xn
+        x^n
         }
         pow
 }
@@ -128,13 +129,11 @@ make.power <- function(n) {
 
 Esta função retorna outra função como seu valor.
 
-```r
-> cube <- make.power(3)
-> square <- make.power(2)
-> cube(3)
-[1] 27
-> square(3)
-[1] 9
+```{r}
+cube <- make.power(3)
+square <- make.power(2)
+cube(3)
+square(3)
 ```
 
 ---
@@ -143,16 +142,14 @@ Esta função retorna outra função como seu valor.
 
 O que há no ambiente de uma função?
 
-```r
-> ls(environment(cube))
-[1] "n"   "pow"
-> get("n", environment(cube))
-[1] 3
+```{r}
+ls(environment(cube))
 
-> ls(environment(square))
-[1] "n"   "pow"
-> get("n", environment(square))
-[1] 2
+get("n", environment(cube))
+
+ls(environment(square))
+
+get("n", environment(square))
 ```
 
 
@@ -161,7 +158,7 @@ O que há no ambiente de uma função?
 ## Lexical vs. Escopo Dinâmico
 
 
-```r
+```{r}
 y <- 10
 
 f <- function(x) {
@@ -176,7 +173,7 @@ g <- function(x) {
 
 Qual é o valor de
 
-```r
+```{r}
 f(3)
 ```
 
@@ -194,15 +191,14 @@ Quando uma função é _definida_ no ambiente global e é subsequentemente _call
 
 
 ```r
-> g <- function(x) { 
-+ a <- 3
-+ x+a+y 
-+ }
-> g(2)
-Error in g(2) : object "y" not found
-> y <- 3
-> g(2)
-[1] 8
+g <- function(x) { 
+        a <- 3
+        x+a+y 
+        }
+g(2)
+# Error in g(2) : object "y" not found
+y <- 3
+g(2)
 ```
 
 ---
@@ -230,25 +226,85 @@ Outros idiomas que suportam o escopo lexical
 Por que alguma dessas informações é útil?
 - As rotinas de otimização em R como `optim`,` nlm` e `optimize` exigem que você passe uma função cujo argumento é um vetor de parâmetros (por exemplo, uma log-verossimilhança)
 - No entanto, uma função de objeto pode depender de uma série de outras coisas além de seus parâmetros (como _data_)
-- Ao escrever software que faz otimização, pode ser desejável para permitir que o usuário mantenha determinados parâmetros fixos
+- Ao escrever software que faz otimização, pode ser desejável permitir que o usuário mantenha determinados parâmetros fixos
 
-img src="imagens/like1.png" height=500>
+
+## Maximizando uma Probabilidade Normal
+
+Escrever uma função "construtor"
+
+```{r}
+make.NegLogLik <- function(data, fixed=c(FALSE,FALSE)) {
+        params <- fixed
+        function(p) {
+                params[!fixed] <- p
+                mu <- params[1]
+                sigma <- params[2]
+                a <- -0.5*length(data)*log(2*pi*sigma^2)
+                b <- -0.5*sum((data-mu)^2) / (sigma^2)
+                -(a + b)
+        } 
+}
+```
+
+*Nota*: Funções de otimização em funções R _minimize_, você precisa usar a probabilidade log negativa.
+
+
+```{r}
+set.seed(1); normals <- rnorm(100, 1, 2)
+nLL <- make.NegLogLik(normals)
+nLL
+function(p) {
+                params[!fixed] <- p
+                mu <- params[1]
+                sigma <- params[2]
+                a <- -0.5*length(data)*log(2*pi*sigma^2)
+                b <- -0.5*sum((data-mu)^2) / (sigma^2)
+                -(a + b)
+        }
+ls(environment(nLL))
+```
 
 ---
 
-## Plotanto o Likelihood (Verossimilhança)
+## Estimando Parâmetros
 
-### Imagem #1
+```{r}
+optim(c(mu = 0, sigma = 1), nLL)$par
+```
 
-<img src="imagens/like1.png" height=300>
+Fixing σ = 2
 
+```{r}
+nLL <- make.NegLogLik(normals, c(FALSE, 2))
+optimize(nLL, c(-1, 3))$minimum
+```
 
-### Imagem #2
+Fixing μ = 1
 
-<img src="imagens/like2.png" height=300>
-
+```{r}
+nLL <- make.NegLogLik(normals, c(1, FALSE))
+optimize(nLL, c(1e-6, 10))$minimum
+```
 
 ---
+
+## Plotando a Verossimilhança
+
+```{r}
+nLL <- make.NegLogLik(normals, c(1, FALSE))
+x <- seq(1.7, 1.9, len = 100)
+y <- sapply(x, nLL)
+plot(x, exp(-(y - min(y))), type = "l")
+
+nLL <- make.NegLogLik(normals, c(FALSE, 2))
+x <- seq(0.5, 1.5, len = 100)
+y <- sapply(x, nLL)
+plot(x, exp(-(y - min(y))), type = "l")
+```
+
+---
+
 
 ## Lexical Scoping Resumo
 

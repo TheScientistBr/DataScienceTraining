@@ -1,0 +1,36 @@
+---
+title: "Introdução a Linguagem R"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Vetores
+job: The Scientist
+---
+
+## Operações Vectorizadas
+
+Muitas operações em R são _vectorized_ tornando o código mais eficiente, conciso e fácil de ler.
+
+```{r}
+x <- 1:4; y <- 6:9 
+x + y
+x > 2
+x >= 2
+y == 8
+x * y
+x / y
+```
+
+---
+
+## Vectorized Matrix Operations
+
+```{r}
+x <- matrix(1:4, 2, 2); y <- matrix(rep(10, 4), 2, 2)
+x * y       
+x / y
+x %*% y     
+```
+
+
+(The Scientist)[http://www.thescientist.com.br]
+
