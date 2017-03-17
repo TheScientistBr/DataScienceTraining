@@ -17,21 +17,14 @@ Existem vários operadores que podem ser usados para extrair subconjuntos de obj
 
 ## Subsetting
 
-```r
-> x <- c("a", "b", "c", "c", "d", "a")
-> x[1]
-[1] "a"
-> x[2]
-[1] "b"
-> x[1:4]
-[1] "a" "b" "c" "c"
-> x[x > "a"]
-[1] "b" "c" "c" "d"
-> u <- x > "a"
-> u
-[1] FALSE TRUE TRUE TRUE TRUE FALSE 
-> x[u]
-[1] "b" "c" "c" "d"
+```{r}
+x <- c("a", "b", "c", "c", "d", "a")
+x[2]
+x[1:4]
+x[x > "a"]
+u <- x > "a"
+u
+x[u]
 ```
 
 ---
