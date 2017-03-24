@@ -123,7 +123,7 @@ O operador `:` é usado para criar sequências **inteiras**.
 
 ## Criando Vetores
 
-A função `c ()` pode ser usada para criar vetores de objetos.
+A função `c()` pode ser usada para criar vetores de objetos.
 
 ```{r,warning=FALSE,message=FALSE}
 x <- c(0,5, 0,6) ## numeric
