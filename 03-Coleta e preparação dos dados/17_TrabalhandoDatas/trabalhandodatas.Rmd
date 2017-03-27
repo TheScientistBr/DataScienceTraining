@@ -1,0 +1,83 @@
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Sumarizando Dados
+job: The Scientist
+---
+
+
+## Inicio siplificado
+
+```{r}
+d1 = date()
+d1
+class(d1)
+```
+
+### Classe Data
+
+```{r sysDate}
+d2 = Sys.Date()
+d2
+class(d2)
+```
+
+---
+
+## Formatando Datas
+
+`%d` = day as number (0-31), `%a` = abbreviated weekday,`%A` = unabbreviated weekday, `%m` = month (00-12), `%b` = abbreviated month,
+`%B` = unabbrevidated month, `%y` = 2 digit year, `%Y` = four digit year
+
+```{r ,dependson="sysDate"}
+format(d2,"%a %b %d")
+```
+
+---
+
+## Criando Datas
+
+```{r}
+x = c("1jan1960", "2jan1960", "31mar1960", "30jul1960"); z = as.Date(x, "%d%b%Y")
+z
+z[1] - z[2]
+as.numeric(z[1]-z[2])
+```
+
+---
+
+## CConvertendo datas julianas
+
+```{r,dependson="sysDate"}
+weekdays(d2)
+months(d2)
+julian(d2)
+```
+
+---
+
+## Lubridate 
+
+```{r lub}
+library(lubridate); ymd("20140108")
+mdy("08/04/2013")
+dmy("03-04-2013")
+```
+
+
+## Lidando com tempos
+
+```{r ,dependson="lub"}
+ymd_hms("2011-08-03 10:15:03")
+ymd_hms("2011-08-03 10:15:03",tz="Pacific/Auckland")
+?Sys.timezone
+```
+
+## Algumas funções têm uma sintaxe ligeiramente diferente
+
+```{r, dependson="lub"}
+x = dmy(c("1jan2013", "2jan2013", "31mar2013", "30jul2013"))
+wday(x[1])
+wday(x[1],label=TRUE)
+```

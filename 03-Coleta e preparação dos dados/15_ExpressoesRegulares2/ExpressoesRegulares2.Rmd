@@ -1,0 +1,256 @@
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Sumarizando Dados
+job: The Scientist
+---
+
+## Mais Metacaracteres
+
+"." É usado para se referir a qualquer caractere. assim
+
+```markdown
+9.11
+```
+
+Corresponderá às linhas
+
+```markdown
+its stupid the post 9-11 rules
+if any 1 of us did 9/11 we would have been caught in days.
+NetBios: scanning ip 203.169.114.66
+Front Door 9:11:46 AM
+Sings: 0118999881999119725...3 !
+```
+
+## Mais Metacharacters: |
+
+This does not mean “pipe” in the context of regular expressions; instead it translates to “or”; we can use it to combine two expressions, the subexpressions being called alternatives
+
+```markdown
+flood|fire
+```
+
+Corresponderá às linhas
+
+```markdown
+is firewire like usb on none macs?
+the global flood makes sense within the context of the bible
+yeah ive had the fire on tonight
+... and the floods, hurricanes, killer heatwaves, rednecks, gun nuts, etc.
+￼
+```
+
+## Mais Metacharacters: |
+
+Podemos incluir qualquer número de alternativas ...
+
+```markdown
+flood|earthquake|hurricane|coldfire
+```
+
+Corresponderá às linhas
+
+```markdown
+Not a whole lot of hurricanes in the Arctic.
+We do have earthquakes nearly every day somewhere in our State
+hurricanes swirl in the other direction
+coldfire is STRAIGHT!
+’cause we keep getting earthquakes
+```
+
+---
+
+## Mais Metacharacters: |
+
+As alternativas podem ser expressões reais e não apenas literais
+
+```markdown
+^[Gg]ood|[Bb]ad
+```
+
+Corresponderá às linhas
+
+```markdown
+good to hear some good knews from someone here
+Good afternoon fellow american infidels!
+good on you-what do you drive?
+Katie... guess they had bad experiences...
+my middle name is trouble, Miss Bad News
+```
+
+---
+
+## Mais Metacharacters: ( and )
+
+Subexpressões são freqüentemente contidas entre parênteses para restringir as alternativas
+
+```markdown
+^([Gg]ood|[Bb]ad)
+```
+
+Corresponderá às linhas
+
+```markdown
+bad habbit
+bad coordination today
+good, becuase there is nothing worse than a man in kinky underwear
+Badcop, its because people want to use drugs
+Good Monday Holiday
+Good riddance to Limey
+```
+
+---
+
+## More Metacharacters: ?
+
+O ponto de interrogação indica que a expressão indicada é opcional
+
+```markdown
+[Gg]eorge( [Ww]\.)? [Bb]ush
+```
+
+Corresponderá às linhas
+
+```markdown
+i bet i can spell better than you and george bush combined
+BBC reported that President George W. Bush claimed God told him to invade I
+a bird in the hand is worth two george bushes
+```
+
+---
+
+## Uma coisa a observar ...
+
+Na sequência
+
+```markdown
+[Gg]eorge( [Ww]\.)? [Bb]ush
+```
+
+we wanted to match a “.” as a literal period; to do that, we had to “escape” the metacharacter, preceding it with a backslash In general, we have to do this for any metacharacter we want to include in our match
+
+---
+
+## Mais metacharacters: * e +
+
+Os sinais * e + são metacaracteres usados para indicar a repetição; * Significa "qualquer número, incluindo nenhum, do item" e + significa "pelo menos um do item"
+
+```markdown
+(.*)
+```
+
+Corresponderá às linhas
+
+```markdown
+anyone wanna chat? (24, m, germany)
+hello, 20.m here... ( east area + drives + webcam )
+(he means older men)
+()
+```
+
+```markdown
+[0-9]+ (.*)[0-9]+
+```
+
+Corresponderá às linhas
+
+```markdown
+working as MP here 720 MP battallion, 42nd birgade
+so say 2 or 3 years at colleage and 4 at uni makes us 23 when and if we fin
+it went down on several occasions for like, 3 or 4 *days*
+Mmmm its time 4 me 2 go 2 bed
+```
+
+---
+
+## Mais metacharacters: { e }
+
+ { e } são referidos como quantificadores de intervalo; Vamos especificar o número mínimo e máximo de correspondências de uma expressão
+
+```markdown
+[Bb]ush( +[^ ]+ +){1,5} debate
+```
+
+Corresponderá às linhas
+
+
+```markdown
+Bush has historically won all major debates he’s done.
+in my view, Bush doesn’t need these debates..
+bush doesn’t need the debates? maybe you are right
+That’s what Bush supporters are doing about the debate.
+Felix, I don’t disagree that Bush was poorly prepared for the debate.
+indeed, but still, Bush should have taken the debate more seriously.
+Keep repeating that Bush smirked and scowled during the debate
+```
+
+---
+
+## Mais metacharacters:
+
+- m, n significa pelo menos m mas não mais de n correspondências
+- m significa exatamente m correspondências
+- m, significa pelo menos m correspondências
+
+---
+
+## Mais metacaracteres: (e) revisitado
+
+- Na maioria das implementações de expressões regulares, os parênteses não só limitam o escopo de alternativas dividido por um "|", mas também pode ser usado para "lembrar" texto correspondido pela subexpressão fechado
+- Nós nos referimos ao texto correspondente com \ 1, \ 2, etc.
+
+---
+
+## Mais metacaracteres: (e) revisitado
+
+Assim, a expressão
+
+```markdown
++([a-zA-Z]+) +\1 +
+```
+
+will match the lines
+
+```markdown
+time for bed, night night twitter!
+blah blah blah blah
+my tattoo is so so itchy today
+i was standing all all alone against the world outside...
+hi anybody anybody at home
+estudiando css css css css.... que desastritooooo
+```
+O * é "ganancioso" por isso sempre corresponde a cadeia mais longa possível que satisfaça a expressão regular. assim
+
+```markdown
+^s(.*)s
+```
+
+Corresponde à
+
+```markdown
+sitting at starbucks
+setting up mysql and rails
+studying stuff for the exams
+spaghetti with marshmallows
+stop fighting with crackers
+sore shoulders, stupid ergonomics
+```
+
+
+A ganância de * pode ser desligada com a ?, Como abaixo
+
+```markdown
+^s(.*?)s$
+```
+
+
+## Resumo
+
+- Expressões regulares são usadas em muitas línguas diferentes; Não exclusivo de R.
+- Expressões regulares são compostas de literais e metacaracteres que representam conjuntos ou classes de caracteres / palavras
+- O processamento de texto através de expressões regulares é uma forma muito poderosa de extrair dados de fontes "hostis" (nem todos os dados são fornecidos como um ficheiro CSV)
+- Utilizado com as funções `grep`,` grepl`, `sub`,` gsub` e outros que envolvem a procura de cadeias de texto
+(Graças a Mark Hansen por algum material nesta palestra.)
+

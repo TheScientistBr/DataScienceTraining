@@ -1,0 +1,97 @@
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Reshiping Data
+job: The Scientist
+---
+
+## O objetivo é os dados arrumados
+
+1. Cada variável forma uma coluna
+2. Cada observação forma uma linha
+3. Cada tabela / arquivo armazena dados sobre um tipo de observação (por exemplo, pessoas / hospitais).
+
+---
+
+## Comece com a remodelação
+
+```{r reshape2}
+library(reshape2)
+head(mtcars)
+```
+
+
+---
+
+## Melting data frames
+
+```{r mtcars,dependson="reshape2"}
+mtcars$carname <- rownames(mtcars)
+carMelt <- melt(mtcars,id=c("carname","gear","cyl"),measure.vars=c("mpg","hp"))
+head(carMelt,n=3)
+tail(carMelt,n=3)
+```
+
+
+## Modelos de Molduras de Dados
+
+```{r ,dependson="mtcars"}
+cylData <- dcast(carMelt, cyl ~ variable)
+cylData
+cylData <- dcast(carMelt, cyl ~ variable,mean)
+cylData
+```
+
+---
+
+## Valores medios
+
+```{r}
+head(InsectSprays)
+tapply(InsectSprays$count,InsectSprays$spray,sum)
+```
+
+---
+
+## Outra maneira - dividir
+
+```{r spIns}
+spIns =  split(InsectSprays$count,InsectSprays$spray)
+spIns
+```
+
+
+```{r sprCount,dependson="spIns"}
+sprCount = lapply(spIns,sum)
+sprCount
+```
+
+---
+
+## Outra maneira - combine
+
+```{r ,dependson="sprCount"}
+unlist(sprCount)
+sapply(spIns,sum)
+```
+
+---
+
+## Outra maneira - plyr package
+
+```{r,dependson="sprCount"}
+library("plyr")
+ddply(InsectSprays,.(spray),summarize,sum=sum(count))
+```
+
+
+---
+
+## Criando uma nova variável
+
+```{r,dependson="sprCount"}
+spraySums <- ddply(InsectSprays,.(spray),summarize,sum=ave(count,FUN=sum))
+dim(spraySums)
+head(spraySums)
+```
