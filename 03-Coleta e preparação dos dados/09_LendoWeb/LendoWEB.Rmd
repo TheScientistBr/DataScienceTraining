@@ -1,0 +1,86 @@
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Lendo WEB
+job: The Scientist
+---
+
+
+
+## Webscraping
+
+__Webscraping__: Programaticamente extrair dados do código HTML de websites.
+
+* Pode ser uma ótima maneira de obter dados [How Netflix engenharia reversa Hollywood] (http://www.theatlantic.com/technology/archive/2014/01/how-netflix-reverse-engineered-hollywood/282679/)
+* Muitos sites têm informações que você pode querer ler programaticaly
+* Em alguns casos isto é contra os termos de serviço para o site
+* Tentando ler demasiadas páginas com demasiada rapidez pode obter o seu endereço IP bloqueado
+
+
+## Como tirar dados das páginas da web - readLines()
+
+
+```{r, warning=FALSE}
+con = url("http://www.delermando.pro.br")
+htmlCode = readLines(con)
+close(con)
+htmlCode
+```
+
+
+
+---
+
+## Parsing com XML
+
+```{r xml }
+library(XML)
+url <- "http://www.delermando.pro.br"
+html <- htmlTreeParse(url, useInternalNodes=T)
+
+xpathSApply(html, "//title", xmlValue)
+```
+
+
+## Acessando sites com senhas
+
+```{r}
+pg1 = GET("http://httpbin.org/basic-auth/user/passwd")
+pg1
+```
+
+[http://cran.r-project.org/web/packages/httr/httr.pdf](http://cran.r-project.org/web/packages/httr/httr.pdf)
+
+---
+
+
+```{r}
+pg2 = GET("http://httpbin.org/basic-auth/user/passwd",
+    authenticate("user","passwd"))
+pg2
+names(pg2)
+```
+
+
+---
+
+## Usando handles
+
+```{r}
+google = handle("http://google.com")
+pg1 = GET(handle=google,path="/")
+pg2 = GET(handle=google,path="search")
+pg1
+pg2
+```
+
+
+---
+## Notas e outros recursos
+
+* R Bloggers tem uma série de exemplos de raspagem web [http://www.r-bloggers.com/?s=Web+Scraping](http://www.r-bloggers.com/?s=Web+Scraping )
+* O arquivo de ajuda httr tem exemplos úteis [http://cran.r-project.org/web/packages/httr/httr.pdf](http://cran.r-project.org/web/packages/httr/ Httr.pdf)
+* Ver conferências posteriores sobre APIs
+
+

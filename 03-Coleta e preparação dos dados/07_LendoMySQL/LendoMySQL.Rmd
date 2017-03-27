@@ -1,0 +1,98 @@
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Lendo arquivos MySQL
+job: The Scientist
+---
+
+
+## mySQL
+
+* Livre e amplamente utilizado software de banco de dados de código aberto
+* Amplamente utilizado em aplicações baseadas na Internet
+* Os dados estão estruturados em 
+* Bancos de dados
+ * Tabelas em bases de dados
+ * Campos dentro de tabelas
+ * Cada linha é chamada de registro
+
+
+---
+
+## Instalando RMySQL
+
+```{r}
+# install.packages("RMySQL")
+library("RMySQL")
+```
+
+
+---
+
+
+
+## Connectando e listando databases
+
+```{r databases}
+ucscDb <- dbConnect(MySQL(),user="genome", 
+                    host="genome-mysql.cse.ucsc.edu")
+result <- dbGetQuery(ucscDb,"show databases;"); dbDisconnect(ucscDb);
+result
+```
+
+
+---
+
+## Conectando em  ailMel1 e listando as tabelas
+
+```{r tables}
+hg19 <- dbConnect(MySQL(),user="genome", db="ailMel1",
+                    host="genome-mysql.cse.ucsc.edu")
+allTables <- dbListTables(hg19)
+length(allTables)
+allTables[1:5]
+```
+
+
+---
+
+## Obter dimensões de uma tabela específica
+
+```{r dimensions,dependson="tables"}
+dbListFields(hg19,"augustusGene")
+dbGetQuery(hg19, "select count(*) from augustusGene")
+```
+
+
+---
+
+## Ler da tabela
+
+```{r readdata ,dependson="tables"}
+affyData <- dbReadTable(hg19, "augustusGene")
+head(affyData)
+```
+
+
+---
+
+## Selecionar um subconjunto específico
+
+```{r, dependson="tables", warning= FALSE}
+query <- dbSendQuery(hg19, "select * from augustusGene where txStart between 700 and 239585")
+affyMis <- fetch(query); quantile(affyMis$misMatches)
+affyMisSmall <- fetch(query,n=10); dbClearResult(query);
+dim(affyMisSmall)
+```
+
+---
+
+## Don't forget to close the connection!
+
+```{r, dependson="tables"}
+dbDisconnect(hg19)
+```
+
+---
+

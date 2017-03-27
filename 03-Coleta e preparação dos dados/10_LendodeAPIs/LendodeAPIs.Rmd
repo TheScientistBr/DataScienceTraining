@@ -1,0 +1,55 @@
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Lendo de APIs
+job: The Scientist
+---
+
+
+## Interface de programação de aplicativoss
+
+
+
+[https://apps.twitter.com/](https://apps.twitter.com/)
+
+
+---
+
+## Creating an application
+
+
+## Accesssando Twitter via R
+
+```{r,eval=FALSE}
+myapp = oauth_app("twitter",
+                   key="yourConsumerKeyHere",secret="yourConsumerSecretHere")
+sig = sign_oauth1.0(myapp,
+                     token = "yourTokenHere",
+                      token_secret = "yourTokenSecretHere")
+homeTL = GET("https://api.twitter.com/1.1/statuses/home_timeline.json", sig)
+```
+
+
+---
+
+## Convertrmfp o json object
+
+```{r eval=FALSE}
+json1 = content(homeTL)
+json2 = jsonlite::fromJSON(toJSON(json1))
+json2[1,1:4]
+```
+
+
+
+## Em geral, olhe para a documentação
+
+
+* Httr permite `GET`,` POST`, `PUT`,` DELETE` solicita se você está autorizado
+* Você pode autenticar com um nome de usuário ou uma senha
+* A maioria das APIs modernas usam algo como oauth
+* httr funciona bem com Facebook, Google, Twitter, Githb, etc
+
+
+

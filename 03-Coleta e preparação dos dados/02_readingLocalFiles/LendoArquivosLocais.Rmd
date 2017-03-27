@@ -1,0 +1,54 @@
+
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Reading local flat files
+job: The Scientist
+---
+
+## Faça o download do arquivo para carregar
+
+```{r, warning=FALSE}
+if(!dir.exists("data")) {
+        dir.create("data")
+        }
+fileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD"
+download.file(fileUrl,destfile="date/cameras.csv",method="curl")
+dateDownloaded <- date()
+dateDownloaded
+file.info("date/cameras.csv")
+```
+
+---
+
+## Carregando arquivos texto - read.table ()
+
+* Esta é a função principal para a leitura de dados em R
+* Flexível e robusto, mas requer mais parâmetros
+* Lê os dados na RAM - grandes dados podem causar problemas
+* Parâmetros importantes _file_, _header_, _sep_, _row.names_, _nrows_
+* Relacionado: _read.csv () _, _read.csv2 () _
+
+
+---
+
+## Baltimore exemplo
+
+```{r}
+cameraData <- read.table("./data/cameras.csv",sep=",",header=TRUE)
+head(cameraData)
+```
+
+
+---
+## Alguns parâmetros mais importantes
+
+* _quote_ - você pode dizer a R se existem valores citados quote = "" significa sem aspas.
+* _na.strings_ - define o caractere que representa um valor ausente.
+* _nrows_ - quantas linhas a ler do arquivo (por exemplo, nrows = 10 lê 10 linhas).
+* _skip_ - número de linhas a saltar antes de começar a ler
+
+_Na minha experiência, o maior problema com a leitura de arquivos planos são aspas "ou" colocados em valores de dados, definindo citações = "" muitas vezes resolve these_.
+
+

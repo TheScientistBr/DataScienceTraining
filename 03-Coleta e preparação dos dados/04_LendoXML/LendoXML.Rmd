@@ -1,0 +1,80 @@
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Lendo arquivos XML
+job: The Scientist
+---
+
+## XML
+
+* Extensible Markup Language
+* Freqüentemente usado para armazenar dados estruturados
+* Particularmente utilizado em aplicações na Internet
+* Extrair XML é a base para a maioria dos raspagem web
+* Componentes
+* Marcação - rótulos que dão a estrutura de texto
+* Conteúdo - o texto real do documento
+
+---
+
+## Tags, elementos e atributos
+
+* As etiquetas correspondem a etiquetas gerais
+* Iniciar tags `<section>`
+* End tags `</ section>`
+* Etiquetas vazias `<linha-quebra />`
+* Os elementos são exemplos específicos de tags
+* `<Saudação> Olá, mundo </ Saudação>`
+* Os atributos são componentes do rótulo
+* `<Img src =" jeff.jpg "alt =" instrutor "/>`
+* `<step number="3"> Connect A to B. </step>`
+  
+
+
+---
+
+## Lendo arquivos no R
+
+```{r xmldata}
+library(XML)
+fileUrl <- "data/arquivoXML.xml"
+doc <- xmlTreeParse(fileUrl,useInternal=TRUE)
+rootNode <- xmlRoot(doc)
+xmlName(rootNode)
+names(rootNode)
+```
+
+
+---
+
+## Acessar diretamente partes do documento XML
+
+```{r explore, dependson="xmldata"}
+rootNode[[1]]
+rootNode[[1]][[1]]
+```
+
+
+
+---
+
+## Programaticamente extrair partes do arquivo
+
+```{r explore2, dependson="xmldata"}
+xmlSApply(rootNode,xmlValue)
+```
+
+
+---
+
+
+```{r}
+xpathSApply(rootNode, "//*",xmlValue)
+
+
+
+```
+
+
+

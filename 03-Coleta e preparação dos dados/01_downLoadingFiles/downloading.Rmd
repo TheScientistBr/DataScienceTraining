@@ -1,0 +1,65 @@
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Downloading files
+job: The Scientist
+---
+
+## Obter / definir seu diretório de trabalho
+
+* Um componente básico de trabalhar com dados é conhecer o seu diretório de trabalho
+* Os dois comandos principais são `` `getwd ()` `` e `` `setwd ()` ``.
+* Esteja ciente dos caminhos relativos versus absolutos
+* __Relative__ - `` `setwd (" ./ data ")` ``, `` `setwd (" ../ ")` ``
+* __Absolute__ - `` `setwd (" / Users / jtleek / data / ")` ``
+* Diferença importante no Windows `` `setwd (" C: \\ Users \\ Andrew \\ Downloads ")` ``
+
+---
+
+## Verificando e criando diretórios
+
+* `` `File.exists (" directoryName ")` `` verificará se o diretório existe
+* `` `Dir.create (" directoryName ")` `` criará um diretório se ele não existir
+* Aqui está um exemplo de verificação de um diretório "data" e criá-lo se ele não existir
+
+```{r data}
+if(!file.exists("data")){
+  dir.create("data")
+}
+```
+
+
+---
+
+## Obtendo dados da Internet - download.file()
+
+* Descarrega um ficheiro da Internet
+* Mesmo se você pudesse fazer isso à mão, ajuda com a reprodutibilidade
+* Parâmetros importantes são _url_, _destfile_, _method_
+* Útil para download de tabulações, csv e outros arquivos
+
+---
+
+
+## Download de um arquivo da web
+
+```{r,dependson="data", warning=FALSE}
+fileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD"
+download.file(fileUrl,destfile="./data/cameras.csv",method="curl")
+list.files("./data")
+dateDownloaded <- date()
+dateDownloaded
+```
+
+---
+
+### Algumas observações sobre download.file ()
+
+* Se o URL começar com _http_ você pode usar download.file()
+* Se a url começa com _https_ no Windows você pode estar ok
+* Se a url começa com _https_ no Mac você pode precisar definir _method = "curl" _
+* Se o arquivo for grande, isso pode levar algum tempo
+* Certifique-se de gravar quando você baixar.
+
+

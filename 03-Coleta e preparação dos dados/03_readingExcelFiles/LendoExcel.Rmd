@@ -1,0 +1,41 @@
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Lendo Arquivos Excel
+job: The Scientist
+---
+
+
+## Arquivos Excel
+
+## read.xlsx(), read.xlsx2() {xlsx package}
+
+```{r}
+library(xlsx)
+cameraData <- read.xlsx("./data/cameras.xlsx",sheetIndex=1,header=TRUE)
+head(cameraData)
+```
+
+
+---
+
+## Lendo linhas e colunas específicas
+
+```{r ,dependson="xlsx"}
+colIndex <- 2:3
+rowIndex <- 1:4
+cameraDataSubset <- read.xlsx("./data/cameras.xlsx",sheetIndex=1,
+                              colIndex=colIndex,rowIndex=rowIndex)
+cameraDataSubset
+```
+
+---
+## Outras observações
+
+* A função _write.xlsx_ irá escrever um arquivo do Excel com argumentos semelhantes.
+* _read.xlsx2_ é muito mais rápido do que _read.xlsx_, mas para ler subconjuntos de linhas pode ser ligeiramente instável.
+* O pacote [XLConnect] (http://cran.r-project.org/web/packages/XLConnect/index.html) tem mais opções para escrever e manipular arquivos do Excel
+* A vinheta [XLConnect] (http://cran.r-project.org/web/packages/XLConnect/vignettes/XLConnect.pdf) é um bom lugar para começar para esse pacote
+* Em geral, é aconselhável armazenar seus dados em um banco de dados
+Ou em arquivos separados por vírgulas (.csv) ou arquivos separados por tabulação (.tab / .txt), pois são mais fáceis de distribuir.

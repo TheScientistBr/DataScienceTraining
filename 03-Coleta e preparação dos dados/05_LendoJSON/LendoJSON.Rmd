@@ -1,0 +1,48 @@
+---
+title: "Aquisição de Arquivos e Datasets"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Lendo arquivos JSON
+job: The Scientist
+---
+
+## JSON
+
+* Javascript Object Notation
+* Leve armazenamento de dados
+* Formato comum para dados de interfaces de programação de aplicativo (APIs)
+* Estrutura semelhante ao XML, mas diferente sintaxe / formato
+* Dados armazenados como
+* Números (duplo)
+* Strings (double quoted)
+* Boolean (_true_ ou _false_)
+* Array (ordenado, separado por vírgula entre colchetes _ [] _)
+* Objeto (unorderd, vírgula coleção separada de chave: pares de valor em curley colchetes _ {} _)
+
+
+
+## Lendo arquivos JSON {jsonlite package}
+
+```{r readJSON}
+library(jsonlite)
+jsonData <- fromJSON("data/myfile.json")
+names(jsonData)
+jsonData$glossary$GlossDiv$GlossList$GlossEntry$Abbrev
+```
+
+---
+
+## Escrevendo arquivos JSON
+
+```{r writeJSON}
+myjson <- toJSON(iris, pretty=TRUE)
+cat(myjson)
+```
+
+## Convertendo para JSON
+
+```{r}
+iris2 <- fromJSON(myjson)
+head(iris2)
+```
+
