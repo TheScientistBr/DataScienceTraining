@@ -46,7 +46,8 @@ xpathSApply(html, "//title", xmlValue)
 ## Acessando sites com senhas
 
 ```{r}
-pg1 = GET("http://httpbin.org/basic-auth/user/passwd")
+library("httr")
+pg1 = ("http://httpbin.org/basic-auth/user/passwd")
 pg1
 ```
 
@@ -74,13 +75,4 @@ pg2 = GET(handle=google,path="search")
 pg1
 pg2
 ```
-
-
----
-## Notas e outros recursos
-
-* R Bloggers tem uma série de exemplos de raspagem web [http://www.r-bloggers.com/?s=Web+Scraping](http://www.r-bloggers.com/?s=Web+Scraping )
-* O arquivo de ajuda httr tem exemplos úteis [http://cran.r-project.org/web/packages/httr/httr.pdf](http://cran.r-project.org/web/packages/httr/ Httr.pdf)
-* Ver conferências posteriores sobre APIs
-
 
