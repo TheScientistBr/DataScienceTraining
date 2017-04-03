@@ -1,0 +1,280 @@
+---
+title: "Análise Exploratória"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: KMeans
+job: The Scientist
+---
+
+
+## Matrix data 
+
+```{r randomData,fig.height=4,fig.width=3}
+set.seed(12345); par(mar=rep(0.2,4))
+dataMatrix <- matrix(rnorm(400),nrow=40)
+image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
+```
+
+---
+
+## Cluster the data 
+
+```{r,fig.height=6,fig.width=6}
+par(mar=rep(0.2,4))
+heatmap(dataMatrix)
+```
+
+---
+
+## E se nós adicionarmos um padrão?
+
+```{r onePattern}
+set.seed(678910)
+for(i in 1:40){
+  # flip a coin
+  coinFlip <- rbinom(1,size=1,prob=0.5)
+  # if coin is heads add a common pattern to that row
+  if(coinFlip){
+    dataMatrix[i,] <- dataMatrix[i,] + rep(c(0,3),each=5)
+  }
+}
+```
+
+
+---
+
+## E se nós adicionarmos um padrão? - os dados
+
+```{r dependson ="onePattern",fig.height=5,fig.width=4}
+par(mar=rep(0.2,4))
+image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
+```
+
+
+---
+
+## What if we add a pattern? - Os dados agrupados
+
+```{r dependson ="onePattern",fig.height=6,fig.width=6}
+par(mar=rep(0.2,4))
+heatmap(dataMatrix)
+```
+
+
+
+---
+
+## Padrões em linhas e colunas
+
+
+
+```{r oChunk, dependson ="onePattern",fig.height=4,fig.width=12}
+hh <- hclust(dist(dataMatrix)); dataMatrixOrdered <- dataMatrix[hh$order,]
+par(mfrow=c(1,3))
+image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
+plot(rowMeans(dataMatrixOrdered),40:1,,xlab="Row Mean",ylab="Row",pch=19)
+plot(colMeans(dataMatrixOrdered),xlab="Column",ylab="Column Mean",pch=19)
+```
+
+---
+## Problemas relacionados
+
+Você tem variáveis multivariáveis $X_1,\ldots, X_n$ so $X_1 = (X_ {11}, \ldots,X_{1m})$
+
+* Encontrar um novo conjunto de variáveis multivariadas que não estão correlacionadas e explicar a maior variação possível.
+* Se você colocar todas as variáveis em uma matriz, encontre a melhor matriz criada com menos variáveis (classificação inferior) que explica os dados originais.
+
+
+O primeiro objetivo é <font color = "# 330066"> estatística </ font> e o segundo objetivo é <font color = "# 993300"> compressão de dados </ font>.
+
+---
+
+## Soluções relacionadas - PCA / SVD
+
+__SVD__
+
+Se $X$ é uma matriz com cada variável em uma coluna e cada observação em uma linha, em seguida, o SVD é uma "decomposição da matriz"
+
+$$X = UDV^T$$
+
+where the columns of $U$ are orthogonal (left singular vectors), the columns of $V$ are orthogonal (right singular vectors) and $D$ is a diagonal matrix (singular values). 
+
+__PCA__
+
+The principal components are equal to the right singular values if you first scale (subtract the mean, divide by the standard deviation) the variables.
+
+---
+
+## Components of the SVD - $u$ and $v$
+
+```{r dependson ="oChunk",fig.height=4,fig.width=12}
+svd1 <- svd(scale(dataMatrixOrdered))
+par(mfrow=c(1,3))
+image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
+plot(svd1$u[,1],40:1,,xlab="Row",ylab="First left singular vector",pch=19)
+plot(svd1$v[,1],xlab="Column",ylab="First right singular vector",pch=19)
+```
+
+
+---
+
+## Componentes da SVD - Variância explicada
+
+```{r dependson ="oChunk",fig.height=5,fig.width=10}
+par(mfrow=c(1,2))
+plot(svd1$d,xlab="Column",ylab="Singular value",pch=19)
+plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Prop. of variance explained",pch=19)
+```
+
+
+---
+
+## Relação com os componentes principais
+
+```{r dependson ="oChunk",fig.height=5,fig.width=5}
+svd1 <- svd(scale(dataMatrixOrdered))
+pca1 <- prcomp(dataMatrixOrdered,scale=TRUE)
+plot(pca1$rotation[,1],svd1$v[,1],pch=19,xlab="Principal Component 1",ylab="Right Singular Vector 1")
+abline(c(0,1))
+```
+
+---
+
+
+```{r dependson ="oChunk",fig.height=4,fig.width=12,tidy=FALSE}
+constantMatrix <- dataMatrixOrdered*0
+for(i in 1:dim(dataMatrixOrdered)[1]){constantMatrix[i,] <- rep(c(0,1),each=5)}
+svd1 <- svd(constantMatrix)
+par(mfrow=c(1,3))
+image(t(constantMatrix)[,nrow(constantMatrix):1])
+plot(svd1$d,xlab="Column",ylab="Singular value",pch=19)
+plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Prop. of variance explained",pch=19)
+```
+
+
+---
+
+## E se acrescentarmos um segundo padrão?
+
+```{r twoPattern, dependson ="randomData",fig.height=4,fig.width=3}
+set.seed(678910)
+for(i in 1:40){
+  # flip a coin
+  coinFlip1 <- rbinom(1,size=1,prob=0.5)
+  coinFlip2 <- rbinom(1,size=1,prob=0.5)
+  # if coin is heads add a common pattern to that row
+  if(coinFlip1){
+    dataMatrix[i,] <- dataMatrix[i,] + rep(c(0,5),each=5)
+  }
+  if(coinFlip2){
+    dataMatrix[i,] <- dataMatrix[i,] + rep(c(0,5),5)
+  }
+}
+hh <- hclust(dist(dataMatrix)); dataMatrixOrdered <- dataMatrix[hh$order,]
+```
+
+---
+
+## Decomposição do valor singular - padrões verdadeiros
+
+```{r  dependson ="twoPattern",fig.height=4.5,fig.width=12}
+svd2 <- svd(scale(dataMatrixOrdered))
+par(mfrow=c(1,3))
+image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
+plot(rep(c(0,1),each=5),pch=19,xlab="Column",ylab="Pattern 1")
+plot(rep(c(0,1),5),pch=19,xlab="Column",ylab="Pattern 2")
+```
+
+---
+
+##  $v$ e padrões de variação em linhas
+
+```{r  dependson ="twoPattern",fig.height=4.5,fig.width=12}
+svd2 <- svd(scale(dataMatrixOrdered))
+par(mfrow=c(1,3))
+image(t(dataMatrixOrdered)[,nrow(dataMatrixOrdered):1])
+plot(svd2$v[,1],pch=19,xlab="Column",ylab="First right singular vector")
+plot(svd2$v[,2],pch=19,xlab="Column",ylab="Second right singular vector")
+```
+
+
+---
+
+##  $d$ e variação explicada
+
+```{r dependson ="twoPattern",fig.height=4,fig.width=8}
+svd1 <- svd(scale(dataMatrixOrdered))
+par(mfrow=c(1,2))
+plot(svd1$d,xlab="Column",ylab="Singular value",pch=19)
+plot(svd1$d^2/sum(svd1$d^2),xlab="Column",ylab="Percent of variance explained",pch=19)
+```
+
+---
+
+## Missing values
+
+```{r,dependson="twoPattern",error=TRUE}
+dataMatrix2 <- dataMatrixOrdered
+## Inserir aleatoriamente alguns dados em falta
+dataMatrix2[sample(1:100,size=40,replace=FALSE)] <- NA
+svd1 <- svd(scale(dataMatrix2))  ## Não funciona!
+```
+
+
+---
+
+## Exemplo de rosto
+
+
+```{r loadFaceData ,fig.height=6,fig.width=6}
+load("data/face.rda")
+image(t(faceData)[,nrow(faceData):1])
+```
+
+
+---
+
+## Exemplo de face - variação explicada
+
+```{r,dependson="loadFaceData",fig.height=5,fig.width=6}
+svd1 <- svd(scale(faceData))
+plot(svd1$d^2/sum(svd1$d^2),pch=19,xlab="Singular vector",ylab="Variance explained")
+```
+
+---
+
+## Exemplo de rosto - criar aproximações
+
+```{r approximations,dependson="loadFaceData",fig.height=4,fig.width=4}
+
+svd1 <- svd(scale(faceData))
+## Note that %*% is matrix multiplication
+
+# Here svd1$d[1] is a constant
+approx1 <- svd1$u[,1] %*% t(svd1$v[,1]) * svd1$d[1]
+
+# In these examples we need to make the diagonal matrix out of d
+approx5 <- svd1$u[,1:5] %*% diag(svd1$d[1:5])%*% t(svd1$v[,1:5]) 
+approx10 <- svd1$u[,1:10] %*% diag(svd1$d[1:10])%*% t(svd1$v[,1:10]) 
+```
+
+---
+
+## Exemplo de rosto - criar aproximações - Plot
+
+```{r dependson="approximations",fig.height=4,fig.width=14}
+par(mfrow=c(1,4))
+image(t(approx1)[,nrow(approx1):1], main = "(a)")
+image(t(approx5)[,nrow(approx5):1], main = "(b)")
+image(t(approx10)[,nrow(approx10):1], main = "(c)")
+image(t(faceData)[,nrow(faceData):1], main = "(d)")  ## Original data
+```
+
+
+
+
+
+
+
+
+

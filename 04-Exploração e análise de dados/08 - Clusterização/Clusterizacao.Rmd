@@ -1,0 +1,165 @@
+---
+title: "Análise Exploratória"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Clusterização
+job: The Scientist
+---
+
+## Carregando os dados
+
+```{r loaddata,tidy=TRUE}
+load("data/samsungData.rda")
+names(samsungData)[1:12]
+table(samsungData$activity)
+```
+
+---
+
+## Traçando a aceleração média para o primeiro assunto
+
+```{r processData,fig.height=4,fig.width=8,tidy=TRUE}
+par(mfrow=c(1, 2), mar = c(5, 4, 1, 1))
+samsungData <- transform(samsungData, activity = factor(activity))
+sub1 <- subset(samsungData, subject == 1)
+plot(sub1[, 1], col = sub1$activity, ylab = names(sub1)[1])
+plot(sub1[, 2], col = sub1$activity, ylab = names(sub1)[2])
+legend("bottomright",legend=unique(sub1$activity),col=unique(sub1$activity), pch = 1)
+```
+
+---
+
+## Clustering baseado apenas na aceleração média
+
+<!-- ## source("http://dl.dropbox.com/u/7710864/courseraPublic/myplclust.R")  -->
+
+
+```{r dependson="processData",fig.height=5,fig.width=8}
+source("myplclust.R")
+distanceMatrix <- dist(sub1[,1:3])
+hclustering <- hclust(distanceMatrix)
+myplclust(hclustering, lab.col = unclass(sub1$activity))
+```
+
+
+---
+
+## Traçando a aceleração máxima para o primeiro assunto
+
+```{r ,dependson="processData",fig.height=5,fig.width=10}
+par(mfrow=c(1,2))
+plot(sub1[,10],pch=19,col=sub1$activity,ylab=names(sub1)[10])
+plot(sub1[,11],pch=19,col = sub1$activity,ylab=names(sub1)[11])
+```
+
+---
+
+## Clustering baseado na aceleração máxima
+
+```{r dependson="processData",fig.height=5,fig.width=10}
+source("myplclust.R")
+distanceMatrix <- dist(sub1[,10:12])
+hclustering <- hclust(distanceMatrix)
+myplclust(hclustering,lab.col=unclass(sub1$activity))
+```
+
+
+
+---
+
+## Decomposição de Valor Singular
+
+```{r svdChunk,dependson="processData",fig.height=5,fig.width=10,cache=TRUE,tidy=TRUE}
+svd1 = svd(scale(sub1[,-c(562,563)]))
+par(mfrow=c(1,2))
+plot(svd1$u[,1],col=sub1$activity,pch=19)
+plot(svd1$u[,2],col=sub1$activity,pch=19)
+```
+
+---
+
+## Encontrar o contribuidor máximo
+
+```{r dependson="svdChunk",fig.height=5,fig.width=6,cache=TRUE,tidy=TRUE}
+plot(svd1$v[,2],pch=19)
+```
+
+
+---
+
+##  Novo cluster com contribuidor máximo
+
+```{r dependson="svdChunk",fig.height=5,fig.width=8,cache=TRUE,tidy=TRUE}
+maxContrib <- which.max(svd1$v[,2])
+distanceMatrix <- dist(sub1[, c(10:12,maxContrib)])
+hclustering <- hclust(distanceMatrix)
+myplclust(hclustering,lab.col=unclass(sub1$activity))                             
+```
+
+
+---
+
+
+```{r dependson="svdChunk",fig.height=4.5,fig.width=4.5,cache=TRUE}
+names(samsungData)[maxContrib]                          
+```
+
+---
+
+##  K-means clustering (nstart=1, first try)
+
+```{r kmeans1,dependson="processData",fig.height=4,fig.width=4}
+kClust <- kmeans(sub1[,-c(562,563)],centers=6)
+table(kClust$cluster,sub1$activity)
+```
+
+
+
+---
+
+##  K-means clustering (nstart=1, second try)
+
+```{r dependson="kmeans1",fig.height=4,fig.width=4,cache=TRUE,tidy=TRUE}
+kClust <- kmeans(sub1[,-c(562,563)],centers=6,nstart=1)
+table(kClust$cluster,sub1$activity)
+```
+
+
+---
+
+##  K-means clustering (nstart=100, first try)
+
+```{r dependson="kmeans1",fig.height=4,fig.width=4,cache=TRUE}
+kClust <- kmeans(sub1[,-c(562,563)],centers=6,nstart=100)
+table(kClust$cluster,sub1$activity)
+```
+
+
+
+---
+
+##  K-means clustering (nstart=100, second try)
+
+```{r kmeans100,dependson="kmeans1",fig.height=4,fig.width=4,cache=TRUE,tidy=TRUE}
+kClust <- kmeans(sub1[,-c(562,563)],centers=6,nstart=100)
+table(kClust$cluster,sub1$activity)
+```
+
+---
+
+##  Cluster 1 Variable Centers (Laying)
+
+```{r dependson="kmeans100",fig.height=4,fig.width=8,cache=FALSE,tidy=TRUE}
+plot(kClust$center[1,1:10],pch=19,ylab="Cluster Center",xlab="")
+```
+
+
+---
+
+##  Cluster 2 Variable Centers (Walking)
+
+```{r dependson="kmeans100",fig.height=4,fig.width=8,cache=FALSE}
+plot(kClust$center[4,1:10],pch=19,ylab="Cluster Center",xlab="")
+```
+
+

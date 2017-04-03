@@ -1,0 +1,93 @@
+---
+title: "Análise Exploratória"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Análise com Gráficos
+job: The Scientist
+---
+
+
+## O Sistema de Plotagem Base
+
+* Modelo "paleta do artista"
+* Comece com tela em branco e construa a partir daí
+* Comece com função de plotagem (ou similar)
+
+* Use funções de anotação para adicionar / modificar (`text`,` lines`, `points`, `Axis`)
+
+---
+
+## O Sistema de Plotagem Base
+
+* Conveniente, espelhos como pensamos em parcelas de construção e análise de dados
+
+* Não é possível voltar uma vez que o enredo tenha começado (ou seja, para ajustar as margens); necessidad Planejar com antecedência
+
+* Difícil de "traduzir" para os outros uma vez que um novo lote foi criado (Sem "linguagem" gráfica)
+
+* Plot é apenas uma série de comandos R
+
+---
+
+## Base Plot
+
+```{r,fig.height=5,fig.width=5}
+library(datasets)
+data(cars)
+with(cars, plot(speed, dist))
+```
+
+---
+## O Sistema de Lattice
+
+* As parcelas são criadas com uma única chamada de função (`xyplot`,` bwplot`,
+Etc)
+
+* Mais útil para condicionar tipos de parcelas: Olhando como y muda com x através de níveis de z
+
+* As coisas como margens / espaçamento definido automaticamente porque todo o enredo é especificado de uma só vez
+
+* Bom para puttng muitas muitas parcelas em uma tela
+
+---
+
+## O Sistema de Lattice
+
+* Às vezes difícil de especificar um gráfico inteiro em uma única chamada de função
+
+* A anotação no gráfico não é especialmente intuitiva
+
+* Uso de funções de painel e subscritos difíceis de manejar e requer preparação intensa
+
+* Não é possível "adicionar" ao gráfico uma vez que é criado
+---
+
+## Lattice Plot
+
+```{r,fig.height=4,fig.width=12}
+library(lattice)
+state <- data.frame(state.x77, region = state.region)
+xyplot(Life.Exp ~ Income | region, data = state, layout = c(4, 1))
+```
+
+---
+## O sistema ggplot2
+
+* Divide a diferença entre a base e a rede de várias maneiras
+
+* Automaticamente lida com espaçamentos, texto, títulos, mas também permite que você para anotar "adicionando" a uma plotagem
+
+* Semelhança superficial à rede mas geralmente mais fácil / mais intuitivo de usar
+
+* O modo padrão faz muitas escolhas para você (mas você ainda pode personalizar para o desejo do seu coração)
+
+---
+
+## ggplot2 Plot
+
+```{r, message=FALSE,fig.height=5,fig.width=6}
+library(ggplot2)
+data(mpg)
+qplot(displ, hwy, data = mpg)
+```
+

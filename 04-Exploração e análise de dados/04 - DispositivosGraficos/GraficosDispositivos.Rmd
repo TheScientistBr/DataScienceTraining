@@ -1,0 +1,165 @@
+---
+title: "Análise Exploratória"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle:ggplot #1
+job: The Scientist
+---
+## O que é um Dispositivo Gráfico?
+
+* Um dispositivo gráfico é algo onde você pode fazer um enredo aparecer
+
+* Uma janela no seu computador (dispositivo de tela)
+
+* Um arquivo PDF (dispositivo de arquivo)
+
+* Um arquivo PNG ou JPEG (dispositivo de arquivo)
+
+* Um arquivo de gráficos vetoriais (SVG) escalável (dispositivo de arquivo)
+
+* Quando você faz um enredo em R, ele tem que ser "enviado" para um determinado dispositivo gráfico
+
+* O lugar mais comum para um enredo a ser "enviado" é o * dispositivo de tela *
+
+* Em um Mac o dispositivo de tela é iniciado com o `quartz ()`
+
+* No Windows o dispositivo de tela é iniciado com `windows ()`
+
+* No Unix / Linux o dispositivo de tela é iniciado com `x11 ()`
+
+---
+
+## O que é um dispositivo gráfico?
+
+* Ao fazer um enredo, você precisa considerar como o enredo será usado para determinar em qual dispositivo a parcela deve ser enviada.
+
+- A lista de dispositivos é encontrada em `? Devices`; Existem também dispositivoa criados por usuários em CRAN
+
+
+* Para visualizações rápidas e análise exploratória, geralmente você quer para usar o dispositivo de tela
+
+- Funções como `plot` na base,` xyplot` em treliça ou `qplot` em ggplot2 será o padrão para enviar um gráfico para o dispositivo de tela
+
+- Em uma determinada plataforma (Mac, Windows, Unix / Linux) há apenas um dispositivo de tela
+
+* Para parcelas que podem ser impressas ou incorporadas em um documento
+(Por exemplo, documentos / relatórios, apresentações de slides), geralmente um * dispositivo de arquivo * é mais apropriado
+
+- Há muitos dispositivos de arquivo diferentes para escolher
+
+* NOTA: Nem todos os dispositivos gráficos estão disponíveis em todas as plataformas (Ou seja, você não pode iniciar o `windows ()` em um Mac)
+
+
+---
+
+## Como um gráfico é criado?
+
+Existem duas abordagens básicas para traçar. A primeira é mais comum:
+
+1. Chame uma função de plotagem como `plot`,` xyplot` ou `qplot`
+
+2. O gráfico aparece no dispositivo de tela
+
+3. Anotar o gráfico, se necessário
+
+4. Desfrute
+
+```{r,eval=FALSE}
+library(datasets)
+with(faithful, plot(eruptions, waiting))  ## Make plot appear on screen device
+title(main = "Old Faithful Geyser data")  ## Annotate with a title
+```
+
+---
+## Como um gráfico é criado?
+
+A segunda abordagem para traçar é mais comumente usada para dispositivos de arquivo:
+
+1. Lançamento explícito de um dispositivo gráfico
+
+2. Chame uma função de plotagem para fazer um gráfico (Nota: se você estiver usando um arquivo
+Dispositivo, nenhum gráfico aparecerá na tela)
+
+3. Anotar o gráfico, se necessário
+
+3. Fechamento explícito do dispositivo gráfico com `dev.off ()` (isso é muito importante!)
+
+```{r,eval=FALSE}
+pdf(file = "myplot.pdf")  ## Abrir dispositivo PDF; Criar 'myplot.pdf' no meu diretório de trabalho
+## Criar trama e enviar para um arquivo (nenhuma plotagem aparece na tela)
+with(faithful, plot(eruptions, waiting))  
+title(main = "Old Faithful Geyser data")  ## Annotate plot; Ainda nada na tela
+dev.off()  ## Feche o dispositivo de arquivo PDF
+## Agora você pode ver o arquivo 'myplot.pdf' no seu computador
+```
+
+
+---
+## Graphics File Devices
+
+Existem dois tipos básicos de dispositivos de arquivo: * vector * e * bitmap *
+Dispositivos
+
+Formatos vetoriais:
+
+- `pdf`: útil para gráficos de tipo de linha, redimensionar bem, não é portátil, não é eficiente se uma parcela tem muitos objetos / pontos
+
+- 'svg`: gráficos vetoriais escaláveis baseados em XML; Suporta animação interativa, potencialmente útil para parcelas baseadas na web
+
+- 'win.metafile`: Formato de metarquivo do Windows (apenas sem Windows)
+
+- `postscript`: formato mais antigo, também redimensionar bem, normalmente portátil, pode ser usado para criar arquivos de postscript encapsulados; Sistemas Windows muitas vezes não tem um visualizador postscript
+
+
+---
+
+## Graphics File Devices
+
+Formatos de bitmap
+
+- `png`: formato de mapa de bits, bom para desenhos de linha ou imagens com sólidos cores, usa compressão sem perdas (como o antigo formato GIF), navegadores podem ler este formato nativamente, bom para traçar muitos muitos pontos, não redimensiona bem
+
+- `jpeg`: bom para fotografias ou cenas naturais, usa lossy compressão, boa para traçar muitos muitos muitos pontos, não redimensionar bem, pode ser lido por quase qualquer computador e qualquer navegador web, não ótimo para desenhos de linha
+
+- `tiff`: Cria arquivos bitmap no formato TIFF; Suporta sem perdas compressão
+
+- `bmp`: um formato bitmap nativo do Windows
+
+---
+
+## Múltiplos dispositivos gráficos abertos
+
+* É possível abrir vários dispositivos gráficos (tela, arquivo ou ambos), por exemplo, ao visualizar vários gráficos de uma só vez
+
+* Plotting só pode ocorrer em um dispositivo gráfico em um tempo
+
+* O dispositivo gráfico ** atualmente ativo ** pode ser encontrado chamando `Dev.cur ()`
+
+* Cada dispositivo gráfico aberto é atribuído um inteiro $ \ geq 2 $.
+
+* Você pode alterar o dispositivo gráfico ativo com `dev.set (<integer>)` onde `<integer>` é o número associado ao dispositivo gráfico você deseja alternar para
+
+---
+
+## Copiando gráficos
+
+Copiar um gráfico para outro dispositivo pode ser útil porque algumas parcelas
+Exigem um monte de código e pode ser uma dor para digitar todos os que em novamente
+Para um dispositivo diferente.
+
+- `dev.copy`: copia um gráfico de um dispositivo para outro
+
+- `dev.copy2pdf`: copie especificamente um gráfico para um arquivo PDF
+
+NOTA: Copiar um gráfico não é uma operação exata, portanto o resultado
+Ser idêntico ao original.
+
+```{r,eval=FALSE}
+library(datasets)
+with(faithful, plot(eruptions, waiting))  ## Create plot on screen device
+title(main = "Old Faithful Geyser data")  ## Add a main title
+dev.copy(png, file = "geyserplot.png")  ## Copy my plot to a PNG file
+dev.off()  ## Don't forget to close the PNG device!
+```
+
+---
