@@ -55,8 +55,8 @@ Poucos pontos
 
 ## O processo de fazer uma plotagem
 
-- Que sistema gráfico você vai usar: base, treliça ou ggplot2? Estes
-Geralmente não pode ser misturado.
+- Que sistema gráfico você vai usar: base, lattice ou ggplot2? Estes
+Geralmente não podem ser misturado.
 
 - Os gráficos de base são geralmente construídos de forma fragmentada, com cada
 O enredo tratado separadamente através de uma série de chamadas de função; esta

@@ -32,7 +32,7 @@ job: The Scientist
 * Um grande número é feito
 * O objetivo é a compreensão pessoal
 * Eixos / lendas são geralmente limpos (mais tarde)
-* Cor / tamanho são usados principalmente para informações
+* Cor / tamanho são usados principalmente para informações
 
 ---
 
