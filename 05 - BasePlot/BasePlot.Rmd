@@ -1,0 +1,264 @@
+---
+title: "Análise Exploratória"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: Base Plot
+job: The Scientist
+---
+
+## Plotting System
+
+O núcleo plotting e motor gráfico em R é encapsulado no
+Seguintes pacotes:
+
+- * gráficos *: contém funções de traçado para a representação gráfica "base"
+Sistemas, incluindo 'parcela', `hist`,` boxplot` e muitos outros.
+
+- * grDevices *: contém todo o código que implementa os vários gráficos
+Dispositivos, incluindo X11, PDF, PostScript, PNG, etc.
+
+O sistema de trama de rede é implementado usando as seguintes embalagens:
+
+- * lattice *: contém código para produzir gráficos Trellis, que são
+Independente do sistema gráfico "base"; Inclui funções como
+`Xyplot`,` bwplot`, `levelplot`
+
+- * grid *: implementa um sistema gráfico diferente, independente do
+Sistema "base"; O pacote * lattice * é construído em cima de * grid *; nós
+Raramente chamar funções do pacote * grid * diretamente
+
+---
+
+## O processo de fazer uma plotagem
+
+Ao fazer uma trama, deve-se primeiro fazer algumas considerações (não
+Necessariamente nesta ordem):
+
+- Onde o plano será feito? Na tela? Em um arquivo?
+
+<! -
+- O padrão no Unix é `x11`; No Windows é `windows`; No Mac OS X é "quartzo"
+->
+
+- Como será usada a trama?
+- É a trama para visualização temporária na tela?
+- Será apresentado em um navegador web?
+- Será que eventualmente acabar em um papel que pode ser impresso?
+- Você está usando isso em uma apresentação?
+
+- Há uma grande quantidade de dados entrando na trama? Ou é apenas um
+Poucos pontos
+
+- Você precisa ser capaz de redimensionar dinamicamente o gráfico?
+
+---
+
+## O processo de fazer uma plotagem
+
+- Que sistema gráfico você vai usar: base, lattice ou ggplot2? Estes
+Geralmente não podem ser misturado.
+
+- Os gráficos de base são geralmente construídos de forma fragmentada, com cada
+O enredo tratado separadamente através de uma série de chamadas de função; esta
+É muitas vezes conceitualmente mais simples e permite traçar um espelho
+processo de pensamento
+
+- Gráficos Lattice são normalmente criados em uma única chamada de função, por isso
+Todos os parâmetros gráficos devem ser especificados de uma vez; Especificando
+Tudo ao mesmo tempo permite R calcular automaticamente o necessário
+Espaçamentos e tamanhos de fonte.
+
+- ggplot2 combina conceitos de gráficos de base e de retículo, mas
+Utiliza uma implementação independente
+
+Nós nos concentramos em usar o ** sistema de plotagem base ** para criar gráficos em
+O ** dispositivo de tela **.
+
+---
+
+## Base Gráficos
+
+Gráficos de base são usados mais comumente e são um sistema muito poderoso para criar gráficos em 2-D.
+
+- Existem duas * fases * para a criação de um plano de base
+- Inicializando uma nova trama
+- Anotar (adicionar) uma parcela existente
+
+- Chamando `parcela (x, y)` ou `hist (x)` irá lançar um dispositivo gráfico (se
+Um já não está aberto) e desenhar um novo enredo no dispositivo
+
+- Se os argumentos para `plot` não forem de alguma classe especial,
+_default_ método para `plot` é chamado; Esta função tem _many_
+Argumentos, permitindo definir o título, rótulo do eixo x, rótulo do eixo y,
+Etc
+
+- O sistema gráfico base tem _muitos parâmetros que podem definir e
+Tweaked; Esses parâmetros estão documentados em `? Par`; Não faria mal
+Para tentar memorizar esta página de ajuda!
+
+## Simple Base Graphics: Histogram
+
+```{r,fig.height=5}
+library(datasets)
+hist(airquality$Ozone)  ## Draw a new plot
+```
+
+---
+
+## Simple Base Graphics: Scatterplot
+
+```{r,fig.height=5}
+library(datasets)
+with(airquality, plot(Wind, Ozone))
+```
+
+---
+
+## Simple Base Graphics: Boxplot
+
+```{r,fig.height=5}
+library(datasets)
+airquality <- transform(airquality, Month = factor(Month))
+boxplot(Ozone ~ Month, airquality, xlab = "Month", ylab = "Ozone (ppb)")
+```
+---
+
+
+## Alguns Parâmetros Gráficos de Base Importantes
+
+Muitas funções básicas de plotagem compartilham um conjunto de parâmetros. Aqui estão alguns
+Chave:
+
+- `pch`: o símbolo de plotagem (o padrão é círculo aberto)
+
+- `lty`: o tipo de linha (padrão é a linha contínua), pode ser tracejado, pontilhado, etc.
+
+- `lwd`: a largura da linha, especificada como um múltiplo inteiro
+
+- `col`: a cor de plotagem, especificada como um número, string ou código hex; 
+
+- A função `colors ()` dá-lhe um vector de cores por nome
+
+- `xlab`: cadeia de caracteres para a etiqueta do eixo x
+
+- `ylab`: cadeia de caracteres para o rótulo do eixo y
+
+
+---
+
+## Alguns Parâmetros Gráficos de Base Importantes
+
+A função `par ()` é usada para especificar * global * graphics parameters
+Que afetam todas as parcelas em uma sessão R. Esses parâmetros podem ser
+Substituídos quando especificados como argumentos para funções de traçado específicas.
+
+- `las`: a orientação dos rótulos do eixo na trama
+- `bg`: a cor de fundo
+- «mar»: o tamanho da margem
+- `oma`: o tamanho da margem externa (o padrão é 0 para todos os lados)
+- `mfrow`: número de parcelas por linha, coluna (as parcelas são preenchidas em linha)
+- `mfcol`: número de parcelas por linha, coluna (as parcelas são preenchidas por coluna)
+---
+
+## Some Important Base Graphics Parameters
+
+Default values for global graphics parameters
+
+```{r}
+par("lty")
+par("col")
+par("pch")
+```
+
+---
+
+## Alguns Parâmetros Gráficos de Base Importantes
+
+Valores padrão para parâmetros gráficos globais
+
+```{r}
+par("bg")
+par("mar")
+par("mfrow")
+```
+
+---
+## Base Plotting Funções
+
+- `plot`: faça um diagrama de dispersão, ou outro tipo de trama dependendo do vlasse do objeto que está sendo plotado
+
+- `lines`: adicione linhas a um gráfico, dado um vetor x valores e um Vetor correspondente de valores de y (ou uma matriz de 2 colunas); esta Função apenas conecta os pontos
+
+- `points`: adicionar pontos a uma parcela
+- `text`: adicione etiquetas de texto a um gráfico usando coordenadas x, y especificadas
+- `title`: adiciona anotações aos rótulos do eixo x, y, título, subtítulo, margem externa
+- `mtext`: adicione texto arbitrário às margens (interna ou externa) da trama
+- `axis`: adicionando carraças / rótulos do eixo
+
+---
+
+## Base Plot com anotação
+
+```{r,fig.height=5}
+library(datasets)
+with(airquality, plot(Wind, Ozone))
+title(main = "Ozone and Wind in New York City")  ## Add a title
+```
+
+---
+
+## Base Plot com anotação
+
+```{r,fig.height=5}
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City"))
+with(subset(airquality, Month == 5), points(Wind, Ozone, col = "blue"))
+```
+
+---
+
+## Base Plot com anotação
+
+```{r,fig.height=5}
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", type = "n"))
+with(subset(airquality, Month == 5), points(Wind, Ozone, col = "blue"))
+with(subset(airquality, Month != 5), points(Wind, Ozone, col = "red"))
+legend("topright", pch = 1, col = c("blue", "red"), legend = c("May", "Other Months"))
+```
+
+---
+
+## Base Plot com linha de Regressão
+
+```{r,fig.height=5}
+with(airquality, plot(Wind, Ozone, main = "Ozone and Wind in New York City", pch = 20))
+model <- lm(Ozone ~ Wind, airquality)
+abline(model, lwd = 2)
+```
+
+---
+
+## Multiple Base Plots
+
+```{r,fig.height=5,fig.width=14}
+par(mfrow = c(1, 2))
+with(airquality, {
+	plot(Wind, Ozone, main = "Ozone and Wind")
+	plot(Solar.R, Ozone, main = "Ozone and Solar Radiation")
+})
+```
+
+---
+
+## Multiple Base Plots
+
+```{r,fig.height=4,fig.width=12}
+par(mfrow = c(1, 3), mar = c(4, 4, 2, 1), oma = c(0, 0, 2, 0))
+with(airquality, {
+	plot(Wind, Ozone, main = "Ozone and Wind")
+	plot(Solar.R, Ozone, main = "Ozone and Solar Radiation")
+	plot(Temp, Ozone, main = "Ozone and Temperature")
+	mtext("Ozone and Weather in New York City", outer = TRUE)
+})
+```
+
+-
