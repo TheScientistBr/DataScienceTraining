@@ -31,14 +31,12 @@ legend("bottomright",legend=unique(sub1$activity),col=unique(sub1$activity), pch
 
 ## Clustering baseado apenas na aceleração média
 
-<!-- ## source("http://dl.dropbox.com/u/7710864/courseraPublic/myplclust.R")  -->
-
 
 ```{r dependson="processData",fig.height=5,fig.width=8}
 source("myplclust.R")
 distanceMatrix <- dist(sub1[,1:3])
 hclustering <- hclust(distanceMatrix)
-myplclust(hclustering, lab.col = unclass(sub1$activity))
+plot(hclustering)
 ```
 
 
@@ -60,7 +58,7 @@ plot(sub1[,11],pch=19,col = sub1$activity,ylab=names(sub1)[11])
 source("myplclust.R")
 distanceMatrix <- dist(sub1[,10:12])
 hclustering <- hclust(distanceMatrix)
-myplclust(hclustering,lab.col=unclass(sub1$activity))
+plot(hclustering)
 ```
 
 
@@ -93,7 +91,7 @@ plot(svd1$v[,2],pch=19)
 maxContrib <- which.max(svd1$v[,2])
 distanceMatrix <- dist(sub1[, c(10:12,maxContrib)])
 hclustering <- hclust(distanceMatrix)
-myplclust(hclustering,lab.col=unclass(sub1$activity))                             
+plot(hclustering)                            
 ```
 
 
@@ -104,14 +102,6 @@ myplclust(hclustering,lab.col=unclass(sub1$activity))
 names(samsungData)[maxContrib]                          
 ```
 
----
-
-##  K-means clustering (nstart=1, first try)
-
-```{r kmeans1,dependson="processData",fig.height=4,fig.width=4}
-kClust <- kmeans(sub1[,-c(562,563)],centers=6)
-table(kClust$cluster,sub1$activity)
-```
 
 
 
@@ -159,7 +149,7 @@ plot(kClust$center[1,1:10],pch=19,ylab="Cluster Center",xlab="")
 ##  Cluster 2 Variable Centers (Walking)
 
 ```{r dependson="kmeans100",fig.height=4,fig.width=8,cache=FALSE}
-plot(kClust$center[4,1:10],pch=19,ylab="Cluster Center",xlab="")
+plot(kClust$cluster,pch=19,ylab="Cluster Center",xlab="", col = sub1$activity)
 ```
 
 
