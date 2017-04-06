@@ -8,7 +8,7 @@ job: The Scientist
 
 ## Podemos encontrar coisas que estão próximas?
 
-Clustering organiza coisas que são __close__ em grupos
+Clustering organiza coisas que são __perto__ em grupos
 
 
 * Como podemos definir próximo?
@@ -32,7 +32,7 @@ Clustering organiza coisas que são __close__ em grupos
 ---
 
 
-## Como definimos close?
+## Como definimos perto?
 
 * Etapa mais importante
 * Lixo em -> lixo para fora
