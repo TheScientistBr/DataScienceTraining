@@ -140,7 +140,7 @@ table(kClust$cluster,sub1$activity)
 ##  Cluster 1 Variable Centers (Laying)
 
 ```{r dependson="kmeans100",fig.height=4,fig.width=8,cache=FALSE,tidy=TRUE}
-plot(kClust$center[1,1:10],pch=19,ylab="Cluster Center",xlab="")
+plot(kClust$center[1,1:10],pch=19,ylab="Cluster Center",xlab="", col = sub1$activity)
 ```
 
 
@@ -150,6 +150,9 @@ plot(kClust$center[1,1:10],pch=19,ylab="Cluster Center",xlab="")
 
 ```{r dependson="kmeans100",fig.height=4,fig.width=8,cache=FALSE}
 plot(kClust$cluster,pch=19,ylab="Cluster Center",xlab="", col = sub1$activity)
+par(new=TRUE)
+plot(kClust$center[1,1:10],pch=19,ylab="Cluster Center",xlab="", col = sub1$activity)
+
 ```
 
 
