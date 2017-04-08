@@ -102,7 +102,6 @@ sv1 <- svd(e)
 plot(sv1$v[, 1], sv1$v[, 2], col = group, main = "genes vs samples (SVA)", xlab = "V1", 
      ylab = "V2")
 
-
 'A questão de qual direção ao centro depende de qual o 
 foco da análise é. Para comparar as distâncias da amostra, 
 como no gráfico típico de PCA, as linhas são amostras e os 

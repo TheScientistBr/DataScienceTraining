@@ -12,6 +12,7 @@ job: The Scientist
 ```{r randomData,fig.height=4,fig.width=3}
 set.seed(12345); par(mar=rep(0.2,4))
 dataMatrix <- matrix(rnorm(400),nrow=40)
+dim(dataMatrix)
 image(1:10,1:40,t(dataMatrix)[,nrow(dataMatrix):1])
 ```
 
@@ -80,7 +81,13 @@ plot(colMeans(dataMatrixOrdered),xlab="Column",ylab="Column Mean",pch=19)
 ---
 ## Problemas relacionados
 
-Você tem variáveis multivariáveis $X_1,\ldots, X_n$ so $X_1 = (X_ {11}, \ldots,X_{1m})$
+Você tem variáveis multivariáveis 
+
+$$X_1,\ldots, X_n$$
+
+em 
+
+$$X_1=(X_{11},\ldots,X_{1m})$$
 
 * Encontrar um novo conjunto de variáveis multivariadas que não estão correlacionadas e explicar a maior variação possível.
 * Se você colocar todas as variáveis em uma matriz, encontre a melhor matriz criada com menos variáveis (classificação inferior) que explica os dados originais.
