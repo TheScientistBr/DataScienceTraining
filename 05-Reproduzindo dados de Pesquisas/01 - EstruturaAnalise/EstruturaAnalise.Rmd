@@ -1,0 +1,255 @@
+---
+title       : Pesquisa Reprodutível
+subtitle    : Estruturea de uma Análise de Dados
+author      : Delermando Branquinho Filho
+output: pdf_document
+job: The Scientist
+---
+## Etapas em uma análise de dados
+
+* Definir a pergunta
+* Definir o conjunto de dados ideal
+* Determinar quais dados você pode acessar
+* Obter os dados
+* Limpe os dados
+* Análise exploratória de dados
+* Previsão / modelagem estatística
+* Interpretar os resultados
+* Resultados do desafio
+* Sintetizar / escrever resultados
+* Criar código reproduzível
+
+---
+
+## Etapas em uma análise de dados
+
+* Definir a pergunta
+* Definir o conjunto de dados ideal
+* Determinar quais dados você pode acessar
+* Obter os dados
+* Limpe os dados
+* <Redtext> Análise exploratória de dados </redtext>
+* <Redtext> Previsão estatística / modelagem </redtext>
+* <Redtext> Interpretar resultados </redtext>
+* <Redtext> Resultados do desafio </redtext>
+* <Redtext> Sintetizar / escrever resultados </redtext>
+* <Redtext> Criar código reprodutível </redtext>
+---
+
+## Um exemplo
+
+__Iniciar com uma pergunta geral__
+
+Posso detectar automaticamente os e-mails que são SPAM ou não?
+
+__Faz concreta__
+
+Posso usar características quantitativas dos e-mails para classificá-los como SPAM / HAM?
+--- 
+
+## Sub amostra de nosso conjunto de dados
+
+Precisamos gerar um conjunto de testes e treinamento (previsão)
+
+```{r,message=FALSE}
+# Se não estiver instalado, instale o pacote kernlab
+library(kernlab)
+data(spam)
+# Executrando o subsampling
+set.seed(3435)
+trainIndicator = rbinom(4601,size=1,prob=0.5)
+table(trainIndicator)
+trainSpam = spam[trainIndicator==1,]
+testSpam = spam[trainIndicator==0,]
+```
+
+---
+
+## Análise exploratória de dados
+
+* Veja resumos dos dados
+* Verificar dados em falta
+* Criar gráficos exploratórios
+* Executar análises exploratórias (por exemplo, clustering)
+
+---
+
+## Names
+```{r}
+names(trainSpam)
+```
+
+
+---
+
+## Head
+```{r}
+head(trainSpam)
+```
+
+---
+
+## Summaries
+```{r}
+table(trainSpam$type)
+```
+
+---
+
+## Plots
+```{r,fig.height=5,fig.width=5}
+plot(trainSpam$capitalAve ~ trainSpam$type)
+```
+
+---
+
+## Plots 
+```{r, fig.height=5,fig.width=5}
+plot(log10(trainSpam$capitalAve + 1) ~ trainSpam$type)
+```
+
+---
+
+## Relationships between predictors
+```{r, fig.height=5,fig.width=5}
+plot(log10(trainSpam[,1:4]+1))
+```
+
+---
+
+## Clustering
+```{r,echo=FALSE}
+par(mar=c(0,0,0,0))
+
+```
+
+```{r, fig.height=6,fig.width=7}
+hCluster = hclust(dist(t(trainSpam[,1:57])))
+plot(hCluster)
+```
+
+---
+## New clustering
+```{r, fig.height=6,fig.width=7}
+hClusterUpdated = hclust(dist(t(log10(trainSpam[,1:55]+1))))
+plot(hClusterUpdated)
+```
+
+---
+## Previsão / modelagem estatística
+
+* Deve ser informado pelos resultados de sua análise exploratória
+* Métodos exatos dependem da questão de interesse
+* As transformações / processamento devem ser contabilizadas quando necessário
+* Medidas de incerteza devem ser relatadas
+
+---
+
+```{r,warning=FALSE,cache=TRUE}
+trainSpam$numType = as.numeric(trainSpam$type)-1
+costFunction = function(x,y) sum(x!=(y > 0.5)) 
+cvError = rep(NA,55)
+library(boot)
+for(i in 1:55){
+  lmFormula = reformulate(names(trainSpam)[i], response = "numType")
+  glmFit = glm(lmFormula,family="binomial",data=trainSpam)
+  cvError[i] = cv.glm(trainSpam,glmFit,costFunction,2)$delta[2]
+}
+
+## Qual predictor tem erro de validação cruzada mínimo?
+names(trainSpam)[which.min(cvError)]
+```
+
+---
+
+## Obtenha uma medida de incerteza
+
+```{r,warning=FALSE}
+## Use the best model from the group
+predictionModel = glm(numType ~ charDollar,family="binomial",data=trainSpam)
+
+## Obter previsões no conjunto de teste
+predictionTest = predict(predictionModel,testSpam)
+predictedSpam = rep("nonspam",dim(testSpam)[1])
+
+## Classificar como "spam" para aqueles com prob > 0.5
+predictedSpam[predictionModel$fitted > 0.5] = "spam"
+```
+
+---
+
+## Get a measure of uncertainty
+
+```{r}
+## Classification table
+table(predictedSpam,testSpam$type)
+
+## Error rate
+(61+458)/(1346+458 + 61 + 449)
+```
+
+---
+## Interpretar os resultados
+
+* Use a linguagem apropriada
+* descreve
+* Correlaciona-se com / associado com
+* Leva a / causas
+Prediz
+* Dê uma explicação
+* Interpretar coeficientes
+* Interpretar medidas de incerteza
+
+---
+
+## Nosso exemplo
+
+* A fração de charcters que são sinais de dólar pode ser usado para prever se um e-mail é Spam
+* Qualquer coisa com mais de 6,6% de sinais de dólar é classificado como Spam
+* Mais sinais de dólar sempre significa mais Spam sob nossa previsão
+* Nossa taxa de erro de teste foi de 22,4%
+
+---
+
+## Resultados do desafio
+
+Desafie todas as etapas:
+* Pergunta
+* Fonte de dados
+* Em processamento
+* Análise
+* Conclusões
+* Desafio de medidas de incerteza
+* Desafie escolhas de termos a incluir nos modelos
+* Pense em análises alternativas em potencial
+
+---
+
+## Sintetizar / escrever resultados
+
+* Conduzir com a pergunta
+* Resumir as análises na história
+* Não incluir todas as análises, incluí-lo
+* Se for necessário para a história
+* Se for necessário para enfrentar um desafio
+* Ordem de análise de acordo com a história, em vez de cronologicamente
+* Incluir figuras "bonitas" que contribuam para a história
+
+---
+
+## No nosso exemplo
+
+* Conduzir com a pergunta
+* Posso usar características quantitativas dos e-mails para classificá-los como SPAM / HAM?
+* Descrever a abordagem
+* Dados coletados de UCI -> criado treinamento / conjuntos de teste
+* Relações exploradas
+* Escolha modelo logístico no treinamento definido por validação cruzada
+* Aplicado ao teste, 78% de precisão do conjunto de teste
+* Interpretar os resultados
+* O número de sinais de dólar parece razoável, p. "Ganhar dinheiro com Viagra \\$ \\$ \\$ \\$!"
+* Resultados do desafio
+* 78% não é tão grande
+* Eu poderia usar mais variáveis
+* Por que regressão logística?
+
