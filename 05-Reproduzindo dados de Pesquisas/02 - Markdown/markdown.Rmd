@@ -1,0 +1,177 @@
+---
+title       : Pesquisa Reprodutível
+subtitle    : MarkDown I
+author      : Delermando Branquinho Filho
+output: pdf_document
+job: The Scientist
+---
+
+  
+## O que é o Markdown?
+
+Markdown é uma ferramenta de conversão de texto para HTML para escritores da Web. Markdown permite que você escreva usando um modo fácil de ler, fácil de escrever o formato de texto simples, em seguida, convertê-lo para XHTML estruturalmente válido (ou HTML). "
+
+<br></br>
+### \- [**John Gruber, criador do Markdown**](http://daringfireball.net/projects/markdown/) 
+
+---
+
+## Markdown Syntax
+
+### Italics
+
+<br></br>
+
+```markdown
+*Este texto aparecerá em itálico!*
+```
+
+<br></br>
+*Este texto aparecerá em itálico!*
+
+---
+
+## Markdown Syntax
+
+### Bold
+
+<br></br>
+
+```markdown
+**Este texto aparecerá em negrito!**
+```
+
+<br></br>
+**Este texto aparecerá em negrito!**
+
+---
+
+## Markdown Syntax
+
+### Headings
+
+<br></br>
+
+```markdown
+## Este é um cabeçalho secundário
+### Este é um cabeçalho terciário
+```
+
+<br></br>
+## Este é um cabeçalho secundário
+### Este é um cabeçalho terciário
+
+---
+
+## Markdown Syntax
+
+### Listas não ordenadas
+
+<br></br>
+
+```markdown
+- primeiro item na lista
+- segundo item da lista
+- terceiro item na lista
+```
+
+<br></br>
+- primeiro item na lista
+- segundo item da lista
+- terceiro item na listast
+
+---
+
+## Markdown Syntax
+
+### Listas ordenadas
+
+<br></br>
+
+```markdown
+1. primeiro item na lista
+2. segundo item na lista
+3. terceiro item na lista
+```
+
+<br></br>
+
+1. primeiro item na lista
+2. segundo item na lista
+3. terceiro item na lista
+
+---
+
+## Markdown Syntax
+
+### Links
+
+<br></br>
+
+```markdown
+[The Scientist](http://www.thescientist.com.br/)
+[Download R](http://www.r-project.org/)
+[RStudio](http://www.rstudio.com/)
+```
+
+<br></br>
+
+[The Scientist](http://www.thescientist.com.br/)
+[Download R](http://www.r-project.org/)
+[RStudio](http://www.rstudio.com/))  
+
+---
+
+## Markdown Syntax
+
+### Links Avançados
+
+<br></br>
+
+```markdown
+    Eu passo tanto tempo lendo [R bloggers] [1] e [Simply Statistics] [2]!  
+    [1]: http://www.r-bloggers.com/   "R bloggers"  
+    [2]: http://simplystatistics.org/ "Simply Statistics"  
+```
+
+<br></br>
+
+Eu passo tanto tempo lendo [R bloggers] [1] e [Simply Statistics] [2]!
+
+[1]: http://www.r-bloggers.com/   "R bloggers"
+[2]: http://simplystatistics.org/ "Simply Statistics"
+
+---
+
+## Markdown Syntax
+
+### Linhas novas
+
+- As linhas novas exigem um espaço duplo após o final de uma linha.
+
+```markdown
+Primeira linha
+Segunda linha
+```
+
+Primeira linha
+Segunda linha
+
+
+```markdown
+Primeira linha
+Segunda linha
+```
+
+Primeira linha
+Segunda linha
+
+
+---
+
+## Markdown Recursos
+
+- [A Documentação Oficial](http://daringfireball.net/projects/markdown/basics)
+
+- [Guia do Markdown no Github](https://help.github.com/articles/github-flavored-markdown)
+

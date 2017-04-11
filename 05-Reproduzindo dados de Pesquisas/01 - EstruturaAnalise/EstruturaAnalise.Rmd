@@ -1,10 +1,11 @@
 ---
 title       : Pesquisa Reprodutível
-subtitle    : Estruturea de uma Análise de Dados
+subtitle    : Estrutura de uma Análise de Dados
 author      : Delermando Branquinho Filho
 output: pdf_document
 job: The Scientist
 ---
+
 ## Etapas em uma análise de dados
 
 * Definir a pergunta
