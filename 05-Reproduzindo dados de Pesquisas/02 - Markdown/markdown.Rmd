@@ -2,7 +2,7 @@
 title       : Pesquisa Reprodutível
 subtitle    : MarkDown I
 author      : Delermando Branquinho Filho
-output: pdf_document
+output: html_document
 job: The Scientist
 ---
 
@@ -16,162 +16,333 @@ Markdown é uma ferramenta de conversão de texto para HTML para escritores da W
 
 ---
 
-## Markdown Syntax
+## Programação estatística alfabetizada com knitr
 
-### Italics
+### knitr NÃO é bom para?
 
-<br></br>
+* Artigos de pesquisa muito longos
+* Cálculos complexos e demorados
+* Documentos que exigem formatação precisa
 
-```markdown
-*Este texto aparecerá em itálico!*
-```
-
-<br></br>
-*Este texto aparecerá em itálico!*
 
 ---
 
 ## Markdown Syntax
 
-### Bold
+Tìtulos <h1> a <h6>
 
-<br></br>
+Para marcar um título, você vai usar # a quantidade de vezes que irá representar o nível do título. Exemplo:
 
-```markdown
-**Este texto aparecerá em negrito!**
+# Título nível 1
+## Título nível 2
+### Título nível 3
+#### Título nível 4
+##### Título nível 5
+###### Título nível 6
+
+Parseia para:
+
+<h1>Título nível 1</h1>
+<h2>Título nível 2</h2>
+<h3>Título nível 3</h3>
+<h4>Título nível 4</h4>
+<h5>Título nível 5</h5>
+<h6>Título nível 6</h6>
+
+Bastante simples, não? O h1 e o h2 ainda podem ser escritos da seguinte forma:
+
+Título de nível 1
+==================
+  
+Título de nível 2
+------------------
+
+        
+Parágrafos e quebras de linha (<p> e <br/>)
+Para gerar parágrafos, basta você escrever o texto em uma linha:
+
+Este é um parágrafo.
+  
+Este é outro parágrafo.
+
+**Sem espaço entre linhas:**
+
+Este é um parágrafo.
+Este é outro parágrafo.
+
+
+Isso gera:
+
+<p>Este é um parágrafo.</p>
+<p>Este é outro parágrafo.</p>
+
+Mas ele não deveria usar um `
+para quebrar linha?
+
+Isso é muito particular de cada parser. Alguns quebram linha quando você dá enter. Mas a documentação do Markdown diz que, para quebras de linha, você precisa deixar dois espaços no final da linha:
+
+
+Primeira linha do parágrafo.··
+Segunda linha do parágrafo.
+
+Coloquei o ·· no final da primeira linha somente para facilitar a visualização. Você deve substituir esse símbolo por dois espaços em branco. Isso deve gerar:
+
+<p>
+  Primeira linha do parágrafo.<br/>
+  Segunda linha do parágrafo.
+</p>
+
+Por isso, se você estiver usando o .editorconfig no seu projeto, deixe a opção `trim_trailing_whitespace` como false para arquivos **Markdown**. Assim, os espaços adicionais não serão removidos.
+
+Ênfase `<strong> e <em>`
+
+Para enfatizar uma palavras (<em>), usamos um * ou _:
+
+Javascript é _cool_!
+ou:
+
+Javascript é *cool*!
+
+Que irá gerar:
+
+<p>
+  Javascript é <em>cool</em>!
+</p>
+
+O mais utilizado para ênfase (`<em>`) é o underline.
+Para dar forte ênfase em palavras (`<strong>`), você usa dois ** ou __:
+
+**file2test** é a pronúncia para **file to test**: file to test!
+ou
+
+__file2test__ é a pronúncia para __file2test__: file to test!
+
+Que irá gerar:
+
+<p>
+  <strong>file2test</strong> é a pronúncia para <strong>file to test:</strong> file to test!
+</p>
+
+O mais utilizado para forte ênfase (`<strong>`) são dois asteriscos.
+
+## Links (`<a>`)
+
+Para gerar links, você usa [](). Dentro dos colchetes você coloca o texto do link, e dentro dos parênteses, você coloca a URL:
+
+[The Scientist](http://www.thescientist.com.br)
+
+Que irá gerar:
+
+<a href="http://www.thescientist.com.br">The Scientist</a>
+
+Passando um texto após a URL, separando o link do texto por um espaço em branco, esse texto será usado como title:
+
+[The Scientist](http://www.thescientist.com.b)
+
+Vai gerar:
+
+<a href="http://www.thescientist.com.brr" title="O Cientísta">The Scientist</a>
+
+
+## Links automáticos
+
+Se o texto do seu link é o próprio link, você pode envolvê-lo entre < e >, que o link será gerado automaticamente:
+
+<https://www.google.com.br>
+
+Irá gerar:
+
+<a href="https://www.google.com.br">https://www.google.com.br</a>
+
+E isso funciona também para e-mails:
+
+<meu@email.com>
+
+Vai gerar:
+
+<a href="mailto:meu@email.com">meu@email.com</a>
+
+##       Referências
+
+Blocos de citação (`<blockquote>`)<p>
+Para criar blocos de citação, você usa o sinal de >:
+
+> Esse é um bloco de citação.
+> Ele pode ter várias linhas por parágrafo.
+> Inclusive, dando um espaço, você tem um novo parágrafo.
+> Que gera o seguinte:
+
+<blockquote>
+  <p>
+    Esse é um bloco de citação.
+    Ele pode ter várias linhas.
+  </p>
+  <p>Inclusive, uma quebra de linha.</p>
+</blockquote>
+
+## Listas (`<ul>` e `<ol>`)
+
+Para listas não ordenadas (`<ul>`), você pode usar *, + ou -. Veja:
+
+`tipo 1`
+* Item 1
+* Item 2
+* Item 3
+  
+`tipo 2`
++ Item 1
++ Item 2
++ Item 3
+  
+`tipo 3`
+- Item 1
+- Item 2
+- Item 3
+
+Os três formatos acima geram a mesma marcação:
+
+<ul>
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
+
+E para listas ordenadas, você usa o número, seguido de ponto:
+
+1. Item 1
+2. Item 2
+3. Item 3
+
+Que irá gerar:
+
+<ol>
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ol>
+
+Alguns parsers renderizam automaticamente os próximos números, após o 1. Você só precisa usar * para os itens do 2 em diante:
+
+1. Item 1
+* Item 2
+* Item 3
+
+Mas não são todos que renderizam dessa forma.
+
+Imagens (`<img/>`)
+
+Geração de imagens é bem parecido com a geração de links: 
+você só precisa adicionar uma ! no início. E o texto que você coloca entre os colchetes, é usado como alt na imagem:
+
+
+![Banana](http://cdn.osxdaily.com/wp-content/uploads/2013/07/dancing-banana.gif)
+Esse código vai gerar:
+
+<img src="http://cdn.osxdaily.com/wp-content/uploads/2013/07/dancing-banana.gif" alt="Banana" />
+
+O title também funciona como no link:
+
+![Banana](http://cdn.osxdaily.com/wp-content/uploads/2013/07/dancing-banana.gif "Olha a banana dançando!")
+
+Que gera:
+
+<img src="http://cdn.osxdaily.com/wp-content/uploads/2013/07/dancing-banana.gif" alt="Banana" title="Olha a banana dançando!" />
+
+Tabelas (`<table>`)
+
+Código inline e bloco (`<code> e <pre>`)
+
+Vocế ainda pode adicionar trechos de código via Markdown. Para adicionar código a nível inline, você usa ```:
+
+O `<blockquote>` é uma tag HTML.
+
+Isso irá gerar:
+
+<p>
+  O <code>&lt;blockquote&gt;</code> é uma tag HTML!
+</p>
+
+E para gerar blocos de código, você simplesmente indenta o código 4 espaços (ou 1 tab) à frente do paràgrafo:
+
+Essa é a função sayHello():
+    function sayHello() {
+      return 'hi!';
+    }
+
+Que irá gerar:
+
+<p>
+  Essa é a função sayHello():
+  <pre><code>function sayHello() {
+    return 'hi!';
+  }</code></pre>
+</p>
+
+Isso é como está na documentação. Mas a maior parte dos parses não funcionam dessa forma. Eles geram blocos de código usando três crases no início da primeira e última linha, para marcar o início e o fim do bloco:
+
+```
+function sayHello() {
+        return("hi")
+}
 ```
 
-<br></br>
-**Este texto aparecerá em negrito!**
+PS.: O Github  recomenda que se use as 3 crases, pois é mais fácil de visualizar e dar manutenção no código.
 
----
+No Github, você ainda consegue definir qual a linguagem que está sendo utilizada, para que seja feito code highlight no seu código. Só passe a linguagem após as 3 crases, dessa forma:
 
-## Markdown Syntax
+Que ó seu código será mostrado bonitinho assim:
 
-### Headings
 
-<br></br>
-
-```markdown
-## Este é um cabeçalho secundário
-### Este é um cabeçalho terciário
+```js
+function sayHello() {
+        return("hi")
+}
 ```
+## Outras tabelas
 
-<br></br>
-## Este é um cabeçalho secundário
-### Este é um cabeçalho terciário
-
----
-
-## Markdown Syntax
-
-### Listas não ordenadas
-
-<br></br>
-
-```markdown
-- primeiro item na lista
-- segundo item da lista
-- terceiro item na lista
-```
-
-<br></br>
-- primeiro item na lista
-- segundo item da lista
-- terceiro item na listast
-
----
-
-## Markdown Syntax
-
-### Listas ordenadas
-
-<br></br>
-
-```markdown
-1. primeiro item na lista
-2. segundo item na lista
-3. terceiro item na lista
-```
-
-<br></br>
-
-1. primeiro item na lista
-2. segundo item na lista
-3. terceiro item na lista
-
----
-
-## Markdown Syntax
-
-### Links
-
-<br></br>
-
-```markdown
-[The Scientist](http://www.thescientist.com.br/)
-[Download R](http://www.r-project.org/)
-[RStudio](http://www.rstudio.com/)
-```
-
-<br></br>
-
-[The Scientist](http://www.thescientist.com.br/)
-[Download R](http://www.r-project.org/)
-[RStudio](http://www.rstudio.com/))  
-
----
-
-## Markdown Syntax
-
-### Links Avançados
-
-<br></br>
-
-```markdown
-    Eu passo tanto tempo lendo [R bloggers] [1] e [Simply Statistics] [2]!  
-    [1]: http://www.r-bloggers.com/   "R bloggers"  
-    [2]: http://simplystatistics.org/ "Simply Statistics"  
-```
-
-<br></br>
-
-Eu passo tanto tempo lendo [R bloggers] [1] e [Simply Statistics] [2]!
-
-[1]: http://www.r-bloggers.com/   "R bloggers"
-[2]: http://simplystatistics.org/ "Simply Statistics"
-
----
-
-## Markdown Syntax
-
-### Linhas novas
-
-- As linhas novas exigem um espaço duplo após o final de uma linha.
-
-```markdown
-Primeira linha
-Segunda linha
-```
-
-Primeira linha
-Segunda linha
+Nome    |   Idade
+--------|------
+Fred    |   29
+Jim     |   47
+Harry   |   32
 
 
-```markdown
-Primeira linha
-Segunda linha
-```
+## Backslash scapes
 
-Primeira linha
-Segunda linha
+Para escapar caracteres que são parseados pelo Markdown, você pode usar a barra invertida \ (`backslash`), seguida do caractere, para imprimí-lo literalmente. O escape funciona para os caracteres listados abaixo:
+ 
+\   backslash (barra invertida)
+`   backtick (crase)
+*   asterisk (asterisco)
+_   underscore
+{}  curly braces (chaves)
+[]  square brackets (colchetes)
+()  parentheses (parênteses)
+#   hash mark (sustenido / hash / jogo da velha)
++   plus sign (sinal de "mais" ou somar)
+-   minus sign (hyphen) (sinal de menos ou hífen)
+.   dot (ponto)
+!   exclamation mark (ponto de exclamação)
 
 
----
+## Lista de definições
 
-## Markdown Recursos
+Listas de definições consistem de termos seguidos de suas definições, como em um dicionário. Um simples exemplo:
 
-- [A Documentação Oficial](http://daringfireball.net/projects/markdown/basics)
+Moodle
+:   Uma plataforma de aprendizado bastante conhecida
 
-- [Guia do Markdown no Github](https://help.github.com/articles/github-flavored-markdown)
+PHP
+:   Uma linguagem de script.
+    Mais utilizada para desenvolver aplicações interativas para a web.
+
+## Notas de rodapé
+
+Uma nota de rodapé tem dois elementos. Uma marcação no texto que irá se tornar um número superscript e uma definição da nota de rodapé que aparecerá no final do documento. Um simles exemplo:
+
+Leia sobre isso no meu livro.[^1]
+
+[^1]: Tudo sobre o meu livro.
+
+Você pode colocar as definições da nota de rodapé aonde desejar. Elas serão listadas na ordem em que elas são linkadas no texto. Você não pode criar mais de um link para a mesma nota de rodapé.
 
