@@ -1,0 +1,10 @@
+name: MyApp
+title: MyApp
+account: delermando
+server: shinyapps.io
+appId: 175498
+bundleId: 804756
+url: https://delermando.shinyapps.io/MyApp/
+when: 1493212756.14745
+asMultiple: FALSE
+asStatic: FALSE
