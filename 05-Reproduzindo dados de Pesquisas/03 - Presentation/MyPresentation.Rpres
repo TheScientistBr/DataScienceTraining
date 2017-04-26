@@ -1,0 +1,36 @@
+My 1º Presentation
+========================================================
+author: Delermando
+date: 26/04/2017
+autosize: true
+
+First Slide
+========================================================
+
+For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+Slide With Code
+========================================================
+
+```{r}
+summary(cars)
+```
+
+Slide With Plot
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Line Plot
+========================================================
+
+```{r}
+plot(cars$speed,cars$dist)
+```
+
