@@ -1,0 +1,168 @@
+---
+title       : Inferência Estatística
+subtitle    : Probabilidade
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Função Densidade (ou Probabilidade)
+
+Calcula o valor da densidade, no caso de distribuições contínuas, ou a probabilidade
+`P(X=x)`, no caso de distribuições discretas, para cada elemento do vetor **x**. No R o nome dessa função é iniciado pela letra **d** mais o nome da distribuição (ex: dbinom, dpois etc.). 
+
+### Função Distribuição
+
+Calcula a distribuição acumulada: P(X ≤ x). O nome da função é iniciado pela letra **p** mais o nome da distribuição (ex: pnorm, pexp etc.).
+
+### Função Probabilidade
+
+Calcula o valor de x correspondente a probabilidade p acumulada. É o inverso da função Distribuição. O nome da função é iniciado pela letra **q** mais o nome da distribuição (ex: qbeta, qcauchy etc.).
+
+### Gerador aleatório
+Gera números aleatórios baseados na distribuição definida. O nome da função é iniciado pela letra r mais o nome da distribuição (ex: rnorm, rbinom etc.). 
+
+
+
+## Densidade Normal
+
+**dnorm** é a função que dá a densidade da normal.
+O histograma, abaixo por simulação, também pode ser facilmente obtido usando-se dnorm:
+
+```{r}
+  x <- seq(-6, 6, by=0.1)
+  y <- dnorm(x)
+  plot(x, y, type="l")
+```
+
+**pnorm** é a função que dá a função de probabilidade acumulada da normal. Por exemplo, pnorm(1.96) é aproximadamente 97,5%. **pnorm** também recebe um vetor, ou seja, a sequência abaixo gera uma curva-S:
+
+```{r}
+  x <- seq(-6, 6, by=0.1)
+  y <- pnorm(x)
+  plot(x, y, type = "l")
+```
+
+
+
+
+Finalmente, **qnorm** é a inversa de **pnorm.** q vem de `quartil`.
+
+Para gerar o 1o quartil de uma normal de média 5 e desvio-padrão 3, basta fazer:
+
+```{r}
+qnorm(0.25, mean = 5, sd = 3) 
+```
+
+Para gerar o 3o quartil de uma normal de média 5 e desvio-padrão 3, basta fazer:
+
+```{r}
+qnorm(0.75, mean = 5, sd = 3) 
+```
+
+
+Analogamente,* **qnorm** também pode receber um vetor de probabilidades, assim, a sequência abaixo é a inversa da curva-S:
+
+```{r}
+  x <- seq(0.001, 0.999, length=1000)
+  y <- qnorm(x)
+  plot(x, y, type="l")
+```
+
+
+## Exemplos
+
+Dividindo as observações em intervalos
+
+```{r}
+salario <- c(12, .4, 5, 2, 50, 8, 3, 1, 4, .25)
+intervalo <- cut(salario,breaks=c(0,1,5,max(salario)))
+intervalo
+```
+
+
+### Freqüência de observações em cada intervalo
+```{r}
+table(intervalo)
+intervalo
+
+```
+
+### Rotulando os intervalos e colocando em uma tabela
+
+```{r}
+levels(intervalo) <-c("pobre","rico"," rolando na grana")
+table(intervalo)
+```
+
+Intervalo sem tabela
+
+```{r}
+intervalo 
+
+```
+
+### Criando variáveis e exibindo-as em tabelas
+
+```{r}
+Peso= c(60, 75, 55, 68)
+Altura = c(65, 61, 70, 65)
+Genero = c("F","F","M","F")
+estudo = data.frame(Peso,Altura,Genero)
+estudo 
+```
+
+### Alterando os rótulos das variáveis
+
+```{r}
+estudo = data.frame(P=Peso,H=Altura,G=Genero)
+row.names(estudo)<-c("Maria","Alice","André","Julia")
+estudo 
+
+```
+
+### Histogramas com curvas teóricas 
+
+```{r}
+x=runif(100)
+hist(x,probability=TRUE,main="Uniforme
+[0,1]",
+ylab="Densidade",col="yellow")
+curve(dunif(x,0,1),add=T)
+```
+
+Outro exemplo
+
+```{r}
+n=10;p=0.25
+x=rbinom(100,n,p)
+hist(x,probability=TRUE,ylab="Densidade",
+col="pink", main="Binomial",ylim=c(0,0.30))
+xvalores=0:n
+points(xvalores,dbinom(xvalores,n,p),type="h",
+lwd=3)
+points(xvalores,dbinom(xvalores,n,p),type="p",
+lwd=3)
+```
+
+```{r}
+x=rnorm(100)
+hist(x,probability=TRUE,col="lightblue", 
+     main="Normal(0,1)",ylab="Densidade", ylim=c(0,0.5),xlim=c(-3,3))
+curve(dnorm(x),add=T) 
+```
+
+
+
+```{r}
+x=rexp(100,1/2500)
+hist(x,probability=TRUE,
+col="lightgreen",main="Exponencial
+com média=2500",ylab="Densidade")
+curve(dexp(x,1/2500),add=T) 
+
+```
+

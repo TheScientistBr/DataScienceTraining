@@ -1,0 +1,157 @@
+---
+title       : Estatística Inferencial
+subtitle    : Expectartiva ou valor esperado
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+#
+## Valores esperados
+
+- O **valor esperado** ou **média** de uma variável aleatória é o centro de sua distribuição
+- Para a variável aleatória discreta $X$ com PMF $p(x)$, ela é definida da seguinte forma
+$$
+E[X] = \sum_x xp(x).
+$$
+Onde a soma é tomada sobre os possíveis valores de $x$
+- $E[X]$ representa o centro de massa de uma coleção de locais e pesos, $\{x, p(x)\}$
+
+---
+
+## Exemplo
+
+### Encontre o centro de massa das barras
+
+```{r ,fig.height=3.5,fig.width=8, fig.align='center', echo = FALSE}
+library(UsingR); data(galton)
+par(mfrow=c(1,2))
+hist(galton$child,col="blue",breaks=100)
+hist(galton$parent,col="blue",breaks=100)
+```
+
+## Usando manipulate
+
+```{r manipulate}
+library(manipulate)
+myHist <- function(mu){
+  hist(galton$child,col="blue",breaks=100)
+  lines(c(mu, mu), c(0, 150),col="red",lwd=5)
+  mse <- mean((galton$child - mu)^2)
+  text(63, 150, paste("mu = ", mu))
+  text(63, 140, paste("Imbalance = ", round(mse, 2)))
+}
+# manipulate(myHist(mu), mu = slider(62, 74, step = 0.5)) 
+# execute manipulate no RStudio ou console, aqui ele não vai funcionar
+```
+
+
+## O centro de massa é a média empírica
+
+```{r lsm, dependson="galton",fig.height=4,fig.width=4, fig.align='center'}
+  hist(galton$child,col="blue",breaks=100)
+  meanChild <- mean(galton$child)
+  lines(rep(meanChild,100),seq(0,150,length=100),col="red",lwd=5)
+```
+
+## Exemplo
+
+- Suponha que uma moeda é virada e $X$ é declarado $0$ ou $1$ correspondente a uma cara ou uma coroa, respectivamente.
+
+- Qual é o valor esperado de $X$?
+$$
+E[X] = .5 \times 0 + .5 \times 1 = 0,5
+$$
+- Note, se pensado geometricamente, esta resposta é óbvia; Se dois pesos iguais forem espaçados em 0 e 1, o centro de massa será $.5$
+
+```{r, echo = FALSE, fig.height=3.5, fig.width = 3.5, fig.align='center'}
+barplot(height = c(.5, .5), names = c(0, 1), border = "black", col = "lightblue", space = .75)
+```
+
+---
+
+## Exemplo
+
+- Suponha que um dado é rolado e $X$ é o número virado para cima
+- Qual é o valor esperado de $X$?
+
+$$
+E[X] = 1 \times \frac{1}{6} + 2 \times \frac{1}{6} +
+3 \times \frac {1} {6} + 4 \times \frac {1} {6} +
+5 \times \frac {1} {6} + 6 \times \frac {1} {6} = 3,5
+$$
+- Novamente, o argumento geométrico torna esta resposta óbvia sem cálculo.
+
+---
+
+## Variáveis aleatórias contínuas
+
+- Para uma variável aleatória contínua, $ X $, com densidade, $ f $, o valor esperado
+Valor é definido da seguinte forma
+$$
+E [X] = \mbox {a área sob a função}~~~ t f(t)
+$$
+
+- Esta definição toma como base a definição de centro de massa para um corpo contínuo
+
+---
+
+## Exemplo
+
+- Considere uma densidade onde $f(x) = 1$ para $x$ entre zero e um
+- (Esta é uma densidade válida?)
+- Suponha que $X$ segue esta densidade; Qual é o seu valor esperado?
+
+
+```{r, fig.height=4, fig.width=8, echo=FALSE}
+par(mfrow = c(1, 2))
+plot(c(-0.25, 0, 0, 1, 1, 1.25), c(0, 0, 1, 1, 0, 0), type = "l", lwd = 3, frame = FALSE, xlab="", ylab = ""); title('f(t)')
+plot(c(-0.25, 0, 1, 1, 1.25), c(0, 0, 1, 0, 0), type = "l", lwd = 3, frame = FALSE, xlab="", ylab = ""); title('t f(t)')
+```
+
+
+### Observação
+
+- Portanto, o valor esperado da **média da amostra** é a média da população que está tentando estimar;
+- Quando o valor esperado de um estimador é o que está tentando estimar, dizemos que o estimador é **imparcial**
+
+## A variância
+
+- A variância de uma variável aleatória é uma medida de * propagação *
+- Se $X$ é uma variável aleatória com média $\mu$, a variância de $X$ é definida como:
+
+
+$$
+Var(X) = E[(X - \mu)^2]
+$$
+
+A distância esperada (quadrado) da média
+
+- As densidades com maior variação são mais dispersas do que as densidades com menor variância.
+
+
+
+
+
+## Exemplo I
+
+- QIs são frequentemente dito para ser distribuído com uma média de $100$ e um sd de $15$
+- Qual é a probabilidade de uma pessoa sorteada aleatoriamente ter um QI superior a $160$ ou abaixo de $40$?
+- Assim, queremos saber a probabilidade de uma pessoa estar acima de $4$ unidades de desvio padrão da média
+- Assim, a desigualdade de Chebyshev sugere que esta não será maior que 6 \%
+- As distribuições de QIs são freqüentemente citadas como sendo em forma de sino, caso em que este limite é muito conservador
+- A probabilidade de um sorteio aleatório de uma curva de sino sendo $4$ desvios padrão da média é da ordem de $10^{- 5}$ (um milésimo de um por cento)
+
+---
+
+## Exemplo II
+
+- Uma frase anterior buzz no controle de qualidade industrial é "Six Sigma" da Motorola, pelo qual as empresas são sugeridas para controlar eventos extremos ou raras peças defeituosas
+- A desigualdade de Chebyshev indica que a probabilidade de um evento "Seis Sigma" é menor que $1/6^2 \approx 3 \%$
+- Se uma curva de sino é assumida, a probabilidade de um evento de "seis sigma" é da ordem de $10^{-9}$ (um dez milionésimo de um por cento)
+
+
+(The Scientist)[http://www.thescientist.com.br]
