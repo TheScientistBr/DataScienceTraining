@@ -1,0 +1,132 @@
+---
+title       : Inferência Estatística
+subtitle    : Probabilidade
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+
+## Probabilidade
+
+- Uma abordagem comum e frutífera das estatísticas é assumir que os dados surgem de uma família de distribuições indexadas por um parâmetro que representa um resumo útil da distribuição
+- A **probabilidade** de uma colecção de dados é a densidade conjunta avaliada em função dos parâmetros com os dados fixos
+- Análise de probabilidade de dados utiliza a probabilidade de executar inferência em relação ao parâmetro desconhecido
+
+---
+
+## Probabilidade
+
+Dada uma função de massa de probabilidade estatística ou densidade, digamos $f(x,\theta)$, onde $\theta$ é um parâmetro desconhecido, a **probabilidade** é $f$ vista como uma função de $\theta$ para Um valor fixo, observado de $x$.
+
+---
+
+## Interpretações de probabilidades
+
+A probabilidade tem as seguintes propriedades:
+
+1. Razões de verossimilhança medem a evidência relativa de um valor do parâmetro desconhecido para outro.
+2. Dado um modelo estatístico e dados observados, todas as informações relevantes contidas nos dados relativos ao parâmetro desconhecido estão contidas na probabilidade.
+3. Se $\{X_i\}$ são variáveis aleatórias independentes, então suas probabilidades se multiplicam. Ou seja, a probabilidade dos parâmetros dados todos os $X_i$ é simplesmente o produto da probabilidade individual.
+
+---
+
+## Exemplo
+
+- Suponha que jogamos uma moeda com probabilidade de sucesso $\theta$
+- Lembre-se que a função de massa para $x$
+
+  $$
+  f(x,\theta) = \theta^x(1 - \theta)^{1 - x}  ~~~\mbox{for}~~~ \theta \in [0,1].
+  $$
+  
+  Onde $x$ é $0$ (cara) ou $1$ (coroa)
+- Suponha que o resultado é uma coroa
+- A probabilidade é
+
+  $$
+  {\cal L}(\theta, 1) = \theta^1 (1 - \theta)^{1 - 1} = \theta  ~~~\mbox{for} ~~~ \theta \in [0,1].
+  $$
+- Onde, ${\cal L}(.5, 1) / {\cal L}(.25, 1) = 2$, 
+- Há duas vezes mais evidências que suportam a hipótese de quet $\theta = .5$ À hipótese de que $\theta = .25$
+
+---
+
+## Continuando o exemplo ...
+
+- Suponha agora que nós jogamos nossa moeda do exemplo anterior 4 vezes e obtemos a seqüência 1, 0, 1, 1
+- A probabilidade é:
+$$
+  \begin{eqnarray*}
+  {\cal L}(\theta, 1,0,1,1) & = & \theta^1 (1 - \theta)^{1 - 1}
+  \theta^0 (1 - \theta)^{1 - 0}  \\
+& \times & \theta^1 (1 - \theta)^{1 - 1} 
+   \theta^1 (1 - \theta)^{1 - 1}\\
+& = &  \theta^3(1 - \theta)^1
+  \end{eqnarray*}
+$$
+- Esta probabilidade só depende do número total de caras e do número total de coroas; Nós podemos escrever ${\cal L}(\theta, 1, 3)$ na forma abreviada
+- Agora considerando ${\cal L}(.5, 1, 3) / {\cal L}(.25, 1, 3) = 5.33$
+- Há mais de cinco vezes mais evidências que apóiam a hipótese de que $\theta = .5$ sobre  $\theta = .25$
+
+---
+
+## Plotando probabilidades
+
+- Geralmente, queremos considerar todos os valores de $\theta$ entre 0 e 1
+- A **gráfico de probabilidade** exibe $\theta$ por ${\cal L} (\theta, x)$
+- Porque a probabilidade mede *evidência relativa*, dividindo a curva pelo seu valor máximo (ou qualquer outro valor para essa matéria) não muda sua interpretação
+
+---
+
+```{r, fig.height=4.5, fig.width=4.5}
+pvals <- seq(0, 1, length = 1000)
+plot(pvals, dbinom(3, 4, pvals) / dbinom(3, 4, 3/4), type = "l", frame = FALSE, lwd = 3, xlab = "p", ylab = "likelihood / max likelihood")
+```
+
+
+---
+
+## Máxima probabilidade
+
+- O valor de $\theta$ onde a curva atinge seu máximo tem um significado especial
+- É o valor de $\theta$ que é mais bem suportado pelos dados
+- Este ponto é chamado de **estimativa de probabilidade máxima** (ou MLE) de $\theta$
+  $$
+  MLE = \mathrm{argmax}_\theta {\cal L}(\theta, x).
+  $$
+Outra interpretação do MLE é que é o valor de $\theta$ que faria os dados que observamos mais provável
+
+---
+
+## Alguns resultados
+- $X_1, \ldots, X_n \stackrel{iid}{\sim} N(\mu, \sigma^2)$ o MLE de $\mu$ é $\bar X$ e o ML de $\sigma^2$ é a estimativa da variância parcial da amostra
+- If $X_1,\ldots, X_n \stackrel{iid}{\sim} Bernoulli(p)$ então MLE de $p$ é $\bar X$ (A proporção da amostra de 1s).
+- Se $X_i \stackrel{iid}{\sim} Binomial(n_i, p)$ então a MLE def $p$ é $\frac{\sum_{i=1}^n X_i}{\sum_{i=1}^n n_i}$ (A proporção da amostra de 1s).
+- Se $X \stackrel{iid}{\sim} Poisson(\lambda t)$ então a MLE de $\lambda$ é $X/t$.
+- Se $X_i \stackrel{iid}{\sim} Poisson(\lambda t_i)$ então a MLE de $\lambda$ é
+  $\frac{\sum_{i=1}^n X_i}{\sum_{i=1}^n t_i}$
+
+---
+
+## Exemplo
+
+- Você viu 5 eventos de falha por 94 dias de monitoramento de uma bomba nuclear
+- Assumindo Poisson, trace a probabilidade
+
+---
+
+```{r, fig.height=4, fig.width=4, echo= TRUE}
+lambda <- seq(0, .2, length = 1000)
+likelihood <- dpois(5, 94 * lambda) / dpois(5, 5)
+plot(lambda, likelihood, frame = FALSE, lwd = 3, type = "l", xlab = expression(lambda))
+lines(rep(5/94, 2), 0 : 1, col = "red", lwd = 3)
+lines(range(lambda[likelihood > 1/16]), rep(1/16, 2), lwd = 2)
+lines(range(lambda[likelihood > 1/8]), rep(1/8, 2), lwd = 2)
+```
+
+
+

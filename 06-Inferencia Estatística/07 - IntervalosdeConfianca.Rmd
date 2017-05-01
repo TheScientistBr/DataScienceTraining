@@ -1,0 +1,156 @@
+---
+title       : Inferência Estatística
+subtitle    : Intervalos de Confiança
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+
+## Intervalos de confiança
+
+- No anterior, discutimos a criação de um intervalo de confiança usando o CLT
+- Nesta palestra, discutiremos alguns métodos para pequenas amostras, nomeadamente a distribuição $t$ de Gosset
+- Para discutir a distribuição $t$, devemos discutir a distribuição do Qui-quadrado
+- Utilizamos o seguinte procedimento geral para a criação de ICs
+
+a. Criar um **Pivot** ou estatística que não depende do parâmetro de interesse
+
+b. Resolver a probabilidade de que o pivô esteja entre os limites do parâmetro
+
+---
+
+## A distribuição Chi-quadrado
+
+- Suponha que $S^2$ é a variância da amostra de uma coleção de iid $N (\mu, \sigma ^ 2)$ dados; então
+
+$$
+    \frac{(n - 1) S^2}{\sigma^2} \sim \chi^2_{n-1}
+$$
+Que lê: segue uma distribuição Chi-quadrado com $n-1$ graus de liberdade
+- A distribuição do Qui-quadrado é distorcida e tem suporte em $0$ a $\infty$
+- A média do qui-quadrado é seus graus de liberdade
+- A variância da distribuição do Qui-quadrado é o dobro dos graus de liberdade
+
+---
+
+## Intervalo de confiança para a variância
+
+Note que se $\chi ^ 2_ {n-1, \alpha}$ é o $\alpha$ quantil da distribuição do qui-quadrado, então
+
+$$
+\begin{eqnarray*}
+  1 - \alpha & = & P \left( \chi^2_{n-1, \alpha/2} \leq  \frac{(n - 1) S^2}{\sigma^2} \leq  \chi^2_{n-1,1 - \alpha/2} \right) \\ \\
+& = &  P\left(\frac{(n-1)S^2}{\chi^2_{n-1,1-\alpha/2}} \leq \sigma^2 \leq 
+\frac{(n-1)S^2}{\chi^2_{n-1,\alpha/2}} \right) \\
+\end{eqnarray*}
+$$
+De modo a
+
+$$
+\left[\frac{(n-1)S^2}{\chi^2_{n-1,1-\alpha/2}}, \frac{(n-1)S^2}{\chi^2_{n-1,\alpha/2}}\right]
+$$
+é a $100(1-\alpha)\%$ intervalo de confiança para $\sigma^2$
+
+---
+## Notas sobre este intervalo
+
+- Este intervalo depende muito da normalidade assumida
+- Quadrado-enraizamento os pontos finais produz um CI para $\sigma$
+
+---
+## Exemplo
+### Intervalo de confiança para o desvio padrão das alturas dos filhos dos dados de Galton
+
+```{r}
+library(UsingR); data(father.son); x <- father.son$sheight
+s <- sd(x); n <- length(x)
+round(sqrt( (n-1) * s ^ 2 / qchisq(c(.975, .025), n - 1) ), 3)
+```
+
+---
+
+## distribuição $t$ de Gosset 
+
+- Inventado por William Gosset (sob o pseudônimo de "Student") em 1908
+- Tem caudas mais grossas do que o normal
+- É indexado por um grau de liberdade; Fica mais como um padrão normal como df fica maior
+- É obtido como
+
+$$
+\frac {Z} {\sqrt {\frac {\chi ^ 2} {df}}}
+$$
+Onde $Z$ e $\chi^2$ são padrões normais independentes e distribuições de Qui-quadrado, respectivamente
+
+---
+
+## Resultado
+
+- Suponha que $(X_1,\ldots,X_n)$ are iid $N(\mu,\sigma^2)$, então:
+  a. $\frac{\bar X - \mu}{\sigma / \sqrt{n}}$ é padrão normal
+  b. $\sqrt{\frac{(n - 1) S^2}{\sigma^2 (n - 1)}} = S / \sigma$ É a raiz quadrada de um Chi-quadrado dividido por seu grau de liberdade (DF - degrees of freedom)
+
+- Therefore 
+$$
+\frac{\frac{\bar X - \mu}{\sigma /\sqrt{n}}}{S/\sigma}  
+= \frac{\bar X - \mu}{S/\sqrt{n}}
+$$
+    Segue a distribuição $t$ de Gosset com $n-1$ graus de liberdade
+
+---
+
+## Intervalos de confiança para a média
+
+- Observe que a estatística $t$ é um pivô, portanto, usá-lo para criar um intervalo de confiança para $\mu$
+- Seja $t_ {df, \alpha}$ o quantil $\alpha^{th}$ da distribuição t com $df$ graus de liberdade
+
+$$
+  \begin{eqnarray*}
+&   & 1 - \alpha \\
+& = & P\left(-t_{n-1,1-\alpha/2} \leq \frac{\bar X - \mu}{S/\sqrt{n}} \leq t_{n-1,1-\alpha/2}\right) \\ \\
+& = & P\left(\bar X - t_{n-1,1-\alpha/2} S / \sqrt{n} \leq \mu  
+      \leq \bar X + t_{n-1,1-\alpha/2}S /\sqrt{n}\right)
+  \end{eqnarray*}
+$$
+- Intervalp é $\bar X \pm t_{n-1,1-\alpha/2} S/\sqrt{n}$
+
+---
+
+## Observação sobre o intervalo $t$
+
+- O intervalo $t$ assume tecnicamente que os dados são iid normal, embora seja robusto a esta suposição
+- Funciona bem sempre que a distribuição dos dados é aproximadamente simétrica e em forma de montículo
+- As observações emparelhadas são frequentemente analisadas utilizando o intervalo $t$ tomando as diferenças
+- Para grandes graus de liberdade, $t$ quantiles tornam-se os mesmos que os quantiles normais; Portanto, este intervalo converge para o mesmo intervalo que o CLT produziu
+- Para distribuições distorcidas, o espírito das hipóteses de intervalo $t$ são violados
+- Além disso, para distribuições distorcidas, não faz muito sentido centrar o intervalo na média
+- Neste caso, considere fazer registros ou usar um resumo diferente, como a mediana
+- Para dados altamente discretos, como binários, estão disponíveis outros intervalos
+---
+## Dados de sono
+
+Em R, digitar `data(sleep)` traz os dados de sono originalmente
+Analisado no documento Biométrika da Gosset, que mostra o aumento da
+Horas para 10 pacientes em dois soporific drogas. R trata os dados como dois
+Em vez de emparelhados.
+
+---
+## Os dados
+
+```{r}
+data(sleep)
+head(sleep)
+```
+
+---
+```{r}
+g1 <- sleep$extra[1 : 10]; g2 <- sleep$extra[11 : 20]
+difference <- g2 - g1
+mn <- mean(difference); s <- sd(difference); n <- 10
+mn + c(-1, 1) * qt(.975, n-1) * s / sqrt(n)
+t.test(difference)$conf.int
+```
+
