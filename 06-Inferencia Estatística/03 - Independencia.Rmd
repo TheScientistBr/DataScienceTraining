@@ -1,0 +1,140 @@
+---
+title       : Inferência Estatística
+subtitle    : Independência
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Eventos independentes
+
+- Dois eventos $A$ e $B$ são **independentes** se $$P(A\cap B) = P(A) P(B)$$
+- Duas variáveis aleatórias, $X$ e $Y$ são independentes se para quaisquer dois conjuntos $A$ e $B$ $$P([X \in A] \cap [Y \in B]) = P (X \in A) P (Y \in B)$$
+- Se $A$ for independente de $ B $ então
+
+- $A^c$ é independente de $B$
+- $A$ é independente de $ B^c$
+- $A^c$ é independente de $B^c$
+
+
+---
+
+## Exemplo
+
+- Qual é a probabilidade de obter duas caras consecutivas?
+- $A = \{\mbox{cara lançamento 1}\}$~$P(A) = .5$
+- $B = \{\mbox{cara lançamento 2}\}$~$P(B) = .5$
+- $A \cap B = \{\mbox {cara nos lançamentos 1 e 2}\}$
+- $P(A\cap B) = P (A) P (B) = .5 \times .5 = .25$
+
+---
+
+## Exemplo
+
+- Volume 309 da Science relata sobre um médico que foi julgado por testemunho de peritos em um julgamento criminal
+
+- Com base numa estimativa de prevalência de síndrome de morte súbita infantil de $1$ de $8,543$, o Dr. Meadow testemunhou que a probabilidade de uma mãe ter dois filhos com SIDS era $\left(\frac{1}{8,543} \right)^2$
+
+- A mãe julgada foi condenada por assassinato
+
+---
+
+## Exemplo: continuação
+
+- Para os propósitos desta classe, o principal erro foi *assumir* que as probabilidades de ter SIDs dentro de uma família são independentes
+- Ou seja, $P(A_1 \cap A_2)$ não é necessariamente igual a $P(A_1) P(A_2)$
+- Os processos biológicos que têm uma componente genética ou familiar conhecida, naturalmente, tendem a ser dependentes dentro das famílias
+- (Há muitos outros pontos estatísticos de discussão para este caso.)
+
+---
+
+## Fato útil
+
+Vamos usar o seguinte fato extensivamente nesta classe:
+
+*Se uma coleção de variáveis aleatórias $X_1,X_2,\ldots,X_n$ são independentes, então sua distribuição conjunta é o produto de suas densidades individuais ou funções de massa*
+
+*Ou seja, se $f_i$ é a densidade para a variável aleatória $X_i$ temos que*
+
+$$
+f(x_1,\ldots, x_n) = \prod_{i=1}^n f_i(x_i)
+$$
+
+---
+
+## Correlation
+
+- The **covariance** between two random variables $X$ and $Y$ is defined as 
+$$
+Cov(X, Y) = E[(X - \mu_x)(Y - \mu_y)] = E[X Y] - E[X]E[Y]
+$$
+- The following are useful facts about covariance
+  1. $Cov(X, Y) = Cov(Y, X)$
+  2. $Cov(X, Y)$ can be negative or positive
+  3. $|Cov(X, Y)| \leq \sqrt{Var(X) Var(y)}$
+
+---
+
+## Correlação
+
+- A **Correlação** entre $X$ e $Y$ é 
+
+$$
+Cor(X, Y) = Cov(X, Y) / \sqrt{Var(X) Var(y)}
+$$
+
+  1. $-1 \leq Cor(X, Y) \leq 1$
+  2. $Cor(X, Y) = \pm 1$ se e somente se $X = a + bY$ para algumas constantes $a$ e $b$
+  3. $Cor(X, Y)$ é unitário
+  4. $X$ e $Y$ não estão **correlacionados** se $Cor(X, Y) = 0$ 
+  5.  $X$ e $Y$ estão positivamente correlacionados, ou mais perto $Cor(X,Y)$ se aprosxima de $1$
+  6.  $X$ e $Y$ estão negativamente correlacionados, ou mais perto $Cor(X,Y)$ se aproxima de $-1$
+
+---
+
+## Alguns resultados úteis
+
+- Seja $\{X_i\} _ {i = 1}^n$ uma coleção de variáveis aleatórias
+- Quando o $\{X_i \}$ não está correlacionado $$Var \left (\sum_ {i = 1} ^ n a_i X_i + b \right) = \sum_ {i = 1}^n a_i^2 Var(X_i )$$
+
+- Um subcaste comumente usado a partir dessas propriedades é que *se uma coleção de variáveis aleatórias $\{X_i \}$ não são correlacionadas*, então a variância da soma é a soma das variâncias
+$$
+Var\left(\sum_{i=1}^n X_i \right) = \sum_{i=1}^n Var(X_i)
+$$
+- Portanto, são as somas de variâncias que tendem a ser úteis, não somas de desvios-padrão; Isto é, o desvio padrão da soma de um monte de variáveis aleatórias independentes é a raiz quadrada da soma das variâncias, não a soma dos desvios-padrão
+
+---
+
+## A média da amostra
+
+Suponha que $X_i$ com variância $\sigma^2$
+
+$$
+\begin{eqnarray*}
+    Var(\bar X) & = & Var \left( \frac{1}{n}\sum_{i=1}^n X_i \right)\\ \\
+    & = & \frac{1}{n^2} Var\left(\sum_{i=1}^n X_i \right)\\ \\
+    & = & \frac{1}{n^2} \sum_{i=1}^n Var(X_i) \\ \\
+    & = & \frac{1}{n^2} \times n\sigma^2 \\ \\
+    & = & \frac{\sigma^2}{n}
+  \end{eqnarray*}
+$$
+
+---
+## Examplo
+```{r}
+#data(father.son) 
+father.son <- as.data.frame(UsingR::father.son)
+x <- father.son$sheight
+n<-length(x)
+```
+
+---
+```{r, fig.height=5, fig.width=5, echo=FALSE}
+hist(father.son$sheight, col="lightblue", border="black")
+```
+```{r}
+round(c(sum( (x - mean(x) )^ 2) / (n-1), var(x), var(x) / n, sd(x), sd(x) / sqrt(n)),2)
+```

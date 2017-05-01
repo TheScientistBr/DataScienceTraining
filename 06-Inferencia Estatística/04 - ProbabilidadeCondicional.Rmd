@@ -1,0 +1,157 @@
+---
+title       : Inferência Estatística
+subtitle    : Probabilidade Condicional
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Probabilidade condicional, motivação
+
+- A probabilidade de obter um dado de um dado (padrão) é geralmente assumido como um sexto
+- Suponha que você tenha recebido a informação extra que o dado mostra um número impar (1, 3 ou 5)
+- *condicionada a esta nova informação*, a probabilidade de Um lado é agora um terço.
+
+---
+
+## Probabilidade condicional, definição
+
+- Seja $B$ um evento em que $P(B)>0$
+- Então a probabilidade condicional de um evento $A$ dado que $B$ ocorreu é
+  $$
+  P(A ~|~ B) = \frac{P(A \cap B)}{P(B)}
+  $$
+- Observe que se $A$ e $B$ forem independentes, então
+  $$
+  P(A ~|~ B) = \frac{P(A) P(B)}{P(B)} = P(A)
+  $$
+
+---
+
+## Exemplo
+
+- Considere nosso dado como exemplo
+- $B = \{1, 3, 5\}$
+- $A = \{1\}$
+$$
+  \begin{eqnarray*}
+P(\mbox{Uma jogada em que o dado é ímpar})  & = & P(A ~|~ B) \\ \\
+  & = & \frac{P(A \cap B)}{P(B)} \\ \\
+  & = & \frac{P(A)}{P(B)} \\ \\ 
+  & = & \frac{1/6}{3/6} = \frac{1}{3}
+  \end{eqnarray*}
+$$
+
+
+
+---
+
+## Regra de Bayes
+
+$$
+P(B ~|~ A) = \frac{P(A ~|~ B) P(B)}{P(A ~|~ B) P(B) + P(A ~|~ B^c)P(B^c)}.
+$$
+  
+
+---
+
+## Testes de diagnóstico
+
+- Seja $+$ e $-$ os eventos que o resultado de um teste de diagnóstico seja positivo ou negativo, respectivamente
+- Seja $D$ e $D^c$ o evento em que o sujeito do teste tem ou não a doença, respectivamente
+- A **sensibilidade** é a probabilidade de o teste ser positivo, dado que o sujeito tem realmente a doença, $P(+~|~D)$
+- A **especificidade** é a probabilidade de que o teste seja negativo dado que o sujeito não tem a doença, $P(-~|~D^c)$
+
+---
+
+## Mais definições
+
+- O **valor preditivo positivo** é a probabilidade de que o sujeito tenha a doença dado que o teste é positivo, $P(D~|~+)$
+- O **valor preditivo negativo** é a probabilidade de que o indivíduo não tenha a doença dado que o teste é negativo, $P(D^c~|~-)$
+- A **prevalência da doença** é a probabilidade marginal de doença, $P(D)$
+
+**Nota**: Em teoria das probabilidades e estatística, a distribuição marginal de um subconjunto de uma coleção de variáveis aleatórias é a distribuição de probabilidade das variáveis contidas no subconjunto.
+
+---
+
+## Mais definições
+
+- A **relação de probabilidade diagnóstica de um teste positivo**, rotulado como $DLR_+$, is $P(+ ~|~ D) / P(+ ~|~ D^c)$, que é a $$sensibilidade / (1 - especificidade)$$
+- A **relação de probabilidade diagnóstica de um teste negativo**, rotulado como $DLR_-$, is $P(- ~|~ D) / P(- ~|~ D^c)$, que é a $$(1 - sensibilidade) / especifidade$$
+
+---
+## Exemplo
+
+- Um estudo comparando a eficácia dos testes de HIV, os relatórios de uma experiência concluiu que os testes de anticorpos contra o HIV têm uma sensibilidade de 99,7% e uma especificidade de 98,5%.
+- Suponha que um sujeito, de uma população com uma prevalência de .1% de HIV, receba um resultado de teste positivo. Qual é a probabilidade de este indivíduo ter HIV?
+- Matematicamente, queremos que $P(D~|~+)$ dada a sensibilidade, $P(+~|~D) = .997$, a especificidade, $P(-~|~D^c) = .985$, E a prevalência $P(D) = .001$
+---
+
+## Usando a fóruma de Bayes
+
+$$
+\begin{eqnarray*}
+  P(D ~|~ +) & = &\frac{P(+~|~D)P(D)}{P(+~|~D)P(D) + P(+~|~D^c)P(D^c)}\\ \\
+ & = & \frac{P(+~|~D)P(D)}{P(+~|~D)P(D) + \{1-P(-~|~D^c)\}\{1 - P(D)\}} \\ \\
+ & = & \frac{.997\times .001}{.997 \times .001 + .015 \times .999}\\ \\
+ & = & .062
+\end{eqnarray*}
+$$
+
+- Nesta população, um resultado positivo do teste sugere apenas uma probabilidade de 6% de que o indivíduo tem a doença (O valor preditivo positivo é de 6% para este teste)
+---
+
+## Mais sobre este exemplo
+
+- O baixo valor preditivo positivo deve-se à baixa prevalência de doença e à especificidade um tanto modesta
+- Suponha-se que se soubesse que o indivíduo era um utilizador de drogas intravenosas e que habitualmente tinha relações sexuais com um parceiro infectado pelo HIV
+- Observe que a evidência implícita por um resultado positivo do teste não muda devido à prevalência de doença na população do sujeito, apenas nossa interpretação dessa evidência muda
+---
+## Razões de probabilidade
+
+- Usando a regra de Bayes, temos
+
+  $$
+  P(D ~|~ +) = \frac{P(+~|~D)P(D)}{P(+~|~D)P(D) + P(+~|~D^c)P(D^c)} 
+  $$
+  e
+  
+  $$
+  P(D^c ~|~ +) = \frac{P(+~|~D^c)P(D^c)}{P(+~|~D)P(D) + P(+~|~D^c)P(D^c)}.
+  $$
+
+---
+
+## Razões de probabilidade
+
+- Assim sendo
+$$
+\frac{P(D ~|~ +)}{P(D^c ~|~ +)} = \frac{P(+~|~D)}{P(+~|~D^c)}\times \frac{P(D)}{P(D^c)}
+$$
+ie
+$$
+\mbox{Probabilidades pós-teste of }D = DLR_+\times\mbox{Probabilidades pré-teste de}D
+$$
+- Similarmente, $DLR _-$ relaciona a diminuição nas probabilidades da doença após um resultado negativo do teste às probabilidades de doença antes do teste.
+
+---
+
+## Exemplo de HIV revisitado
+
+- Suponha que um indivíduo tenha um teste de HIV positivo
+- $DLR_ + = .997 / (1 - .985) \approx 66$
+- O resultado do teste positivo é que as chances de doença é agora 66 vezes a probabilidade pré-teste
+- Ou, de forma equivalente, a hipótese de doença é 66 vezes mais suportada pelos dados do que a hipótese de nenhuma doença
+
+---
+
+## Exemplo de HIV revisitado
+
+- Suponha que um sujeito tem um resultado de teste negativo
+- $DLR_- = (1 - .997) / .985 \approx .003$
+- Portanto, as probabilidades pós-teste de doença é agora $.3\%$ das probabilidades pré-teste dado o teste negativo.
+- Ou, a hipótese de doença é suportada $.003$ vezes a da hipótese de ausência de doença dado o resultado negativo do teste
+

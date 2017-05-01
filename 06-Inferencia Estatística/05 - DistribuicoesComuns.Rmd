@@ -1,0 +1,323 @@
+---
+title       : Inferência Estatística
+subtitle    : Probabilidade Condicional
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## A distribuição de Bernoulli
+
+- A **distribuição de Bernoulli** surge como resultado de um resultado binário
+- As variáveis aleatórias de Bernoulli tomam (somente) os valores 1 e 0 com probabilidades de (digamos) $p$ e $1-p$ respectivamente
+- O PMF (`Probability mass function`) para uma variável aleatória de Bernoulli $X$ é $$P(X = x) = p^x (1 - p)^{1 - x}$$
+- A média de uma variável aleatória de Bernoulli é $p$ e a variância é $p(1 - p)$
+- Se deixamos $X$ ser uma variável aleatória de Bernoulli, é típico chamar $X = 1$ como um "sucesso" e $X = 0$ como uma "falha"
+
+---
+
+##  ensaios de Bernoulli 
+
+- **iid** - Independent and identically distributed random variables
+
+
+- Se várias observações de iid Bernoulli, digamos $x_1, \ldots, x_n$, são observadas as
+A probabilidade é:
+
+$$
+(1 - p) ^ {1 - x_i} = p ^ {\sum x_i} (1 - p) ^ {n - \sum x_i}
+$$
+- Observe que a probabilidade depende apenas da soma dos $x_i$
+- Como $n$ é fixo e assumido conhecido, isso implica que a proporção da amostra $\sum_i x_i / n$ contém todas as informações relevantes sobre $p$
+- Podemos maximizar a probabilidade de Bernoulli sobre $p$ para obter que $\hat p = \sum_i x_i / n$ é o estimador de máxima verossimilhança para $p$
+
+---
+
+## Traçando todas as probabilidades possíveis para um n pequeno
+
+---
+```{r, fig.height=6, fig.width=6, echo = FALSE, results='hide'}
+n <- 5
+pvals <- seq(0, 1, length = 1000)
+plot(c(0, 1), c(0, 1.2), type = "n", frame = FALSE, xlab = "p", ylab = "likelihood")
+text((0 : n) /n, 1.1, as.character(0 : n))
+sapply(0 : n, function(x) {
+  phat <- x / n
+  if (x == 0) lines(pvals,  ( (1 - pvals) / (1 - phat) )^(n-x), lwd = 3)
+  else if (x == n) lines(pvals, (pvals / phat) ^ x, lwd = 3)
+  else lines(pvals, (pvals / phat ) ^ x * ( (1 - pvals) / (1 - phat) ) ^ (n-x), lwd = 3) 
+  }
+)
+title(paste("Likelihoods for n = ", n))
+```
+
+---
+
+## Ensaios binomiais
+
+- As variáveis aleatórias *binomiais* são obtidas como a soma dos ensaios **iid** Bernoulli
+- Em específico, vamos $X_1, \ldots, X_n$ `iid` Bernoulli $(p)$; Então $X = \sum_ {i = 1} ^ n X_i$ é uma variável aleatória binomial
+- A função de massa binomial é:
+
+$$
+P(X = x) = 
+\left(
+\begin{array}{c}
+  n \\ x
+\end{array}
+\right)
+p^x(1 - p)^{n-x}
+$$
+
+para $x=0,\ldots,n$
+
+---
+
+## Escolha
+
+- Lembre-se que a notação
+  $$\left(
+    \begin{array}{c}
+      n \\ x
+    \end{array}
+  \right) = \frac{n!}{x!(n-x)!}
+  $$
+(Leia-se escolhe "$x$ de $n$") Conta o número de maneiras de selecionar $x$ itens de $n$ sem substituição, desconsiderando a ordem dos itens
+
+$$\left(
+    \begin{array}{c}
+      n \\ 0
+    \end{array}
+  \right) =
+\left(
+    \begin{array}{c}
+      n \\ n
+    \end{array}
+  \right) =  1
+  $$ 
+
+---
+
+## Exemplo de justificativa da probabilidade binomial
+
+- Considere a probabilidade de obter $6$ caras de $10$ jogadas de uma moeda com probabilidade de sucesso $p$
+- A probabilidade de obter $6$ caras e $4$ coroas em qualquer ordem específica é:
+
+  $$
+  p^6(1-p)^4
+  $$
+- Existem 
+$$\left(
+\begin{array}{c}
+  10 \\ 6
+\end{array}
+\right)
+$$
+Possíveis ordenações de $6$ caras e $4$ coroas
+
+---
+
+## Exemplo
+
+- Suponha que um amigo tem $8$ crianças (putz!), $7$ são meninas e nenhum gêmeos
+- Se cada sexo tem uma probabilidade de $50$% independente para cada nascimento, qual é a probabilidade de obter $7$ ou mais meninas de $8$ nascimentos?
+
+$$\left(
+\begin{array}{c}
+  8 \\ 7
+\end{array}
+\right) .5^{7}(1-.5)^{1}
++
+\left(
+\begin{array}{c}
+  8 \\ 8
+\end{array}
+\right) .5^{8}(1-.5)^{0} \approx 0.04
+$$
+```{r}
+choose(8, 7) * .5 ^ 8 + choose(8, 8) * .5 ^ 8 
+pbinom(6, size = 8, prob = .5, lower.tail = FALSE)
+```
+
+---
+```{r, fig.height=5, fig.width=5}
+plot(pvals, dbinom(7, 8, pvals) / dbinom(7, 8, 7/8) , 
+     lwd = 3, frame = FALSE, type = "l", xlab = "p", ylab = "likelihood")
+```
+
+---
+
+## A distribuição normal
+
+- Diz-se que uma variável aleatória segue uma distribuição **normal** ou **gaussiana** com média $\mu$ e variância $\sigma^2$ se a densidade associada for:
+
+$$
+(2 \ pi \ sigma ^ 2) ^ {- 1/2} e ^ {- (x - \ mu) ^ 2/2 \ sigma ^ 2}
+$$
+
+Se $ X $ a RV com esta densidade então $E[X] = \mu $e$ Var(X) = \sigma ^ 2$
+- Nós escrevemos $X \sim \mbox {N} (\mu, \sigma^2)$
+- Quando $\mu = 0$ e $\sigma = 1$ a distribuição resultante é chamada **a distribuição normal padrão**
+- A função de densidade normal padrão é rotulada $\phi$
+- Normal RVs normais são frequentemente rotulados $Z$
+
+---
+```{r, fig.height=4.5, fig.width=4.5}
+zvals <- seq(-3, 3, length = 1000)
+plot(zvals, dnorm(zvals), 
+     type = "l", lwd = 3, frame = FALSE, xlab = "z", ylab = "Density")
+sapply(-3 : 3, function(k) abline(v = k))
+```
+
+---
+
+## Mais fatos sobre a densidade normal
+
+- Se $X \sim \mbox{N}(\mu,\sigma^2)$ o $Z = \frac{X -\mu}{\sigma}$ É padrão normal
+- Se $Z$ É padrão normal $$X = \mu + \sigma Z \sim \mbox{N}(\mu, \sigma^2)$$
+- A densidade normal não padronizada é $$\phi\{(x - \mu) / \sigma\}/\sigma$$
+
+1. Aproximadamente $68\%$, $95\%$ e $99\%$ da densidade normal estão dentro de $1$, $2$ e $3$ desvios padrão da média, respectivamente
+2. $-1.28$, $-1.645$, $-1.96$ e $-2.33$ são os $10^{th}$, $5^{th}$, $2.5^{th}$ e $1^{st}$ Percentis da distribuição normal padrão, respectivamente
+3. Por simetria, os $1.28$, $1.645$, $1.96$ e $2.33$ são os percentis de $90^{o}$, $95^{o}$, $97.5^{o}$ and $99^{o}$ Distribuição, respectivamente
+
+---
+
+## Pergunta
+
+- Qual é o percentil $95^{th}$ de uma distribuição $N (\mu, \sigma^2)$?
+- Resposta rápida em R `qnorm (.95, mean = mu, sd = sd)`
+- Queremos o ponto $x_0$ para que $P(X\leq x_0) = .95$
+
+$$
+  \begin{eqnarray*}
+    P(X \leq x_0) & = & P\left(\frac{X - \mu}{\sigma} \leq \frac{x_0 - \mu}{\sigma}\right) \\ \\
+                  & = & P\left(Z \leq \frac{x_0 - \mu}{\sigma}\right) =  .95
+  \end{eqnarray*}
+$$
+
+Ou $x_0 = \mu + \sigma 1.645$
+
+- Em geral $x_0 = \mu + \sigma z_0$ onde $z_0$ é o quântico normal padrão apropriado
+
+---
+
+## Pergunta
+
+- Qual é a probabilidade de um $\mbox{N} (\mu, \sigma ^ 2)$ RV ser 2 desvios padrão acima da média?
+
+- Nós queremos saber
+
+$$
+  \begin{eqnarray*}
+  P(X > \mu + 2\sigma) & = & 
+P\left(\frac{X -\mu}{\sigma} > \frac{\mu + 2\sigma - \mu}{\sigma}\right)    \\ \\
+& = & P(Z \geq 2 ) \\ \\ 
+& \approx & 2.5\%
+  \end{eqnarray*}
+$$
+
+---
+
+## Outras propriedades
+
+- A distribuição normal é simétrica e atingiu o pico em relação à sua média (portanto, a média, a mediana e a moda são todas iguais)
+- Um tempo constante de uma variável aleatória normalmente distribuída também é normalmente distribuído (o que é a média ea variância?)
+- As somas de variáveis aleatórias normalmente distribuídas são novamente distribuídas, mesmo que as variáveis sejam dependentes (qual é a média ea variância?)
+- Médias de amostra de variáveis aleatórias normalmente distribuídas são novamente distribuídas normalmente (com que média e variância?)
+- O quadrado de uma variável aleatória *padrão normal* segue o que é chamado de distribuição de **chi-quadrado**
+- O expoente de uma variável aleatória normalmente distribuída segue o que é chamado de **log-normal** distribuição
+- Como veremos mais adiante, muitas variáveis aleatórias, devidamente normalizadas, *limitam* a uma distribuição normal
+
+---
+
+## Pensamentos finais sobre probabilidades normais
+
+- O MLE para $\mu$ é $\bar X$.
+- O MLE para $\sigma^ 2$ é
+
+  $$
+  \frac{\sum_{i=1}^n (X_i - \bar X)^2}{n}
+  $$
+MLE - maximum likelihood estimate (Estimativa de máxima verossimilhança)
+Verossimilhança - Em estatística, a noção de verossimilhança é uma função da probabilidade condicional. 
+  
+(Qual é a versão tendenciosa da variância da amostra.)
+- O MLE de $\sigma$ é simplesmente a raiz quadrada deste estimativa
+
+---
+## A distribuição de Poisson
+
+* Usado para modelar contagens
+* A função de massa de Poisson é
+
+$$
+P (X = x; \lambda) = \frac {\lambda ^ x e ^ {- \lambda}} {x!}
+$$
+
+Para $x = 0,1, \ldots$
+- A média dessa distribuição é $\lambda$
+- A variação desta distribuição é $\lambda$
+- Observe que $x$ varia de $0$ para $\infty$
+
+---
+## Alguns usos para a distribuição de Poisson
+- Modelagem de dados de evento / tempo
+- Modelagem de decaimento radioativo
+- Modelagem de dados de sobrevivência
+- Modelagem de dados de contagem ilimitada
+- Modelagem de tabelas de contingência
+- Aproximar binomiais quando $n$ é grande e $p$ é pequeno
+
+---
+## derivação de Poisson
+- $\Lambda$ é o número médio de eventos por unidade de tempo
+- Seja $h$ muito pequeno
+- Suponhamos que assumimos que
+- Prob. De um evento em um intervalo de comprimento $h$ is $\lambda h$ enquanto o prob. De mais de um evento é insignificante 
+- Se um evento ocorre ou não em um pequeno intervalo não afeta se um evento ocorre ou não em outro pequeno intervalo, rntão, o número de eventos por unidade de tempo é Poisson com média $\lambda$
+
+---
+## Taxas e variáveis aleatórias de Poisson
+- Variáveis aleatórias de Poisson são usadas para modelar taxas
+- $X\sim Poisson (\lambda t)$ onde
+- $\Lambda = E [X / t]$ é a contagem esperada por unidade de tempo
+- $T$ é o tempo total de monitoramento
+
+---
+## aproximação de Poisson ao binômio
+- Quando $n$ é grande e $p$ é pequeno a distribuição de Poisson é uma aproximação precisa à distribuição binomial
+
+- Notação
+  - $\lambda = n p$
+  - $X \sim \mbox{Binomial}(n, p)$, $\lambda = n p$ and
+  - $n$ grande 
+  - $p$ pequeno
+  - $\lambda$ permanece constante
+
+---
+## Exemplo
+O número de pessoas que aparecem em um ponto de ônibus é Poisson com uma média de $2.5$ por hora.
+
+Se observar o ponto de ônibus por 4 horas, qual é a probabilidade de que $3$ ou menos pessoas aparecem por todo o tempo?
+
+```{r}
+ppois(3, lambda = 2.5 * 4)
+```
+
+---
+## Exemplo, aproximação de Poisson ao binômio
+
+Jogamos uma moeda com probabilidade de sucesso $0,01$ quinhentas vezes.
+
+Qual é a probabilidade de 2 ou menos sucessos? A probabilidade de que $3$
+Ou menos pessoas aparecem por todo o tempo?
+
+```{r}
+pbinom(2, size = 500, prob = .01)
+ppois(2, lambda=500 * .01)
+```
+

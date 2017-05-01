@@ -1,0 +1,239 @@
+---
+title       : Inferência Estatística
+subtitle    : Assintotica
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Asymptotics
+* Asymptotics é o termo para o comportamento da estatística como o tamanho da amostra (ou alguma outra quantidade relevante) limites para o infinito (ou algum outro número relevante)
+* Asymptopia é o meu nome para a terra de assintóticos, onde tudo funciona bem e não há bagunça. A terra de dados infinitos é agradável dessa maneira.
+* Asymptotics são incrivelmente útil para inferência estatística simples e aproximações (Não abrangidos nesta classe) Asymptotics muitas vezes levam a uma boa compreensão dos procedimentos
+* Asymptotics geralmente não dão garantias sobre o desempenho da amostra finita
+* Os tipos de asymptotics que fazem são ordens de magnitude mais difíceis de trabalhar com
+* Asymptotics formam a base para a interpretação de freqüência de probabilidades (A proporção de longo prazo de ocorrências de um evento
+* Para entender asymptotics, precisamos de uma compreensão muito básica dos limites.
+
+---
+
+## Limites numéricos
+
+Imagine uma seqüência
+
+  - $a_1 = .9$,
+  - $a_2 = .99$,
+  - $a_3 = .999$, ...
+
+- Claramente esta seqüência converge para $1$
+- Definição de um limite: Para qualquer distância fixa podemos encontrar um ponto na seqüência para que a seqüência esteja mais próxima do limite que a distância desse ponto em
+
+---
+
+## Limites de variáveis aleatórias
+
+- O problema é mais difícil para as variáveis aleatórias
+- Considere $\bar X_n$ a média da amostra da primeira $n$ de uma coleção de $iid$ observações
+
+- Exemplo $\bar X_n$ poderia ser a média do resultado de $n$ moeda jogada (ou seja, a proporção da amostra de caras)
+
+- Dizemos que $\bar X_n$ converge em probabilidade para um limite se, para qualquer distância fixa, a probabilidade de $\bar X_n$ estar mais próxima (mais longe) do que a distância do limite converge para um (zero)
+
+---
+
+## A Lei dos Grandes Números
+
+- Estabelecer que uma seqüência aleatória converge para um limite é difícil
+- Felizmente, temos um teorema que faz todo o trabalho para nós, chamado A **Lei de Grandes Números**
+- A lei dos grandes números afirma que se $X_1, \ldots X_n$ são iid de uma população com média $\mu$ e variância $\sigma ^2$ então $\bar X_n$ converge em probabilidade para $\mu$
+- Há muitas variações sobre o LLN (**Law of Large Numbers**), estamos usando uma versão particularmente preguiçosa (Lazy).
+
+---
+
+## Lei de grandes números em ação
+
+```{r, fig.height=4, fig.width=4}
+n <- 10000; means <- cumsum(rnorm(n)) / (1  : n)
+plot(1 : n, means, type = "l", lwd = 2, 
+     frame = FALSE, ylab = "cumulative means", xlab = "sample size")
+abline(h = 0)
+```
+
+---
+
+## Discussão
+- Um estimador é **consistente** se converge para o que você quer estimar
+- A coerência não é nem necessária nem suficiente para que um estimador seja melhor que outro
+- Normalmente, bons estimadores são consistentes; Não é muito pedir que, se nós vamos para o problema de coletar uma `quantidade infinita` de dados que temos a resposta certa
+- O LLN basicamente afirma que a média da amostra é consistente
+- A variância da amostra e o desvio padrão da amostra são também
+- Recordar também que a média da amostra ea variância da amostra são
+- (O desvio padrão da amostra é parcial, pelo caminho)
+
+---
+
+## O Teorema do Limite Central
+
+- O **Teorema do Limite Central** (CLT) é um dos teoremas mais importantes em estatística
+- Para os nossos propósitos, a CLT afirma que a distribuição das médias das variáveis iid, devidamente normalizada, passa a ser a de um normal padrão à medida que o tamanho da amostra aumenta
+- A CLT se aplica em uma infinidade de configurações
+- Seja $X_1, \ldots, X_n$ uma coleção de variáveis aleatórias de iid com média $\mu$ e variância $\sigma^2$
+- Seja $\bar X_n $ a sua média de amostra
+- Então $\frac{\bar X_n - \mu} {\sigma / \sqrt {n}}$ tem uma distribuição como a de um padrão normal para grandes $n$.
+- Lembrar a fórmula
+
+$$\frac{\bar X_n - \mu}{\sigma / \sqrt{n}} = 
+    \frac{\mbox{Estimate} - \mbox{Mean of estimate}}{\mbox{Std. Err. of estimate}}.
+$$
+
+- Normalmente, substituir o erro padrão pelo seu valor estimado não altera o CLT
+
+---
+
+## Exemplo
+
+- Simular uma variável aleatória normal padrão rodando $n$ (seis lados)
+- Seja $X_i$ o resultado para o dado $i$
+- Note que $\mu = E [X_i] = 3.5$
+- $Var(X_i) = 2.92$ 
+- SE $\sqrt{2.92 / n} = 1.71 / \sqrt{n}$
+- Média padronizada
+
+$$
+    \frac{\bar X_n - 3.5}{1.71/\sqrt{n}}
+$$ 
+
+---
+
+## Simulação de média de $n$ lançamento de dados
+```{r, echo = FALSE, fig.width=9, fig.height = 3}
+par(mfrow = c(1, 3))
+for (n in c(1, 2, 6)){
+  temp <- matrix(sample(1 : 6, n * 10000, replace = TRUE), ncol = n)
+  temp <- apply(temp, 1, mean)
+  temp <- (temp - 3.5) / (1.71 / sqrt(n)) 
+  dty <- density(temp)
+  plot(dty$x, dty$y, xlab = "", ylab = "density", type = "n", xlim = c(-3, 3), ylim = c(0, .5))
+  title(paste("sample mean of", n, "obs"))
+  lines(seq(-3, 3, length = 100), dnorm(seq(-3, 3, length = 100)), col = grey(.8), lwd = 3)
+  lines(dty$x, dty$y, lwd = 2)
+}
+```
+
+---
+
+## A Moeda e CLT
+
+- Seja $X_i$ o resultado $0$ ou $1$ do $i^{th}$ jogada de uma moeda possivelmente injusta
+- A proporção da amostra, digamos $\hat p$, é a média das jogadas da moedas
+- $E[X_i] = p$ e $Var(X_i) = p(1-p)$
+- Erro padrão da média é $\sqrt{p (1-p) / n}$
+- Então
+
+$$
+    \frac{\hat p - p}{\sqrt{p(1-p)/n}}
+$$
+
+Será aproximadamente distribuído normalmente
+
+---
+
+
+```{r, echo = FALSE, fig.width=7.5, fig.height = 5}
+par(mfrow = c(2, 3))
+for (n in c(1, 10, 20)){
+  temp <- matrix(sample(0 : 1, n * 10000, replace = TRUE), ncol = n)
+  temp <- apply(temp, 1, mean)
+  temp <- (temp - .5) * 2 * sqrt(n)
+  dty <- density(temp)
+  plot(dty$x, dty$y, xlab = "", ylab = "density", type = "n", xlim = c(-3, 3), ylim = c(0, .5))
+  title(paste("sample mean of", n, "obs"))
+  lines(seq(-3, 3, length = 100), dnorm(seq(-3, 3, length = 100)), col = grey(.8), lwd = 3)
+  lines(dty$x, dty$y, lwd = 2)
+}
+for (n in c(1, 10, 20)){
+  temp <- matrix(sample(0 : 1, n * 10000, replace = TRUE, prob = c(.9, .1)), ncol = n)
+  temp <- apply(temp, 1, mean)
+  temp <- (temp - .1) / sqrt(.1 * .9 / n)
+  dty <- density(temp)
+  plot(dty$x, dty$y, xlab = "", ylab = "density", type = "n", xlim = c(-3, 3), ylim = c(0, .5))
+  title(paste("sample mean of", n, "obs"))
+  lines(seq(-3, 3, length = 100), dnorm(seq(-3, 3, length = 100)), col = grey(.8), lwd = 3)
+  lines(dty$x, dty$y, lwd = 2)
+}
+```
+
+
+---
+
+## CLT na prática
+
+- Na prática, a CLT é sobretudo útil como uma aproximação
+
+$$
+    P\left( \frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \leq z \right) \approx \Phi(z).  
+$$
+- Lembrar que $1.96$ é uma boa aproximação ao $.975^{the}$ quantil do padrão normal
+- Considere:
+$$
+    \begin{eqnarray*}
+      .95 & \approx & P\left( -1.96 \leq \frac{\bar X_n - \mu}{\sigma / \sqrt{n}} \leq 1.96 \right)\\ \\
+      & =       & P\left(\bar X_n +1.96 \sigma/\sqrt{n} \geq \mu \geq \bar X_n - 1.96\sigma/\sqrt{n} \right),\\
+    \end{eqnarray*}
+$$
+
+---
+
+## Intervalos de confiança
+
+- Portanto, de acordo com a CLT, a probabilidade de que o intervalo aleatório $$\bar X_n \pm z_ {1-\alpha / 2} \sigma / \sqrt {n}$$ contém $\mu$ é aproximadamente 100 $1-\alpha) $%, onde $z_{1- \alpha / 2}$ é o quantil $1- \alpha / 2$ da distribuição normal padrão
+- Isso é chamado de um intervalo de confiança $100 (1 - \alpha)$%**intervalo de confiança** para $\mu$
+- Podemos substituir o desconhecido $\sigma$ por $s$
+
+---
+
+## Dê um intervalo de confiança para a altura média dos filhos
+Nos dados de Galton
+
+```{r}
+library(UsingR);data(father.son); x <- father.son$sheight
+(mean(x) + c(-1, 1) * qnorm(.975) * sd(x) / sqrt(length(x))) / 12
+```
+
+---
+
+## Proporções da amostra
+
+- No caso de cada $X_i$ ser $0$ ou $1$ com probabilidade de sucesso comum $p$ então $\sigma ^ 2 = p (1 - p $
+- O intervalo assume a forma
+
+$$
+    \hat p \pm z_{1 - \alpha/2}  \sqrt{\frac{p(1 - p)}{n}}
+$$
+- Substituindo $p$ por $\hat p$ no erro padrão resulta no que é chamado de intervalo de confiança Wald para $p$
+- Observe também que $p(1-p) \leq 1/4$ para $0 \leq p \leq 1 $
+- Vamos $\alpha = .05$ para que $z_{1 - \alpha / 2} = 1.96 \approx 2$ então
+
+$$
+    2  \sqrt{\frac{p(1 - p)}{n}} \leq 2 \sqrt{\frac{1}{4n}} = \frac{1}{\sqrt{n}} 
+$$
+- Portanto $\hat p \pm \frac {1} {\sqrt {n}}$ é uma estimativa rápida do `intervalo de confiança` para $p$
+
+---
+
+## Exemplo
+
+* Seu conselheiro da campanha disse-lhe que em uma amostra aleatória de 100 eleitores prováveis, 56 intenção de votar em você.
+* Você pode relaxar? Você tem essa corrida no saco?
+* Sem acesso a um computador ou calculadora, quão precisa é esta estimativa?
+* `1 / sqrt (100) =. 1` assim um back do cálculo do envelope dá um intervalo aproximado de 95% de `(0.46, 0.66)`
+* Não é suficiente para você relaxar, melhor ir fazer mais campanhas!
+* Diretrizes aproximadas, 100 para 1 casa decimal, 10.000 para 2, 1.000.000 para 
+
+```{r}
+round(1 / sqrt(10 ^ (1 : 6)), 3)
+```
+

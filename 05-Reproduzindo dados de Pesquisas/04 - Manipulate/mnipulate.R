@@ -1,5 +1,5 @@
 library(manipulate)
-require(mtcars)
+data(mtcars)
 
 myHist <- function(mu){
         hist(mtcars$disp,col="blue",breaks=100)

@@ -9,7 +9,6 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
-#
 ## Valores esperados
 
 - O **valor esperado** ou **média** de uma variável aleatória é o centro de sua distribuição
