@@ -1,0 +1,95 @@
+---
+title       : Inferência Estatística
+subtitle    : Teste de Hipótese
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+
+
+## P-values
+
+* Medida mais comum de "significância estatística"
+* Sua ubiqüidade, junto com a preocupação com a sua interpretação e uso torna controversos entre os estatísticos
+  * [http://warnercnr.colostate.edu/~anderson/thompson1.html](http://warnercnr.colostate.edu/~anderson/thompson1.html)
+  * Also see *Statistical Evidence: A Likelihood Paradigm* by Richard Royall 
+  * *Toward Evidence-Based Medical Statistics. 1: The P Value Fallacy* by Steve Goodman
+  * The hilariously titled: *The Earth is Round (p < .05)* by Cohen.
+* Alguns comentários positivos
+  * [simply statistics](http://simplystatistics.org/2012/01/06/p-values-and-hypothesis-testing-get-a-bad-rap-but-we/)
+  * [normal deviate](http://normaldeviate.wordpress.com/2013/03/14/double-misunderstandings-about-p-values/)
+  * [Error statistics](http://errorstatistics.com/2013/06/14/p-values-cant-be-trusted-except-when-used-to-argue-that-p-values-cant-be-trusted/)
+
+---
+
+
+## O que é um p-value?
+
+__Idea__: Suponha que nada está acontecendo - quão incomum é ver a estimativa que temos?
+
+__Abordagem__:
+
+1. Definir a distribuição hipotética de um resumo de dados (estatística) quando "nada está acontecendo" (hipótese nula)
+2. Calcule o resumo / estatística com os dados que temos (_teste estatístico_)
+3. Compare o que calculamos com nossa distribuição hipotética e verifique se o valor é "extremo" (_p-value_)
+
+---
+## P-values
+* O p-value é a probabilidade sob a hipótese nula de obter evidências como extremas ou mais extremas do que seria observado por acaso sozinho
+* Se o p-value é pequeno, então $H_0$ é verdadeiro e observamos um evento raro ou $H_0$ é falso
+* No nosso exemplo, a estatística $T$ foi $0.8$.
+* Qual é a probabilidade de obter uma estatística $T$ tão grande quanto $0.8$?
+
+```{r}
+pt(0.8, 15, lower.tail = FALSE) 
+```
+* Portanto, a probabilidade de ver as evidências como extremas ou mais extremas do que aquelas realmente obtidas sob $H_0$ é `r pt(0.8, 15, lower.tail = FALSE)`
+
+---
+
+### O nível de significância alcançado
+
+* Nossa estatística de teste foi $2$ para $H_0: \mu_0 = 30$ versus $H_a: \mu > 30$.
+* Observe que nós rejeitamos o teste um lado quando $\alpha = 0.05$, nós rejeitariamos se $\alpha = 0.01$, como sobre $0.001$?
+* O menor valor para alfa que você ainda rejeitar a hipótese nula é chamado de *nível de significância alcançado*
+* Isto é equivalente, mas filosoficamente um pouco diferente do *P-value*
+
+---
+
+## Notas
+* Ao relatar um valor P o leitor pode executar o teste de hipótese em qualquer nível $\alpha$ que ele ou ela escolhe
+* Se o p-value for menor que $\alpha$ você rejeita a hipótese nula
+* Para teste de hipótese de duas amostras pareadas, o dobro do menor dos dois em um teste de hipóteses lado ao lado de p-value
+
+---
+
+## Revisitando um exemplo anterior
+
+- Suponha que um amigo tem $8$ crianças, $7$ de que são meninas e nenhum são gêmeos
+- Se cada sexo tem uma probabilidade de $50$% independente para cada nascimento, qual é a probabilidade de obter $7$ ou mais meninas de $8$ nascimentos?
+
+```{r}
+choose(8, 7) * .5 ^ 8 + choose(8, 8) * .5 ^ 8 
+pbinom(6, size = 8, prob = .5, lower.tail = FALSE)
+```
+
+---
+
+## exemplo Poisson
+
+- Suponha que um hospital tenha uma taxa de infecção de 10 infecções por 100 pessoas por dia em risco (taxa de 0,1) durante o último período de monitorização.
+- Suponha que uma taxa de infecção de 0,05 seja um parâmetro de referência importante.
+- Dado o modelo, poderia a taxa observada ser maior que 0,05 ser atribuída ao acaso?
+- Sob $H_0: \lambda = 0,05$ para que $\lambda_0 100 = 5$
+- Considere $H_a: \lambda> 0,05$.
+
+```{r}
+ppois(9, 5, lower.tail = FALSE)
+```
+
+
+

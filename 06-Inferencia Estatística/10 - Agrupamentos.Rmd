@@ -1,0 +1,167 @@
+---
+title       : Inferência Estatística
+subtitle    : Agrupamentos
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Grupo independente $t$ intervalos de confiança
+
+- Suponha que queremos comparar a pressão arterial média entre dois grupos em um estudo randomizado; Aqueles que receberam o tratamento para aqueles que receberam um placebo
+- Não podemos usar o teste t emparelhado porque os grupos são independentes e podem ter tamanhos de amostra diferentes
+- Apresentamos agora métodos para comparar grupos independentes
+
+---
+
+## Notatição
+
+- Deixe $X_1,\ldots,X_{n_x}$ ser iid $N(\mu_x,\sigma^2)$
+- Deixe $Y_1,\ldots,Y_{n_y}$ ser iid $N(\mu_y, \sigma^2)$
+- Deixe $\bar X$, $\bar Y$, $S_x$, $S_y$ Ser a média e desvios-padrão
+- Usando o fato de que combinações lineares de normais são novamente normais, sabemos que $\bar Y - \bar X$ Também é normal com média $\mu_y - \mu_x$ e variância $\sigma^2 (\frac{1}{n_x} + \frac{1}{n_y})$
+- O estimador de variância combinado $$S_p^2 = \{(n_x - 1) S_x^2 + (n_y - 1) S_y^2\}/(n_x + n_y - 2)$$ É um bom estimador de $\sigma^2$
+
+---
+
+## Nota
+
+- O estimador combinado é uma mistura das variâncias do grupo, colocando maior peso em qualquer que tenha um maior tamanho da amostra
+- Se os tamanhos de amostra forem os mesmos, a estimativa de variância agrupada é a média das variâncias do grupo
+- O estimador combinado é imparcial
+$$
+    \begin{eqnarray*}
+    E[S_p^2] & = & \frac{(n_x - 1) E[S_x^2] + (n_y - 1) E[S_y^2]}{n_x + n_y - 2}\\
+            & = & \frac{(n_x - 1)\sigma^2 + (n_y - 1)\sigma^2}{n_x + n_y - 2}
+    \end{eqnarray*}
+$$
+- A estimativa de variância agrupada é independente de $\bar Y - \bar X$ dado que $S_x$ é independente de $\bar X$ e $S_y$ é independente de $\bar Y$ e os grupos são independentes
+
+---
+
+## Resultado
+
+- A soma de duas variáveis aleatórias independentes Chi-quadrado é Chi-quadrado com graus de liberdade iguais à soma dos graus de liberdade dos summands
+- Assim sendo
+
+$$
+    \begin{eqnarray*}
+      (n_x + n_y - 2) S_p^2 / \sigma^2 & = & (n_x - 1)S_x^2 /\sigma^2 + (n_y - 1)S_y^2/\sigma^2 \\ \\
+      & = & \chi^2_{n_x - 1} + \chi^2_{n_y-1} \\ \\
+      & = & \chi^2_{n_x + n_y - 2}
+    \end{eqnarray*}
+$$
+
+---
+
+## Juntando tudo isso
+
+- A estatística
+$$
+    \frac{\frac{\bar Y - \bar X - (\mu_y - \mu_x)}{\sigma \left(\frac{1}{n_x} + \frac{1}{n_y}\right)^{1/2}}}%
+    {\sqrt{\frac{(n_x + n_y - 2) S_p^2}{(n_x + n_y - 2)\sigma^2}}}
+    = \frac{\bar Y - \bar X - (\mu_y - \mu_x)}{S_p \left(\frac{1}{n_x} + \frac{1}{n_y}\right)^{1/2}}
+$$
+É um padrão normal dividido pela raiz quadrada de um Chi-quadrado independente dividido por seus graus de liberdade
+- Portanto esta estatística segue a distribuição $t$ de Gosset com $n_x + n_y - 2$ graus de liberdade
+- Observe que o formulário é (estimador - valor verdadeiro) / SE
+
+---
+
+## Intervalo de COnfiança
+
+- Portanto, um $(1 - \alpha)\times 100\%$ Intervalo de confiança para $\mu_y - \mu_x$ is 
+$$
+    \bar Y - \bar X \pm t_{n_x + n_y - 2, 1 - \alpha/2}S_p\left(\frac{1}{n_x} + \frac{1}{n_y}\right)^{1/2}
+$$
+- Lembre-se que este intervalo está assumindo uma variância constante entre os dois grupos
+- Se houver alguma dúvida, assumir uma variação diferente por grupo, que discutiremos mais tarde
+---
+
+
+## Exemplo
+### Baseado em Rosner, Fundamentals of Biostatistics
+
+        - Comparando PAS para 8 usuários contraceptivos orais versus 21 controles
+- $\bar X_{OC} = 132.86$ mmHg with $s_{OC} = 15.34$ mmHg
+- $\bar X_{C} = 127.44$ mmHg with $s_{C} = 18.23$ mmHg
+- Pooled variance estimate
+```{r}
+sp <- sqrt((7 * 15.34^2 + 20 * 18.23^2) / (8 + 21 - 2))
+132.86 - 127.44 + c(-1, 1) * qt(.975, 27) * sp * (1 / 8 + 1 / 21)^.5
+```
+
+---
+```{r}
+data(sleep)
+x1 <- sleep$extra[sleep$group == 1]
+x2 <- sleep$extra[sleep$group == 2]
+n1 <- length(x1)
+n2 <- length(x2)
+sp <- sqrt( ((n1 - 1) * sd(x1)^2 + (n2-1) * sd(x2)^2) / (n1 + n2-2))
+md <- mean(x1) - mean(x2)
+semd <- sp * sqrt(1 / n1 + 1/n2)
+md + c(-1, 1) * qt(.975, n1 + n2 - 2) * semd
+t.test(x1, x2, paired = FALSE, var.equal = TRUE)$conf
+t.test(x1, x2, paired = TRUE)$conf
+```
+
+---
+## Ignoring pairing
+```{r, echo = FALSE, fig.width=5, fig.height=5}
+plot(c(0.5, 2.5), range(x1, x2), type = "n", frame = FALSE, xlab = "group", ylab = "Extra", axes = FALSE)
+axis(2)
+axis(1, at = 1 : 2, labels = c("Group 1", "Group 2"))
+for (i in 1 : n1) lines(c(1, 2), c(x1[i], x2[i]), lwd = 2, col = "red")
+for (i in 1 : n1) points(c(1, 2), c(x1[i], x2[i]), lwd = 2, col = "black", bg = "salmon", pch = 21, cex = 3)
+```
+
+---
+
+## Unequal variances
+
+- Under unequal variances
+$$
+    \bar Y - \bar X \sim N\left(\mu_y - \mu_x, \frac{s_x^2}{n_x} + \frac{\sigma_y^2}{n_y}\right)
+$$
+- The statistic 
+$$
+    \frac{\bar Y - \bar X - (\mu_y - \mu_x)}{\left(\frac{s_x^2}{n_x} + \frac{\sigma_y^2}{n_y}\right)^{1/2}}
+$$
+approximately follows Gosset's $t$ distribution with degrees of freedom equal to
+$$
+    \frac{\left(S_x^2 / n_x + S_y^2/n_y\right)^2}
+    {\left(\frac{S_x^2}{n_x}\right)^2 / (n_x - 1) +
+      \left(\frac{S_y^2}{n_y}\right)^2 / (n_y - 1)}
+$$
+
+---
+
+## Example
+
+- Comparando PAS para 8 usuários contraceptivos orais versus 21 controles
+- $\bar X_{OC} = 132.86$ mmHg com $s_{OC} = 15.34$ mmHg
+- $\bar X_{C} = 127.44$ mmHg com $s_{C} = 18.23$ mmHg
+- $df=15.04$, $t_{15.04, .975} = 2.13$
+- Intervalo
+$$
+132.86 - 127.44 \pm 2.13 \left(\frac{15.34^2}{8} + \frac{18.23^2}{21} \right)^{1/2}
+= [-8.91, 19.75]
+$$
+- In R, `t.test(..., var.equal = FALSE)`
+
+---
+
+## Comparando outros tipos de dados
+
+* Para dados binomiais, há muitas maneiras de comparar dois grupos de risco relativo, diferença de risco, odds ratio.
+* Qui-quadrado testes, aproximações normais, testes exatos.
+* Para dados de contagem, há também testes de Qui-quadrado e testes exatos.
+* Vamos deixar as discussões para comparar grupos de dados para binário e contagem de dados até cobertura glms na classe de regressão.
+* Além disso, Mathematical Biostatistics Boot Camp 2 abrange muitos especiais casos relevantes para bioestatística.
+
+
+---

@@ -1,0 +1,186 @@
+---
+title       : Inferência Estatística
+subtitle    : Teste de Hipótese
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+
+## Testando hipóteses
+* O teste de hipóteses está relacionado com a tomada de decisões usando dados
+* Uma hipótese nula é especificada que representa o status quo, geralmente rotulado como $H_0$
+* A hipótese nula é considerada verdadeira e é necessária evidência estatística rejeitá-la em favor de uma pesquisa ou hipótese alternativa
+
+---
+
+## Exemplo
+* Um índice de distúrbio respiratório de mais de $ 30 $ eventos / hora, digamos, é consideradas evidências de distúrbios respiratórios graves do sono (SDB).
+* Suponha que em uma amostra de $ 100 $ sujeitos com sobrepeso com fatores de risco para distúrbios respiratórios do sono em uma clínica de média RDI foi $ 32 $ eventos / hora com um desvio padrão de $ 10 $ eventos / hora.
+* Podemos querer testar a hipótese de que
+* $H_0: \mu = 30$
+* $H_a: \mu > 30$
+* Onde $\mu$ é a média da população RDI.
+
+---
+
+## Testando hipóteses
+* As hipóteses alternativas são tipicamente da forma $<$, $>$ ou $\neg$
+* Observe que há quatro resultados possíveis de nosso processo de decisão estatística
+
+Verdade | Decide | Resultado |
+---|---|---|
+$H_0$ | $H_0$ | Aceitar corretamente a hipótese nula|
+$H_0$ | $H_a$ | Erro tipo 1 |
+$H_a$ | $H_a$ | Recusar corretamente a hipótese nula|
+$H_a$ | $H_0$ | Erro tipo 2 |
+
+---
+
+## Discussão
+* Considerar um tribunal de direito; A hipótese nula é que ao réu é inocente
+* Exigimos evidências para rejeitar a hipótese nula (convicto)
+* Se precisarmos de pouca evidência, então aumentaremos a percentagem de inocentes condenados (erros do tipo I); No entanto nós também aumentaria a porcentagem de culpados condenados (Rejeitando corretamente a hipótese nula)
+* Se precisamos de muita evidência, então nós aumentamos o percentagem de pessoas inocentes liberta (aceitando corretamente a hipótese nula), enquanto também aumentaríamos a porcentagem de pessoas culpadas deixe livre (erros de tipo II)
+
+---
+
+## Exemplo
+- Considere nosso exemplo novamente
+- Uma estratégia razoável rejeitaria a hipótese nula se $\bar X$ foi maior do que alguma constante, digamos $C$
+- Normalmente, $ C $ é escolhido de modo que a probabilidade de um Tipo I erro, $\alpha$, é $.05$ (ou alguma outra constante relevante)
+- $\alpha$ = Taxa de erro do tipo I = Probabilidade de rejeitar a hipótese nula quando, de fato, a hipótese nula está correta
+
+---
+
+## Exemplo continuado
+
+$$
+\begin{align}
+0.05  & =  P\left(\bar X \geq C ~|~ \mu = 30 \right) \\
+      & =  P\left(\frac{\bar X - 30}{10 / \sqrt{100}} \geq \frac{C - 30}{10/\sqrt{100}} ~|~ \mu = 30\right) \\
+      & =  P\left(Z \geq \frac{C - 30}{1}\right) \\
+\end{align}
+$$
+
+* Portanto $(C - 30) / 1 = 1.645$ implicando em $C = 31.645$
+* Uma vez que nossa média é $32$ rejeitamos a hipótese nula
+
+---
+
+## Discussão
+* Em geral, não convertem $ C $ de volta para a escala original
+* Nós simplesmente rejeitamos porque o Z-score; Que é quantas erros padrão, a média da amostra está acima da média  
+
+$$
+  \frac{32 - 30}{10 / \sqrt{100}} = 2
+$$
+
+É maior que $1.645$
+* Ou, sempre que 
+
+$\sqrt{n} (\bar X - \mu_0) / s > Z_{1-\alpha}$
+
+---
+
+## Regras gerais
+* O teste $Z$ para $H_0:\mu = \mu_0$ versus 
+  * $H_1: \mu < \mu_0$
+  * $H_2: \mu \neq \mu_0$
+  * $H_3: \mu > \mu_0$ 
+* Teste estatístico $ TS = \frac{\bar{X} - \mu_0}{S / \sqrt{n}} $
+* Rejeitar a hipótese nula quando
+  * $TS \leq -Z_{1 - \alpha}$
+  * $|TS| \geq Z_{1 - \alpha / 2}$
+  * $TS \geq Z_{1 - \alpha}$
+
+---
+
+## Notas
+* Nós fixamos $\alpha$ para baixo, então se rejeitarmos $H_0$ (ou nosso modelo está errado) ou há uma baixa probabilidade de termos feito um erro
+* Não fixamos a probabilidade de um erro de tipo II, $\beta$; portanto, tendemos a dizer "Falha em rejeitar $H_0$" em vez de aceitando $H_0$
+* Significado estatístico não é o mesmo que científico significado
+* A região dos valores de TS para a qual você rejeita $H_0$ é chamada de região de rejeição
+
+---
+
+## Mais notas
+* O teste $Z$ requer as suposições do CLT e para $n$ ser grande o suficiente para que ele se aplique
+* Se $n$ for pequeno, então o teste $T$ de Gossett é executado exatamente da mesma maneira, com os quantiles normais substituídos pelos quantiles $ T $ apropriados do estudante e $N-1$ graus de liberdade
+* A probabilidade de rejeitar a hipótese nula quando é falsa é chamada de *poder*
+* Power é um muito usado para calcular tamanhos de amostra para experimentos
+
+---
+
+## Exemplo reconsiderado
+- Considere o nosso exemplo novamente. Suponha que $ n = 16 $ (em vez de $100$). 
+Então considere que
+$$
+.05 = P\left(\frac{\bar X - 30}{s / \sqrt{16}} \geq t_{1-\alpha, 15} ~|~ \mu = 30 \right)
+$$
+- Para que nossa estatística de teste seja agora $\sqrt{16}(32 - 30) / 10 = 0.8 $, enquanto  o valor crítico é $t_{1-\alpha, 15} = 1.75$. 
+- Nós agora não rejeitamos.
+
+---
+
+## Testes de dois lados
+* Suponhamos que rejeitamos a hipótese nula se na verdade a média era muito grande ou muito pequena
+* Ou seja, queremos testar a alternativa $H_a: \mu \neq 30$ (Não faz muito sentido no nosso cenário)
+* Em seguida, observe
+
+$$
+ \alpha = P\left(\left. \left|\frac{\bar X - 30}{s /\sqrt{16}}\right| > t_{1-\alpha/2,15} ~\right|~ \mu = 30\right)
+$$
+* Isto é, vamos rejeitar se a estatística de teste, $0.8$, é ou demasiado grande ou demasiado pequeno, mas o valor crítico é calculado $\alpha / 2$
+* No nosso exemplo, o valor crítico é $2.13$, por isso não conseguimos rejeitar.
+
+---
+
+## T test em R
+```{r}
+library(UsingR); data(father.son)
+t.test(father.son$sheight - father.son$fheight)
+```
+
+---
+
+## Conexões com intervalos de confiança
+
+* Considere testar $H_0: \mu = \mu_0$ versus $H_a: \mu \neq \mu_0$
+* Pegue o conjunto de todos os valores possíveis para os quais você não rejeita $H_0$, este conjunto é um intervalo de confiança $(1- \alpha) 100\%$ para $\mu$
+* O mesmo funciona em sentido inverso; Se um intervalo $(1- \alpha) 100\%$ contém $\mu_0$, então nós *falhamos em* rejeitar $H_0$
+
+---
+
+## Teste binomial exato
+- Lembre-se deste problema, *Suponha que um amigo tem $8$ crianças, $7$ de que são meninas e nenhum são gêmeos*
+- Realizar o teste de hipóteses relevante. $H_0: p = 0,5$ $H_a: p> 0,5$
+- Qual é a região de rejeição relevante para que a probabilidade de rejeição seja (menor que) 5%?
+  
+Região de rejeição | Taxa de erro do tipo I |
+---|---|
+[0 : 8] | `r pbinom(-1, size = 8, p = .5, lower.tail = FALSE)`
+[1 : 8] | `r pbinom( 0, size = 8, p = .5, lower.tail = FALSE)`
+[2 : 8] | `r pbinom( 1, size = 8, p = .5, lower.tail = FALSE)`
+[3 : 8] | `r pbinom( 2, size = 8, p = .5, lower.tail = FALSE)`
+[4 : 8] | `r pbinom( 3, size = 8, p = .5, lower.tail = FALSE)`
+[5 : 8] | `r pbinom( 4, size = 8, p = .5, lower.tail = FALSE)`
+[6 : 8] | `r pbinom( 5, size = 8, p = .5, lower.tail = FALSE)`
+[7 : 8] | `r pbinom( 6, size = 8, p = .5, lower.tail = FALSE)`
+[8 : 8] | `r pbinom( 7, size = 8, p = .5, lower.tail = FALSE)`
+
+---
+
+## Notas
+* É impossível obter um teste de nível exato de 5% para este caso devido à discreteness do binômio.
+* O mais próximo é a região de rejeição [7: 8]
+* Qualquer nível alfa inferior a `r 1/2 ^ 8` não é atingível.
+* Para amostras maiores, podemos fazer uma aproximação normal, mas você já sabia disso.
+* Teste de dois lados não é óbvio.
+* Dada uma maneira de fazer testes bilaterais, poderíamos tomar o conjunto de valores de $ p_0 $ para o qual não conseguimos rejeitar obter um intervalo de confiança binomial exato (chamado intervalo Clopper / Pearson, BTW)
+* Para esses problemas, as pessoas sempre criam um P-valor (próxima palestra) ao invés de computar a região de rejeição.
+
+

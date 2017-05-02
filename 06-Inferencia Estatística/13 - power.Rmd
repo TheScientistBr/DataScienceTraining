@@ -1,0 +1,127 @@
+---
+title       : Inferência Estatística
+subtitle    : Power
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+
+
+
+## Power (poder)
+- Potência é a probabilidade de rejeitar a hipótese nula quando é falsa
+- Ergo, poder (como o nome sugere) é uma coisa boa; Você quer mais poder
+- Um erro de tipo II (uma coisa ruim, como seu nome sugere) está falhando em rejeitar a hipótese nula quando é falsa; A probabilidade de um erro de tipo II é normalmente denominada $\beta$
+- Nota: Power $=1-\beta$
+
+---
+## Notas
+- Consideremos nosso exemplo anterior envolvendo RDI
+- $H_0: \mu = 30$ versus $H_a: \mu> 30$
+- Então o poder é
+$$P\left(\frac{\bar X - 30}{s /\sqrt{n}} > t_{1-\alpha,n-1} ~|~ \mu = \mu_a \right)$$
+- Note que esta é uma função que depende do valor específico de $ \ mu_a $!
+- Observe como $ \ mu_a $ se aproxima $ 30 $ o poder se aproxima $ \ alpha $
+
+
+---
+## Calculando a potência para dados gaussianos
+Suponha que $n$ é grande e que sabemos $\sigma$
+
+$$
+\begin{align}
+1 -\beta & = 
+P\left(\frac{\bar X - 30}{\sigma /\sqrt{n}} > z_{1-\alpha} ~|~ \mu = \mu_a \right)\\
+& = P\left(\frac{\bar X - \mu_a + \mu_a - 30}{\sigma /\sqrt{n}} > z_{1-\alpha} ~|~ \mu = \mu_a \right)\\ \\
+& = P\left(\frac{\bar X - \mu_a}{\sigma /\sqrt{n}} > z_{1-\alpha} - \frac{\mu_a - 30}{\sigma /\sqrt{n}} ~|~ \mu = \mu_a \right)\\ \\
+& = P\left(Z > z_{1-\alpha} - \frac{\mu_a - 30}{\sigma /\sqrt{n}} ~|~ \mu = \mu_a \right)\\ \\
+\end{align}
+$$
+
+---
+
+## Exemplo continuado
+- Suponha que queremos detectar um aumento na média de RDI de pelo menos 2 eventos / hora (acima de 30).
+- Assumir a normalidade e que a amostra em questão terá um desvio padrão de $ 4 $;
+- Qual seria o poder se tomássemos um tamanho de amostra de $16$?
+  - $Z_{1-\alpha} = 1.645$ 
+  - $\frac{\mu_a - 30}{\sigma /\sqrt{n}} = 2 / (4 /\sqrt{16}) = 2$ 
+  - $P(Z > 1.645 - 2) = P(Z > -0.355) = 64\%$
+  
+```{r}
+pnorm(-0.355, lower.tail = FALSE)
+```
+
+---
+## Nota
+- Considere $H_0 : \mu = \mu_0$ and $H_a : \mu > \mu_0$ with $\mu = \mu_a$ under $H_a$.
+- Sob $H_0$ a estatística $Z = \frac{\sqrt{n}(\bar X - \mu_0)}{\sigma}$ is $N(0, 1)$
+- Sob $H_a$ $Z$ é $N\left( \frac{\sqrt{n}(\mu_a - \mu_0)}{\sigma}, 1\right)$
+- Nós rejeitamos se $Z > Z_{1-\alpha}$
+
+```{r}
+sigma <- 10; mu_0 = 0; mu_a = 2; n <- 100; alpha = .05
+plot(c(-3, 6),c(0, dnorm(0)), type = "n", frame = FALSE, xlab = "Z value", ylab = "")
+xvals <- seq(-3, 6, length = 1000)
+lines(xvals, dnorm(xvals), type = "l", lwd = 3)
+lines(xvals, dnorm(xvals, mean = sqrt(n) * (mu_a - mu_0) / sigma), lwd =3)
+abline(v = qnorm(1 - alpha))
+```
+
+
+---
+## Questão
+- Quando testamos $H_a : \mu > \mu_0$, avisa se o poder é $1 - \beta$, então 
+$$1 - \beta = P\left(Z > z_{1-\alpha} - \frac{\mu_a - \mu_0}{\sigma /\sqrt{n}} ~|~ \mu = \mu_a \right) = P(Z > z_{\beta})$$
+- Isto produz a equação
+$$z_{1-\alpha} - \frac{\sqrt{n}(\mu_a - \mu_0)}{\sigma} = z_{\beta}$$
+- Desconhecidos: $\mu_a$, $\sigma$, $n$, $\beta$
+- Conhecidos: $\mu_0$, $\alpha$
+- Especifique qualquer das 3 incógnitas e você pode resolver para o restante
+
+---
+
+## Notas
+- O cálculo para $H_a: \mu <\mu_0 $ é semelhante
+- Para $H_a: \mu \neq \mu_0$ calcular o poder unilateral usando $\alpha /2$ (isto é apenas aproximadamente certo, exclui a probabilidade de obter um grande grande na direção oposta da verdade)
+- O poder sobe à medida que $\alpha$ fica maior 
+- O poder de um teste unilateral é maior do que o poder do teste bilateral associado
+- O poder sobe quando $\mu_1$ fica mais distante de $\mu_0$
+- O poder aumenta à medida que $n$ sobe
+- O poder não precisa de $\mu_a$, $\sigma$ e $n$, em vez de apenas $\frac {\sqrt {n} (\mu_a - \mu_0)} {\sigma}$
+- A quantidade $\frac {\mu_a - \mu_0} {\sigma}$ é chamada de tamanho do efeito, a diferença na média das unidades de desvio padrão.
+- Ser livre de unidade, tem alguma esperança de interpretabilidade através de configurações
+
+---
+
+## Potência do teste T
+- Considere calcular o poder para um teste $T$ de Gossett para nosso exemplo
+- O poder é
+
+  $$
+  P\left(\frac{\bar X - \mu_0}{S /\sqrt{n}} > t_{1-\alpha, n-1} ~|~ \mu = \mu_a \right)
+  $$
+- Calculando isso requer a distribuição t não-central.
+- `power.t.test` faz isso muito bem - Omitir um dos argumentos e ele resolve por ele
+
+---
+## Exemplo
+```{r}
+power.t.test(n = 16, delta = 2 / 4, sd=1, type = "one.sample",  alt = "one.sided")$power
+power.t.test(n = 16, delta = 2, sd=4, type = "one.sample",  alt = "one.sided")$power
+power.t.test(n = 16, delta = 100, sd=200, type = "one.sample", alt = "one.sided")$power
+```
+
+---
+
+```{r}
+power.t.test(power = .8, delta = 2 / 4, sd=1, type = "one.sample",  alt = "one.sided")$n
+power.t.test(power = .8, delta = 2, sd=4, type = "one.sample",  alt = "one.sided")$n
+power.t.test(power = .8, delta = 100, sd=200, type = "one.sample", alt = "one.sided")$n
+```
+
+

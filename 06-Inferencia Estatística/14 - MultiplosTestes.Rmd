@@ -1,0 +1,174 @@
+---
+title       : Inferência Estatística
+subtitle    : Testes Multiplos
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+
+
+
+# Ideas Chave
+
+* Teste de hipóteses / análise de significância é comumente usado em excesso
+* Correção de múltiplos testes evita falsos positivos ou descobertas
+* Dois componentes-chave
+    * Medida de erro
+    * Correção
+
+
+---
+
+## Três eras de estatísticas
+
+__A idade de Quetelet e seus sucessores, em que enormes conjuntos de dados de censo foram trazidos para questões simples mas importantes__: Há mais nascimentos de homens do que de mulheres? A taxa de insanidade está aumentando?
+
+O período clássico de Pearson, Fisher, Neyman, Hotelling e seus sucessores, gigantes intelectuais que desenvolveram uma teoria da inferência ótima capaz de torcer cada gota de informação de um experimento científico. As questões tratadas ainda tendem a ser simples O tratamento A é melhor do que o tratamento B?
+
+__A era da produção em massa científica__, em que as novas tecnologias tipificadas pelo microarray permitem que uma única equipe de cientistas produza conjuntos de dados de um tamanho que Quetelet inveja. Mas agora a inundação de dados é acompanhada por um dilúvio de perguntas, talvez milhares de estimativas ou testes de hipóteses que o estatístico é encarregado de responder em conjunto; Não o que os mestres clássicos tinham em mente. Quais as variáveis que importam entre os milhares medidos? Como você relaciona informações não relacionadas?
+
+[http://www-stat.stanford.edu/~ckirby/brad/papers/2010LSIexcerpt.pdf](http://www-stat.stanford.edu/~ckirby/brad/papers/2010LSIexcerpt.pdf)
+
+---
+
+## Tipos de erros
+
+Suponha que você está testando uma hipótese de que um parâmetro $\beta$ é igual a zero versus a alternativa que não é igual a zero. Estes são os resultados possíveis.  
+
+Afirmação | $\beta=0$   | $\beta\neq0$   |  Hipótese
+--------------------|-------------|----------------|---------
+Afirmação $\beta=0$     |      $U$    |      $T$       |  $m-R$
+Afirmação $\beta\neq 0$ |      $V$    |      $S$       |  $R$
+Afirmação |     $m_0$   |      $m-m_0$   |  $m$
+
+__Erro de tipo I ou falso positivo ($V$)__ Digamos que o parâmetro não é igual a zero quando ele faz
+
+__Efeito de tipo II ou falso negativo ($T$)__ Digamos que o parâmetro é igual a zero quando não
+
+
+---
+
+## Taxas de erro
+
+__taxa de falso positivo __ A taxa na qual os resultados falsos ($\beta = 0$) são chamados significantes: $E\left[\frac{V}{m_0}\right]$*
+
+__Taxa de erro da família sábia (Family wise error rate - FWER)__ -A probabilidade de pelo menos um falso positivo ${\rm Pr}(V \geq 1)$
+
+__Taxa de descoberta falsa (False discovery rate - FDR)__ - A taxa em que as reivindicações de significado são falsas $E\left[\frac{V}{R}\right]$
+
+* A taxa de falsos positivos está estreitamente relacionada com a taxa de erro do tipo I [http://en.wikipedia.org/wiki/False_positive_rate](http://en.wikipedia.org/wiki/False_positive_rate)
+
+---
+
+## Controlando a taxa de falsos positivos
+
+Se os __p-values__ estiverem corretamente calculados chamando todos os $P<\alpha$ significativos, a taxa de falso positivo será no nível $\alpha$ em média.
+
+<Redtext> Problema </redtext>: Suponha que você execute 10.000 testes e $\beta = 0$ para todos eles.
+
+Suponha que você chama todos os $P <0,05$ significativos.
+
+O número esperado de falsos positivos é: $10,000 \times 0,05 = 500$ falsos positivos.
+
+__Como evitamos tantos falsos positivos?__
+
+
+---
+
+## Controlando a taxa de erro da família (FWER)
+
+
+A correção de Bonferroni (http://en.wikipedia.org/wiki/Bonferroni_correction) é a mais antiga correção de testes múltiplos.
+
+__Ideia básica__:
+- Suponha que você faça $m$ testes
+- Você deseja controlar FWER no nível $\alpha$ so $Pr(V\geq 1) <\alpha$
+- Calcule P-valores normalmente
+- Definir $\alpha_{fwer} = \alpha / m$
+- Chamar todos os $P_{(i)} \leq \alpha \times \frac{i}{m}$ significativo
+
+__Pros__: Fácil de calcular, conservador
+__Cons__: Pode ser muito conservador
+
+```{r createPvals,cache=TRUE}
+set.seed(1010093)
+pValues <- rep(NA,1000)
+for(i in 1:1000){
+  y <- rnorm(20)
+  x <- rnorm(20)
+  pValues[i] <- summary(lm(y ~ x))$coeff[2,4]
+}
+
+# Controls false positive rate
+sum(pValues < 0.05)
+```
+
+---
+
+## Estudo de caso I: sem verdadeiros positivos
+
+```{r, dependson="createPvals"}
+# Controls FWER 
+sum(p.adjust(pValues,method="bonferroni") < 0.05)
+# Controls FDR 
+sum(p.adjust(pValues,method="BH") < 0.05)
+```
+
+
+---
+
+## Estudo de caso II: 50% de verdadeiros positivos
+
+```{r createPvals2,cache=TRUE}
+set.seed(1010093)
+pValues <- rep(NA,1000)
+for(i in 1:1000){
+  x <- rnorm(20)
+  # First 500 beta=0, last 500 beta=2
+  if(i <= 500){y <- rnorm(20)}else{ y <- rnorm(20,mean=2*x)}
+  pValues[i] <- summary(lm(y ~ x))$coeff[2,4]
+}
+trueStatus <- rep(c("zero","not zero"),each=500)
+table(pValues < 0.05, trueStatus)
+```
+
+---
+
+
+## Estudo de caso II: 50% de verdadeiros positivos
+
+```{r, dependson="createPvals2"}
+# Controls FWER 
+table(p.adjust(pValues,method="bonferroni") < 0.05,trueStatus)
+# Controls FDR 
+table(p.adjust(pValues,method="BH") < 0.05,trueStatus)
+```
+
+
+---
+
+
+## Estudo de caso II: 50% de verdadeiros positivos
+
+__P-values versus adjusted P-values__
+```{r, dependson="createPvals2",fig.height=4,fig.width=8}
+par(mfrow=c(1,2))
+plot(pValues,p.adjust(pValues,method="bonferroni"),pch=19)
+plot(pValues,p.adjust(pValues,method="BH"),pch=19)
+```
+
+
+---
+
+
+## Notas e recursos
+
+__Notas__:
+* Teste múltiplo é um subcampo inteiro
+* Uma correção básica de Bonferroni / BH geralmente é suficiente
+* Se houver forte dependência entre os testes, pode haver problemas
+* Considerar método = "by"
