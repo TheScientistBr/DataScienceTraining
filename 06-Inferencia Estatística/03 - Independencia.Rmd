@@ -13,10 +13,9 @@ mode        : selfcontained # {standalone, draft}
 
 - Dois eventos $A$ e $B$ são **independentes** se $$P(A\cap B) = P(A) P(B)$$
 - Duas variáveis aleatórias, $X$ e $Y$ são independentes se para quaisquer dois conjuntos $A$ e $B$ $$P([X \in A] \cap [Y \in B]) = P (X \in A) P (Y \in B)$$
-- Se $A$ for independente de $ B $ então
-
+- Se $A$ for independente de $B$ então
 - $A^c$ é independente de $B$
-- $A$ é independente de $ B^c$
+- $A$ é independente de $B^c$
 - $A^c$ é independente de $B^c$
 
 
@@ -65,13 +64,13 @@ $$
 
 ---
 
-## Correlation
+## Correlação
 
-- The **covariance** between two random variables $X$ and $Y$ is defined as 
+- A **covariância** entre duas variáveis aleatórias $X$ e $Y$ é definida como
 $$
 Cov(X, Y) = E[(X - \mu_x)(Y - \mu_y)] = E[X Y] - E[X]E[Y]
 $$
-- The following are useful facts about covariance
+- Os seguintes são fatos úteis sobre a covariância
   1. $Cov(X, Y) = Cov(Y, X)$
   2. $Cov(X, Y)$ can be negative or positive
   3. $|Cov(X, Y)| \leq \sqrt{Var(X) Var(y)}$

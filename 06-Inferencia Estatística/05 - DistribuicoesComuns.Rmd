@@ -1,6 +1,6 @@
 ---
 title       : Inferência Estatística
-subtitle    : Probabilidade Condicional
+subtitle    : Distribuições Comuns
 author      : Delermando Branquinho Filho
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
@@ -19,19 +19,19 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 
-##  ensaios de Bernoulli 
+##  Ensaios de Bernoulli 
 
-- **iid** - Independent and identically distributed random variables
+ **iid** - Independent and identically distributed random variables
 
 
-- Se várias observações de iid Bernoulli, digamos $x_1, \ldots, x_n$, são observadas as
-A probabilidade é:
+- Se várias observações de iid Bernoulli, digamos $x_1, \ldots, x_n$, são observadas, então a
+probabilidade de A é:
 
 $$
 (1 - p) ^ {1 - x_i} = p ^ {\sum x_i} (1 - p) ^ {n - \sum x_i}
 $$
 - Observe que a probabilidade depende apenas da soma dos $x_i$
-- Como $n$ é fixo e assumido conhecido, isso implica que a proporção da amostra $\sum_i x_i / n$ contém todas as informações relevantes sobre $p$
+- Como $n$ é fixo e assumido conhecido, isso implica que a proporção da amostra $\sum_i x_i / n$ contém todas as informações relevantes sobre $p$  
 - Podemos maximizar a probabilidade de Bernoulli sobre $p$ para obter que $\hat p = \sum_i x_i / n$ é o estimador de máxima verossimilhança para $p$
 
 ---

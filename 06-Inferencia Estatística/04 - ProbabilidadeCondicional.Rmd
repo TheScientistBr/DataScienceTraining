@@ -79,8 +79,16 @@ $$
 
 ## Mais definições
 
-- A **relação de probabilidade diagnóstica de um teste positivo**, rotulado como $DLR_+$, is $P(+ ~|~ D) / P(+ ~|~ D^c)$, que é a $$sensibilidade / (1 - especificidade)$$
-- A **relação de probabilidade diagnóstica de um teste negativo**, rotulado como $DLR_-$, is $P(- ~|~ D) / P(- ~|~ D^c)$, que é a $$(1 - sensibilidade) / especifidade$$
+- A **relação de probabilidade diagnóstica de um teste positivo**, rotulado como 
+
+$DLR_+$ é $P(+ ~|~ D) / P(+ ~|~ D^c)$
+
+que é a $$sensibilidade / (1 - especificidade)$$
+
+- A **relação de probabilidade diagnóstica de um teste negativo**, rotulado como 
+é $P(- ~|~ D) / P(- ~|~ D^c)$
+
+que é a $$(1 - sensibilidade) / especifidade$$
 
 ---
 ## Exemplo
@@ -88,6 +96,7 @@ $$
 - Um estudo comparando a eficácia dos testes de HIV, os relatórios de uma experiência concluiu que os testes de anticorpos contra o HIV têm uma sensibilidade de 99,7% e uma especificidade de 98,5%.
 - Suponha que um sujeito, de uma população com uma prevalência de .1% de HIV, receba um resultado de teste positivo. Qual é a probabilidade de este indivíduo ter HIV?
 - Matematicamente, queremos que $P(D~|~+)$ dada a sensibilidade, $P(+~|~D) = .997$, a especificidade, $P(-~|~D^c) = .985$, E a prevalência $P(D) = .001$
+
 ---
 
 ## Usando a fóruma de Bayes
@@ -101,7 +110,9 @@ $$
 \end{eqnarray*}
 $$
 
+
 - Nesta população, um resultado positivo do teste sugere apenas uma probabilidade de 6% de que o indivíduo tem a doença (O valor preditivo positivo é de 6% para este teste)
+
 ---
 
 ## Mais sobre este exemplo
@@ -109,6 +120,7 @@ $$
 - O baixo valor preditivo positivo deve-se à baixa prevalência de doença e à especificidade um tanto modesta
 - Suponha-se que se soubesse que o indivíduo era um utilizador de drogas intravenosas e que habitualmente tinha relações sexuais com um parceiro infectado pelo HIV
 - Observe que a evidência implícita por um resultado positivo do teste não muda devido à prevalência de doença na população do sujeito, apenas nossa interpretação dessa evidência muda
+
 ---
 ## Razões de probabilidade
 
@@ -133,7 +145,7 @@ $$
 $$
 ie
 $$
-\mbox{Probabilidades pós-teste of }D = DLR_+\times\mbox{Probabilidades pré-teste de}D
+\mbox{Probabilidades pós-teste de }D = DLR_+\times\mbox{Probabilidades pré-teste de} D
 $$
 - Similarmente, $DLR _-$ relaciona a diminuição nas probabilidades da doença após um resultado negativo do teste às probabilidades de doença antes do teste.
 

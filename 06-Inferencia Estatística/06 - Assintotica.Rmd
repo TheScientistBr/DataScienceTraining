@@ -14,7 +14,7 @@ mode        : selfcontained # {standalone, draft}
 * Asymptopia é o meu nome para a terra de assintóticos, onde tudo funciona bem e não há bagunça. A terra de dados infinitos é agradável dessa maneira.
 * Asymptotics são incrivelmente útil para inferência estatística simples e aproximações (Não abrangidos nesta classe) Asymptotics muitas vezes levam a uma boa compreensão dos procedimentos
 * Asymptotics geralmente não dão garantias sobre o desempenho da amostra finita
-* Os tipos de asymptotics que fazem são ordens de magnitude mais difíceis de trabalhar com
+* Os tipos de asymptotics, que são ordens de magnitude, são mais difíceis de trabalhar
 * Asymptotics formam a base para a interpretação de freqüência de probabilidades (A proporção de longo prazo de ocorrências de um evento
 * Para entender asymptotics, precisamos de uma compreensão muito básica dos limites.
 
@@ -109,7 +109,8 @@ $$
 ---
 
 ## Simulação de média de $n$ lançamento de dados
-```{r, echo = FALSE, fig.width=9, fig.height = 3}
+
+```{r, fig.width=9, fig.height = 3}
 par(mfrow = c(1, 3))
 for (n in c(1, 2, 6)){
   temp <- matrix(sample(1 : 6, n * 10000, replace = TRUE), ncol = n)
@@ -142,7 +143,7 @@ Será aproximadamente distribuído normalmente
 ---
 
 
-```{r, echo = FALSE, fig.width=7.5, fig.height = 5}
+```{r, fig.width=7.5, fig.height = 5}
 par(mfrow = c(2, 3))
 for (n in c(1, 10, 20)){
   temp <- matrix(sample(0 : 1, n * 10000, replace = TRUE), ncol = n)
@@ -207,13 +208,13 @@ library(UsingR);data(father.son); x <- father.son$sheight
 
 ## Proporções da amostra
 
-- No caso de cada $X_i$ ser $0$ ou $1$ com probabilidade de sucesso comum $p$ então $\sigma ^ 2 = p (1 - p $
+- No caso de cada $X_i$ ser $0$ ou $1$ com probabilidade de sucesso comum $p$ então $\sigma ^ 2 = p (1 - p)$
 - O intervalo assume a forma
 
 $$
     \hat p \pm z_{1 - \alpha/2}  \sqrt{\frac{p(1 - p)}{n}}
 $$
-- Substituindo $p$ por $\hat p$ no erro padrão resulta no que é chamado de intervalo de confiança Wald para $p$
+- Substituindo $p$ por $\hat p$ no erro padrão resulta no que é chamado de intervalo de confiança para $p$
 - Observe também que $p(1-p) \leq 1/4$ para $0 \leq p \leq 1 $
 - Vamos $\alpha = .05$ para que $z_{1 - \alpha / 2} = 1.96 \approx 2$ então
 

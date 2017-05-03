@@ -9,6 +9,13 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
+
+
+```{r global_options}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+```
+
+
 ## Valores esperados
 
 - O **valor esperado** ou **média** de uma variável aleatória é o centro de sua distribuição
@@ -26,7 +33,8 @@ Onde a soma é tomada sobre os possíveis valores de $x$
 ### Encontre o centro de massa das barras
 
 ```{r ,fig.height=3.5,fig.width=8, fig.align='center', echo = FALSE}
-library(UsingR); data(galton)
+library(UsingR,quietly = TRUE); 
+data(galton,verbose = FALSE)
 par(mfrow=c(1,2))
 hist(galton$child,col="blue",breaks=100)
 hist(galton$parent,col="blue",breaks=100)
@@ -35,7 +43,7 @@ hist(galton$parent,col="blue",breaks=100)
 ## Usando manipulate
 
 ```{r manipulate}
-library(manipulate)
+library(manipulate,quietly = TRUE)
 myHist <- function(mu){
   hist(galton$child,col="blue",breaks=100)
   lines(c(mu, mu), c(0, 150),col="red",lwd=5)
@@ -84,12 +92,18 @@ E[X] = 1 \times \frac{1}{6} + 2 \times \frac{1}{6} +
 $$
 - Novamente, o argumento geométrico torna esta resposta óbvia sem cálculo.
 
+```{r}
+a<-0
+sapply(1:6, function(x) { a<<- a+x*1/6})
+```
+
+
 ---
 
 ## Variáveis aleatórias contínuas
 
-- Para uma variável aleatória contínua, $ X $, com densidade, $ f $, o valor esperado
-Valor é definido da seguinte forma
+- Para uma variável aleatória contínua, $X$, com densidade, $f$, o valor esperado é definido da seguinte forma
+
 $$
 E [X] = \mbox {a área sob a função}~~~ t f(t)
 $$
@@ -119,7 +133,7 @@ plot(c(-0.25, 0, 1, 1, 1.25), c(0, 0, 1, 0, 0), type = "l", lwd = 3, frame = FAL
 
 ## A variância
 
-- A variância de uma variável aleatória é uma medida de * propagação *
+- A variância de uma variável aleatória é uma medida de *propagação*
 - Se $X$ é uma variável aleatória com média $\mu$, a variância de $X$ é definida como:
 
 
@@ -133,24 +147,25 @@ A distância esperada (quadrado) da média
 
 
 
-
-
 ## Exemplo I
 
 - QIs são frequentemente dito para ser distribuído com uma média de $100$ e um sd de $15$
 - Qual é a probabilidade de uma pessoa sorteada aleatoriamente ter um QI superior a $160$ ou abaixo de $40$?
 - Assim, queremos saber a probabilidade de uma pessoa estar acima de $4$ unidades de desvio padrão da média
-- Assim, a desigualdade de Chebyshev sugere que esta não será maior que 6 \%
+- Assim, a desigualdade de Chebyshev sugere que esta não será maior que 6\%
 - As distribuições de QIs são freqüentemente citadas como sendo em forma de sino, caso em que este limite é muito conservador
 - A probabilidade de um sorteio aleatório de uma curva de sino sendo $4$ desvios padrão da média é da ordem de $10^{- 5}$ (um milésimo de um por cento)
 
----
 
-## Exemplo II
+```{r}
+x <- rnorm(1000,100,15)
+hist(x, prob=TRUE, col="grey",main = "QI")
+lines(density(x, adjust=1), lty="dotted", col="red", lwd=2) 
+lines(density(x, adjust=2), lty="dotted", col="blue", lwd=2) 
+lines(density(x, adjust=3), lty="dotted", col="green", lwd=2) 
 
-- Uma frase anterior buzz no controle de qualidade industrial é "Six Sigma" da Motorola, pelo qual as empresas são sugeridas para controlar eventos extremos ou raras peças defeituosas
-- A desigualdade de Chebyshev indica que a probabilidade de um evento "Seis Sigma" é menor que $1/6^2 \approx 3 \%$
-- Se uma curva de sino é assumida, a probabilidade de um evento de "seis sigma" é da ordem de $10^{-9}$ (um dez milionésimo de um por cento)
+```
 
 
-(The Scientist)[http://www.thescientist.com.br]
+
+[The Scientist](http://www.thescientist.com.br)

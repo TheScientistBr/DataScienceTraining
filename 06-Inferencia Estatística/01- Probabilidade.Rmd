@@ -79,8 +79,10 @@ Dividindo as observações em intervalos
 
 ```{r}
 salario <- c(12, .4, 5, 2, 50, 8, 3, 1, 4, .25)
+barplot(salario,names.arg = salario)
+salario <- sort(salario)
+barplot(salario,names.arg = salario)
 intervalo <- cut(salario,breaks=c(0,1,5,max(salario)))
-intervalo
 ```
 
 
@@ -88,7 +90,6 @@ intervalo
 ```{r}
 table(intervalo)
 intervalo
-
 ```
 
 ### Rotulando os intervalos e colocando em uma tabela
@@ -126,10 +127,12 @@ estudo
 
 ### Histogramas com curvas teóricas 
 
+Essas funções fornecem informações sobre a distribuição uniforme no intervalo de min a max. **dunif** dá a densidade, **punif** dá a função de distribuição **qunif** dá a função quantile e **runif** gera desvios aleatórios.
+
 ```{r}
 x=runif(100)
-hist(x,probability=TRUE,main="Uniforme
-[0,1]",
+head(x)
+hist(x,probability=TRUE,main="Uniforme [0,1]",
 ylab="Densidade",col="yellow")
 curve(dunif(x,0,1),add=T)
 ```
