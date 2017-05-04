@@ -14,7 +14,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## Power (poder)
 - Potência é a probabilidade de rejeitar a hipótese nula quando é falsa
-- Ergo, poder (como o nome sugere) é uma coisa boa; Você quer mais poder
+- Logo, poder (como o nome sugere) é uma coisa boa; Você quer mais poder
 - Um erro de tipo II (uma coisa ruim, como seu nome sugere) está falhando em rejeitar a hipótese nula quando é falsa; A probabilidade de um erro de tipo II é normalmente denominada $\beta$
 - Nota: Power $=1-\beta$
 
@@ -24,8 +24,8 @@ mode        : selfcontained # {standalone, draft}
 - $H_0: \mu = 30$ versus $H_a: \mu> 30$
 - Então o poder é
 $$P\left(\frac{\bar X - 30}{s /\sqrt{n}} > t_{1-\alpha,n-1} ~|~ \mu = \mu_a \right)$$
-- Note que esta é uma função que depende do valor específico de $ \ mu_a $!
-- Observe como $ \ mu_a $ se aproxima $ 30 $ o poder se aproxima $ \ alpha $
+- Note que esta é uma função que depende do valor específico de $\mu_a$!
+- Observe como $\mu_a$ se aproxima $30$ o poder se aproxima $\alpha$
 
 
 ---
@@ -45,7 +45,7 @@ $$
 ---
 
 ## Exemplo continuado
-- Suponha que queremos detectar um aumento na média de RDI de pelo menos 2 eventos / hora (acima de 30).
+- Suponha que queremos detectar um aumento na média de RDI (respiratory disturbance index) de pelo menos 2 eventos / hora (acima de 30).
 - Assumir a normalidade e que a amostra em questão terá um desvio padrão de $ 4 $;
 - Qual seria o poder se tomássemos um tamanho de amostra de $16$?
   - $Z_{1-\alpha} = 1.645$ 
@@ -105,23 +105,22 @@ $$z_{1-\alpha} - \frac{\sqrt{n}(\mu_a - \mu_0)}{\sigma} = z_{\beta}$$
   $$
   P\left(\frac{\bar X - \mu_0}{S /\sqrt{n}} > t_{1-\alpha, n-1} ~|~ \mu = \mu_a \right)
   $$
-- Calculando isso requer a distribuição t não-central.
-- `power.t.test` faz isso muito bem - Omitir um dos argumentos e ele resolve por ele
+
+- Calculando isso requer a distribuição $t$ não-central
+- O teste `power.t.test` faz isso muito bem
+- Você pode omitir um dos argumentos e ele se resolve
 
 ---
 ## Exemplo
+
 ```{r}
 power.t.test(n = 16, delta = 2 / 4, sd=1, type = "one.sample",  alt = "one.sided")$power
 power.t.test(n = 16, delta = 2, sd=4, type = "one.sample",  alt = "one.sided")$power
 power.t.test(n = 16, delta = 100, sd=200, type = "one.sample", alt = "one.sided")$power
 ```
 
----
-
-```{r}
-power.t.test(power = .8, delta = 2 / 4, sd=1, type = "one.sample",  alt = "one.sided")$n
-power.t.test(power = .8, delta = 2, sd=4, type = "one.sample",  alt = "one.sided")$n
-power.t.test(power = .8, delta = 100, sd=200, type = "one.sample", alt = "one.sided")$n
-```
 
 
+.
+
+.

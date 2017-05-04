@@ -75,6 +75,8 @@ abline(h = 0)
 
 ---
 
+
+
 ## O Teorema do Limite Central
 
 - O **Teorema do Limite Central** (CLT) é um dos teoremas mais importantes em estatística
@@ -90,6 +92,8 @@ $$\frac{\bar X_n - \mu}{\sigma / \sqrt{n}} =
 $$
 
 - Normalmente, substituir o erro padrão pelo seu valor estimado não altera o CLT
+
+O teorema do limite central implica normalidade assintótica da média da amostra $\bar x$ e como um estimador da média verdadeira. Mais geralmente, estimadores de máxima verossimilhança são assintoticamente normais sob condições de regularidade bastante fracos.
 
 ---
 

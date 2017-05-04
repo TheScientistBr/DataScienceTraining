@@ -1,6 +1,6 @@
 ---
 title       : Inferência Estatística
-subtitle    : Teste de Hipótese
+subtitle    : p-value
 author      : Delermando Branquinho Filho
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
@@ -93,3 +93,19 @@ ppois(9, 5, lower.tail = FALSE)
 
 
 
+
+### Interpretação
+
+O P-value, que depende diretamente de uma dada amostra, tenta fornnecer uma medida da força dos resultados de um teste, em contraste a uma simples rejeição ou não rejeição. 
+
+Se a hipótese nula for verdadeira e a chance da variação aleatória for a única razão para as diferenças amostrais, então o P-value é uma medida quantitativa para alimentar o processo de tomada de decisão como evidência. A tabela seeguinte fornece uma interpretação razoável dos P-values:
+
+$p-value$ | Interpretação
+-------|-------------------------------
+$\rho < 0.01$| evidência muito forte contra $H_0$
+$0.01< = \rho < 0,05$ | evidência moderada contra $H_0$
+$0.05< = \rho < 0,10$ | evidência sugestiva contra $H_0$
+$0.10< = \rho$ | pouca ou nenhuma evidência real contra $H_0$
+
+
+.

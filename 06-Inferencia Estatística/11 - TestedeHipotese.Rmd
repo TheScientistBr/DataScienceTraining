@@ -140,10 +140,15 @@ $$
 ---
 
 ## T test em R
+```{r echo=FALSE,warning=FALSE,message=FALSE}
+library(UsingR,quietly = TRUE,verbose = FALSE); 
+data(father.son)
+```
+
 ```{r}
-library(UsingR); data(father.son)
 t.test(father.son$sheight - father.son$fheight)
 ```
+
 
 ---
 
@@ -183,4 +188,101 @@ Região de rejeição | Taxa de erro do tipo I |
 * Dada uma maneira de fazer testes bilaterais, poderíamos tomar o conjunto de valores de $ p_0 $ para o qual não conseguimos rejeitar obter um intervalo de confiança binomial exato (chamado intervalo Clopper / Pearson, BTW)
 * Para esses problemas, as pessoas sempre criam um P-valor (próxima palestra) ao invés de computar a região de rejeição.
 
+**Passos para o teste de hipótese**
 
+1. As hipóteses nula e alternativa
+2. Verifique suas suposições.
+3. Definir uma região crítica com um $\alpha = 0.05$ nível de significância.
+4. Calcule o valor da estatística de teste e indique sua conclusão.
+
+**Exemplo**
+
+Suponha que $\rho$ = a proporção de alunos admitidos na escola de pós-graduação da Universidade da Califórnia em Berkeley, e suponha que um oficial de relações públicas historicamente, a UCB teve uma taxa de aceitação de 40% para sua escola de pós-graduação. Considere os dados armazenados na tabela UCBAdmissions de 1973. 
+
+Supondo que estas observações constituíram uma amostra randomica simples, ou seja, são consistentes com a reivindicação do operador, ou provêem a evidência de aceitação.
+A Taxa foi significativamente menor que 40%? 
+Usar um $\alpha = 0.01$ nível de significância.
+
+Nossa hipótese nula neste problema é $H_0 : \rho = 0.4$ e a hipótese alternativa é $H_1: \rho < 0.4$. 
+
+Rejeitamos a hipótese nula se $\rho$ é muito pequeno, isto é, se:
+
+$$
+\frac{\bar\rho - 0.4}{\sqrt{0.4(1--.4)/n}}
+$$
+
+Onde $\alpha = 0.01$ e $-z_.01$ é
+
+```{r}
+-qnorm(0.99)
+```
+
+
+**Teste para Proporções**
+
+Nossa única tarefa restante é encontrar o valor da estatística de teste e ver onde ela cai em relação ao valor crítico. Podemos encontrar o número de pessoas admitidas e não admitidas para a UCB graduate school com o seguinte.
+
+```{r}
+A <- as.data.frame(UCBAdmissions)
+head(A)
+xtabs(Freq ~ Admit, data = A)
+```
+
+
+Agora calculamos o valor do teste estatístico.
+
+```{r}
+phat <- 1755/(1755 + 2771) 
+(phat - 0.4)/sqrt(0.4 * 0.6/(1755 + 2771))
+```
+
+
+
+Nosso teste estatístico não é menor que 2.32, portanto não cai na região crítica. Assim, nós falhamos em rejeitar a hipótese nula de que a verdadeira proporção de alunos admitidos menos de 40% e dizer que os dados observados são consistentes com a reivindicação de $\alpha = 0.01$ de nível de significância.
+
+Vamos fazer o Exemplo novamente. Tudo será exatamente o mesmo com uma alteração. Suponha que escolhemos nível de significância $\alpha = 0.05$ em vez de $\alpha = 0.01$.
+
+Os dados de 1973 são consistentes com a alegação do autor?
+
+Nossas hipóteses nulas e alternativas são as mesmas. A nossa estatística de teste observada é a mesma e foi aproximadamente 1.68, mas note que o nosso valor crítico mudou: $\alpha = 0.05$ e $z_.05$ é:
+
+```{r}
+-qnorm(0.95)
+```
+
+Nosso teste estatístico é menor que 1.64, então agora cai na região crítica!
+
+Rejeitamos agora a hipótese nula e concluímos que os dados de 1973 dão provas de que a verdadeira proporção de estudantes admitidos na escola de pós-graduação da UCB em 1973 foi significativamente inferior a 40%. Os dados não são consistentes com a reivindicação do oficial ser $\alpha = 0.05$ de nível de significância. 
+
+O que está acontecendo, aqui? Se escolhermos $\alpha = 0.05$ então nós rejeitamos a hipótese nula, mas se escolhemos $\alpha = 0.01$ então não conseguimos rejeitar a hipótese nula. 
+
+Nossa conclusão final parece depender de nossa seleção do nível de significância. Isto é ruim; Para um teste particular, nunca se sabe se nossa conclusão teria sido diferente se tivéssemos escolhido um nível de significância diferente.
+
+Claramente, para alguns níveis de significância que rejeitamos, e para alguns níveis de significância não. Onde está a fronteira? Ou seja, qual é o nível de significância para o qual nós rejeitamos em qualquer nível de significância maior, e nós falhamos em rejeitar em qualquer nível de significância menor? Esse valor limite tem um nome especial: é chamado de **p-value** do teste.
+
+O p-value, ou nível de significância observado, de um teste de hipótese é a probabilidade quando a hipótese nula é verdadeira para se obter o valor observado da estatística de teste (tal como $\rho$) ou valores mais extremos - o que significa, na direção da hipótese alternativa.
+
+Vamos calcular o valor de $\rho$ para o teste nos dois exemplos acima, o p-value para este teste é a probabilidade de obter um escore de $z$ igual ao nosso teste observado. 
+Estatística (que teve z-score $\approx -1.680919$) ou mais extremo, que neste exemplo é menor do que o teste estatístico observada. 
+
+Em outras palavras, queremos conhecer a área sob uma curva normal padrão
+O intervalo ($\infty,  -1.680919$]. Podemos obter isto facilmente com:
+
+```{r}
+pnorm(-1.680919)
+```
+
+
+Vemos que o p-value é estritamente entre os níveis de significância $\alpha = 0.01$ e $\alpha = 0.05$.
+Isso faz sentido: ele tem que ser maior do que$\alpha = 0.01$ (caso contrário teríamos rejeitado $H_0$.
+
+No primeiro exemplo também deve ser menor que $\alpha = 0.05$ (caso contrário, não teríamos rejeitado $H_0$. 
+No segundo exemplo, na verdade, os valores de p são um indicador característico de rejeitados em níveis de significância variados, e por isso um estatístico muitas vezes cálcula as regiões críticas e valores críticos inteiramente. 
+
+Se ele (oficial) sabe o p-valuer, então ele sabe imediatamente se ele (ou quais) teria rejeitado em qualquer nível de significância.
+
+Assim, outra maneira de expressar nosso procedimento de teste de significância é: rejeitaremos $H_0$ no nível de significância se o p-value for menor que $\alpha$.
+
+
+
+.

@@ -158,11 +158,11 @@ $$
 (2 \ pi \ sigma ^ 2) ^ {- 1/2} e ^ {- (x - \ mu) ^ 2/2 \ sigma ^ 2}
 $$
 
-Se $ X $ a RV com esta densidade então $E[X] = \mu $e$ Var(X) = \sigma ^ 2$
+Se $X$ é ua variável aleatória com esta densidade então $E[X] = \mu $e$ Var(X) = \sigma ^ 2$
 - Nós escrevemos $X \sim \mbox {N} (\mu, \sigma^2)$
 - Quando $\mu = 0$ e $\sigma = 1$ a distribuição resultante é chamada **a distribuição normal padrão**
 - A função de densidade normal padrão é rotulada $\phi$
-- Normal RVs normais são frequentemente rotulados $Z$
+- O padrão das variáveis aleatórias são frequentemente rotulados $Z$
 
 ---
 ```{r, fig.height=4.5, fig.width=4.5}

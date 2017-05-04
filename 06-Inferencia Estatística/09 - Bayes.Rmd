@@ -21,18 +21,19 @@ mode        : selfcontained # {standalone, draft}
 - Portanto, como vimos nos testes diagnósticos, a o fator pelo qual nossas crenças prévias são atualizadas para produzir conclusões à luz dos dados recolhidos
 
 ---
+
 ## Especificação prévia
-- A distribuição beta é a prioridade prévia para parâmetros entre $0$ e $1$.
+- A distribuição beta é a prioridade a priori para parâmetros entre $0$ e $1$.
 - A densidade beta depende de dois parâmetros $\alpha$ e $\beta$
 
 $$
 \frac{\Gamma(\alpha +  \beta)}{\Gamma(\alpha)\Gamma(\beta)}
- p ^ {\alpha - 1} (1 - p) ^ {\beta - 1} ~~~~\mbox{for} ~~ 0 \leq p \leq 1
+ p ^ {\alpha - 1} (1 - p) ^ {\beta - 1} ~~~~\mbox{para} ~~ 0 \leq p \leq 1
 $$
 - A média da densidade beta é $\alpha / (\alpha + \beta) $
 - A variação da densidade beta é
-$$\frac {\alpha \beta} {(\alpha + \beta) ^ 2 (\alpha + \beta + 1)} $$
-- A densidade uniforme é o caso especial onde $ \alpha = \beta = 1 $
+$$\frac {\alpha \beta} {(\alpha + \beta) ^ 2 (\alpha + \beta + 1)}$$
+- A densidade uniforme é o caso especial onde $\alpha = \beta = 1$
 
 ---
 
@@ -47,7 +48,15 @@ manipulate(
     )
 ```
 
+
+```{r echo=FALSE}
+x=seq(0,1.5,length=100)
+y=dbeta(x,7,2)
+plot(x,y, type="l", col="blue")
+```
+
 ---
+
 ## Posteriori
 
 - Suponha que escolhemos valores de $\alpha$ e $\beta$ para que o beta anterior é indicativo do nosso grau de crença em relação a $p$ na ausência de dados
@@ -55,7 +64,7 @@ manipulate(
   $$
   \mbox{Posterior} \propto \mbox{Likelihood} \times \mbox{Prior}
   $$
-  E jogando fora qualquer coisa que não depende de $ p $, temos que
+  E jogando fora qualquer coisa que não depende de $p$, temos que
 
 $$
 \begin{align}
@@ -76,9 +85,11 @@ E[p ~|~ X] & =   \frac{\tilde \alpha}{\tilde \alpha + \tilde \beta}\\ \\
 & =  \frac{x + \alpha}{x + \alpha + n - x + \beta}\\ \\
 & =  \frac{x + \alpha}{n + \alpha + \beta} \\ \\
 & =  \frac{x}{n} \times \frac{n}{n + \alpha + \beta} + \frac{\alpha}{\alpha + \beta} \times \frac{\alpha + \beta}{n + \alpha + \beta} \\ \\
-& =  \mbox{MLE} \times \pi + \mbox{Prior Mean} \times (1 - \pi)
+& =  \mbox{MLE} \times \pi + \mbox{media a priori} \times (1 - \pi)
 \end{align}
 $$
+
+MLE -> Maximum likelihood estimation
 
 ---
 
@@ -100,6 +111,7 @@ De hipertensão nesta população.
 - $x = 13$ e $n = 20$
 - Considere uma prioridade uniforme, $\alpha = \beta = 1$
 - O posterior é proporcional a (ver fórmula acima)
+
 $$
 p^{x + \alpha - 1} (1 - p)^{n - x + \beta - 1} = p^x (1 - p)^{n-x}
 $$
@@ -108,7 +120,7 @@ Isto é, para o uniforme prévio, o posterior é a probabilidade
 $$
 p^{x + \alpha - 1} (1 - p)^{n - x + \beta - 1} = p^{x + 1} (1 - p)^{n-x + 1}
 $$
-- O "prior de Jeffrey", que tem alguns benefícios teóricos coloca $\alpha = \beta = .5$
+- A "priori", que tem alguns benefícios teóricos, coloca $\alpha = \beta = .5$
 
 ---
 
@@ -134,7 +146,7 @@ manipulate(
 ---
 ## Intervalos de confiança
 - Um intervalo bayesiano credível é o análogo bayesiano de um intervalo de confiança 
-- A $95\%$ crível intervalo, $[a, b]$ iria satisfazer
+- A $95\%$ intervalo crível, $[a, b]$ iria satisfazer
   $$
   P(p \in [a, b] ~|~ x) = .95
   $$
@@ -143,16 +155,22 @@ manipulate(
 
 ---
 
-## Obtendo intervalos HPD para este exemplo
+## Obtendo HPD intervalos para este exemplo
 - Instale o pacote \texttt{binom}, com o comando `install.package(binom)`
+
+Dá o intervalo HPD.
+- O nível credível padrão é $95\%$.
+
+
+**HPD** -> Highest Posterior Density 
+
+**Exemplo**
 
 ```{r}
 library(binom)
 binom.bayes(13, 20, type = "highest")
 ```
 
-Dá o intervalo HPD.
-- O nível credível padrão é $95\%$ e O anterior padrão é o anterior do Jeffrey.
 
 ---
 

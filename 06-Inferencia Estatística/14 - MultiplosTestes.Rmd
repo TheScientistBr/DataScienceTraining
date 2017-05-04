@@ -49,6 +49,7 @@ __Erro de tipo I ou falso positivo ($V$)__ Digamos que o parâmetro não é igua
 
 __Efeito de tipo II ou falso negativo ($T$)__ Digamos que o parâmetro é igual a zero quando não
 
+$\beta$ - A convenção é que a probabilidade seja estabelecida em 20% (0,2 ou 0.2) como exemplo, o que se chama o valor de Beta.  Nesse caso, poder estatístico é, simplesmente, 1 menos Beta, ou seja: 1 - 0,2 = 0,8 = 80%.
 
 ---
 

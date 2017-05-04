@@ -53,8 +53,8 @@ mode        : selfcontained # {standalone, draft}
 ## Exemplo
 ### Queremos estimar o viés e o erro padrão da mediana
 
-```{r, results='hide'}
-library(UsingR)
+```{r, message=FALSE}
+library(UsingR,quietly = TRUE,verbose = FALSE)
 data(father.son)
 x <- father.son$sheight
 n <- length(x)
@@ -231,8 +231,33 @@ mean(permutations > observedStat)
 ---
 
 ## Histograma de permutações
-```{r, echo= FALSE, fig.width=5, fig.height=5}
+```{r, fig.width=5, fig.height=5}
 hist(permutations)
 ```
 
+
+## bootstrap
+
+O exemplo a seguir gera o intervalo de confiança de 95% de bootstrap para R-quadrado na regressão linear de milhas por galão (mpg) no peso do carro (peso) e deslocamento (disp). A fonte de dados é mtcars. O intervalo de confiança bootstrap baseia-se em 1000 repetições.
+
+```{r message=FALSE}
+# Bootstrap 95% CI for R-Squared
+library(boot,quietly = TRUE,verbose = FALSE)
+# function to obtain R-Squared from the data 
+rsq <- function(formula, data, indices) {
+  d <- data[indices,] # allows boot to select sample 
+  fit <- lm(formula, data=d)
+  return(summary(fit)$r.square)
+} 
+# bootstrapping with 1000 replications 
+results <- boot(data=mtcars, statistic=rsq, 
+  	R=1000, formula=mpg~wt+disp)
+
+# view results
+results 
+plot(results)
+
+# get 95% confidence interval 
+boot.ci(results, type="bca")
+```
 
