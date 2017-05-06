@@ -46,7 +46,7 @@ $$
 
 ## Exemplo continuado
 - Suponha que queremos detectar um aumento na média de RDI (respiratory disturbance index) de pelo menos 2 eventos / hora (acima de 30).
-- Assumir a normalidade e que a amostra em questão terá um desvio padrão de $ 4 $;
+- Assumir a normalidade e que a amostra em questão terá um desvio padrão de $4$;
 - Qual seria o poder se tomássemos um tamanho de amostra de $16$?
   - $Z_{1-\alpha} = 1.645$ 
   - $\frac{\mu_a - 30}{\sigma /\sqrt{n}} = 2 / (4 /\sqrt{16}) = 2$ 
@@ -86,10 +86,10 @@ $$z_{1-\alpha} - \frac{\sqrt{n}(\mu_a - \mu_0)}{\sigma} = z_{\beta}$$
 ---
 
 ## Notas
-- O cálculo para $H_a: \mu <\mu_0 $ é semelhante
-- Para $H_a: \mu \neq \mu_0$ calcular o poder unilateral usando $\alpha /2$ (isto é apenas aproximadamente certo, exclui a probabilidade de obter um grande grande na direção oposta da verdade)
+- O cálculo para $H_a: \mu <\mu_0$ é semelhante
+- Para $H_a: \mu \neq \mu_0$ calcular o poder unilateral usando $\alpha /2$ (isto é apenas aproximadamente certo, exclui a probabilidade de obter um valor grande para o TS  na direção oposta da verdade)
 - O poder sobe à medida que $\alpha$ fica maior 
-- O poder de um teste unilateral é maior do que o poder do teste bilateral associado
+- O poder de **um teste unilateral é maior** do que o poder do teste bilateral associado
 - O poder sobe quando $\mu_1$ fica mais distante de $\mu_0$
 - O poder aumenta à medida que $n$ sobe
 - O poder não precisa de $\mu_a$, $\sigma$ e $n$, em vez de apenas $\frac {\sqrt {n} (\mu_a - \mu_0)} {\sigma}$

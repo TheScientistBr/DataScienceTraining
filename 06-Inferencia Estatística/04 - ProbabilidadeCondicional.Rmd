@@ -91,6 +91,7 @@ que é a $$sensibilidade / (1 - especificidade)$$
 que é a $$(1 - sensibilidade) / especifidade$$
 
 ---
+
 ## Exemplo
 
 - Um estudo comparando a eficácia dos testes de HIV, os relatórios de uma experiência concluiu que os testes de anticorpos contra o HIV têm uma sensibilidade de 99,7% e uma especificidade de 98,5%.

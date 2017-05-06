@@ -45,7 +45,7 @@ $$
 
 ## Resultado
 
-- A soma de duas variáveis aleatórias independentes Chi-quadrado é Chi-quadrado com graus de liberdade iguais à soma dos graus de liberdade dos summands
+- A soma de duas variáveis aleatórias independentes `Chi-quadrado` é Chi-quadrado com graus de liberdade iguais à soma dos graus de liberdade dos summands
 - Assim sendo
 
 $$
@@ -56,9 +56,17 @@ $$
     \end{eqnarray*}
 $$
 
+**Lembrando**
+`Para que serve?`
+
+**Quiq-uadrado**, simbolizado por χ2 é um teste de hipóteses que se destina a encontrar um valor da **dispersão** para duas variáveis nominais, avaliando a associação existente entre variáveis qualitativas. É um teste não paramétrico, ou seja, não depende dos parâmetros populacionais, como média e variância.
+
+`Variáveis Qualitativas` (ou categóricas): são as características que não possuem valores quantitativos, mas, ao contrário, são definidas por várias categorias, ou seja, representam uma classificação dos indivíduos. Podem ser nominais ou ordinais.  
+`Variáveis nominais`: não existe ordenação dentre as categorias.
+
 ---
 
-## Juntando tudo isso
+### Juntando tudo isso
 
 - A estatística
 $$
@@ -70,7 +78,7 @@ $$
 - Portanto esta estatística segue a distribuição $t$ de Gosset com $n_x + n_y - 2$ graus de liberdade
 - Observe que o formulário é (estimador - valor verdadeiro) / SE
 
-**qui-quadrado** - A distribuição χ2 ou qui-quadrado é uma das distribuições mais utilizadas em estatística inferencial, principalmente para realizar testes de `χ2`. Este teste serve para avaliar quantitativamente a relação entre o resultado de um experimento e a distribuição esperada para o fenômeno. Isto é, ele nos diz com quanta certeza os valores observados podem ser aceitos como regidos pela teoria em questão. Muitos outros testes de hipótese usam, também, a distribuição `χ2`.
+**Chi-quadrado** - A distribuição χ2 ou Chi-quadrado é uma das distribuições mais utilizadas em estatística inferencial, principalmente para realizar testes de `χ2`. Este teste serve para avaliar quantitativamente a relação entre o resultado de um experimento e a distribuição esperada para o fenômeno. Isto é, ele nos diz com quanta certeza os valores observados podem ser aceitos como regidos pela teoria em questão. Muitos outros testes de hipótese usam, também, a distribuição `χ2`.
 
 ---
 
@@ -118,14 +126,29 @@ t.test(x1, x2, paired = TRUE)$conf
 
 ---
 
+
 ## Ignorando o emparelhamento
-```{r, echo = FALSE, fig.width=5, fig.height=5}
+```{r, fig.width=5, fig.height=5}
 plot(c(0.5, 2.5), range(x1, x2), type = "n", frame = FALSE, xlab = "group", ylab = "Extra", axes = FALSE)
 axis(2)
-axis(1, at = 1 : 2, labels = c("Group 1", "Group 2"))
-for (i in 1 : n1) lines(c(1, 2), c(x1[i], x2[i]), lwd = 2, col = "red")
-for (i in 1 : n1) points(c(1, 2), c(x1[i], x2[i]), lwd = 2, col = "black", bg = "salmon", pch = 21, cex = 3)
+axis(1, at = 1:2, labels = c("Group 1", "Group 2"))
+for (i in 1:n1) lines(c(1, 2), c(x1[i], x2[i]), lwd = 2, col = "red")
+for (i in 1:n1) points(c(1, 2), c(x1[i], x2[i]), lwd = 2, col = "black", bg = "salmon", pch = 21, cex = 3)
 ```
+
+
+## Com emparelhamento
+```{r, fig.width=5, fig.height=5}
+x1 <- sort(x1)
+x2 <- sort(x2)
+plot(c(0.5, 2.5), range(x1, x2), type = "n", frame = FALSE, xlab = "group", ylab = "Extra", axes = FALSE)
+axis(2)
+axis(1, at = 1:2, labels = c("Group 1", "Group 2"))
+for (i in 1:n1) lines(c(1, 2), c(x1[i], x2[i]), lwd = 2, col = "red")
+for (i in 1:n1) points(c(1, 2), c(x1[i], x2[i]), lwd = 2, col = "black", bg = "salmon", pch = 21, cex = 3)
+```
+
+
 
 ---
 
@@ -168,8 +191,8 @@ $$
 ## Comparando outros tipos de dados
 
 * Para dados binomiais, há muitas maneiras de comparar dois grupos de risco relativo, diferença de risco, odds ratio.
-* Teste Qui-quadrado, aproximações normais, testes exatos.
-* Para dados de contagem, há também testes de Qui-quadrado e testes exatos.
+* Teste Chi-quadrado, aproximações normais, testes exatos.
+* Para dados de contagem, há também testes de Chi-quadrado e testes exatos.
 * Vamos deixar as discussões para comparar grupos de dados para binário e contagem de dados até cobertura glms na classe de regressão.
 
 ---
@@ -191,7 +214,7 @@ Dieta2<-c(15,19,15,12,13,16,15)
 
 Verifique normalidade dos dados
 
-```{r}
+```{r message=FALSE,warning=FALSE}
 shapiro.test(Dieta1)
 shapiro.test(Dieta2)
 ```

@@ -12,7 +12,7 @@ mode        : selfcontained # {standalone, draft}
 
 
 
-# Ideas Chave
+## Ideias Chave
 
 * Teste de hipóteses / análise de significância é comumente usado em excesso
 * Correção de múltiplos testes evita falsos positivos ou descobertas
@@ -23,7 +23,7 @@ mode        : selfcontained # {standalone, draft}
 
 ---
 
-## Três eras de estatísticas
+### Três eras de estatísticas
 
 __A idade de Quetelet e seus sucessores, em que enormes conjuntos de dados de censo foram trazidos para questões simples mas importantes__: Há mais nascimentos de homens do que de mulheres? A taxa de insanidade está aumentando?
 
@@ -45,6 +45,17 @@ Afirmação $\beta=0$     |      $U$    |      $T$       |  $m-R$
 Afirmação $\beta\neq 0$ |      $V$    |      $S$       |  $R$
 Afirmação |     $m_0$   |      $m-m_0$   |  $m$
 
+**Onde**
+
+- $m$ é o número total de hipóteses testadas
+- $m_ 0$ é o número de hipóteses nulas verdadeiras, um parâmetro desconhecido
+- $m-m_ 0$ é o número de hipóteses alternativas verdadeiras
+- $V$ é o número de falsos positivos (erro de Tipo I) (também chamado de "falsas descobertas")
+- $S$ é o número de verdadeiros positivos (também chamados de "verdadeiras descobertas")
+- $T$ é o número de falsos negativos (erro Tipo II)
+- $U$ é o número de negativos verdadeiros
+- $R = V + S$ é o número de hipóteses nulas rejeitadas (também chamadas de `descobertas`, verdadeiras ou falsas)
+
 __Erro de tipo I ou falso positivo ($V$)__ Digamos que o parâmetro não é igual a zero quando ele faz
 
 __Efeito de tipo II ou falso negativo ($T$)__ Digamos que o parâmetro é igual a zero quando não
@@ -55,13 +66,12 @@ $\beta$ - A convenção é que a probabilidade seja estabelecida em 20% (0,2 ou 
 
 ## Taxas de erro
 
-__taxa de falso positivo __ A taxa na qual os resultados falsos ($\beta = 0$) são chamados significantes: $E\left[\frac{V}{m_0}\right]$*
-
-__Taxa de erro da família sábia (Family wise error rate - FWER)__ -A probabilidade de pelo menos um falso positivo ${\rm Pr}(V \geq 1)$
-
-__Taxa de descoberta falsa (False discovery rate - FDR)__ - A taxa em que as reivindicações de significado são falsas $E\left[\frac{V}{R}\right]$
-
-* A taxa de falsos positivos está estreitamente relacionada com a taxa de erro do tipo I [http://en.wikipedia.org/wiki/False_positive_rate](http://en.wikipedia.org/wiki/False_positive_rate)
+- __taxa de falso positivo __ A taxa na qual os resultados falsos ($\beta = 0$) são chamados significantes: $E\left[\frac{V}{m_0}\right]$
+- Taxa de erro da família sábia (Family wise error rate - FWER)
+- A probabilidade de pelo menos um falso positivo ${\rm Pr}(V \geq 1)$
+- Taxa de descoberta falsa (False discovery rate - FDR)
+- A taxa em que as reivindicações de significado são falsas $E\left[\frac{V}{R}\right]$
+- A taxa de falsos positivos está estreitamente relacionada com a taxa de erro do tipo I 
 
 ---
 
@@ -86,14 +96,15 @@ __Como evitamos tantos falsos positivos?__
 A correção de Bonferroni (http://en.wikipedia.org/wiki/Bonferroni_correction) é a mais antiga correção de testes múltiplos.
 
 __Ideia básica__:
-- Suponha que você faça $m$ testes
-- Você deseja controlar FWER no nível $\alpha$ so $Pr(V\geq 1) <\alpha$
-- Calcule P-valores normalmente
-- Definir $\alpha_{fwer} = \alpha / m$
-- Chamar todos os $P_{(i)} \leq \alpha \times \frac{i}{m}$ significativo
 
-__Pros__: Fácil de calcular, conservador
-__Cons__: Pode ser muito conservador
+- Suponha que você faça $m$ testes  
+- Você deseja controlar FWER no nível $\alpha$ so $Pr(V\geq 1) <\alpha$  
+- Calcule os p-values normalmente  
+- Definir $\alpha_{fwer} = \alpha / m$  
+- Chamar todos os $P_{(i)} \leq \alpha \times \frac{i}{m}$ significativo  
+
+__Pro__: Fácil de calcular  
+__Con__: Pode ser muito conservador
 
 ```{r createPvals,cache=TRUE}
 set.seed(1010093)
@@ -140,7 +151,7 @@ table(pValues < 0.05, trueStatus)
 ---
 
 
-## Estudo de caso II: 50% de verdadeiros positivos
+continuando ...
 
 ```{r, dependson="createPvals2"}
 # Controls FWER 
@@ -150,12 +161,7 @@ table(p.adjust(pValues,method="BH") < 0.05,trueStatus)
 ```
 
 
----
-
-
-## Estudo de caso II: 50% de verdadeiros positivos
-
-__P-values versus adjusted P-values__
+__P-values versus P-values ajustados__
 ```{r, dependson="createPvals2",fig.height=4,fig.width=8}
 par(mfrow=c(1,2))
 plot(pValues,p.adjust(pValues,method="bonferroni"),pch=19)

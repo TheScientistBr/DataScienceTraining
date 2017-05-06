@@ -14,7 +14,7 @@ mode        : selfcontained # {standalone, draft}
 
 - No anterior, discutimos a criação de um intervalo de confiança usando o CLT
 - Nesta palestra, discutiremos alguns métodos para pequenas amostras, nomeadamente a distribuição $t$ de Gosset
-- Para discutir a distribuição $t$, devemos discutir a distribuição do Qui-quadrado
+- Para discutir a distribuição $t$, devemos discutir a distribuição do Chi-quadrado
 - Utilizamos o seguinte procedimento geral para a criação de ICs
 
 a. Criar um **Pivot** ou estatística que não depende do parâmetro de interesse
@@ -25,21 +25,28 @@ b. Resolver a probabilidade de que o pivô esteja entre os limites do parâmetro
 
 ## A distribuição Chi-quadrado
 
+`Para que serve?`
+
+**Quiq-uadrado**, simbolizado por χ2 é um teste de hipóteses que se destina a encontrar um valor da **dispersão** para duas variáveis nominais, avaliando a associação existente entre variáveis qualitativas. É um teste não paramétrico, ou seja, não depende dos parâmetros populacionais, como média e variância.
+
+`Variáveis Qualitativas` (ou categóricas): são as características que não possuem valores quantitativos, mas, ao contrário, são definidas por várias categorias, ou seja, representam uma classificação dos indivíduos. Podem ser nominais ou ordinais.  
+`Variáveis nominais`: não existe ordenação dentre as categorias.
+
 - Suponha que $S^2$ é a variância da amostra de uma coleção de iid $N (\mu, \sigma ^ 2)$ dados; então
 
 $$
     \frac{(n - 1) S^2}{\sigma^2} \sim \chi^2_{n-1}
 $$
-Que lê: segue uma distribuição Chi-quadrado com $n-1$ graus de liberdade
-- A distribuição do Qui-quadrado é distorcida e tem suporte em $0$ a $\infty$
-- A média do qui-quadrado é seus graus de liberdade
-- A variância da distribuição do Qui-quadrado é o dobro dos graus de liberdade
+Que lê: segue uma distribuição Chi-quadrado com $n-1$ graus de liberdade  
+- A distribuição do `Chi-quadrado` é distorcida e tem suporte em $0$ a $\infty$  
+- A média do `Chi-quadrado` é seus graus de liberdade  
+- A variância da distribuição do Chi-quadrado é o dobro dos graus de liberdade
 
 ---
 
 ## Intervalo de confiança para a variância
 
-Note que se $\chi ^ 2_ {n-1, \alpha}$ é o $\alpha$ quantil da distribuição do qui-quadrado, então
+Note que se $\chi ^ 2_ {n-1, \alpha}$ é o $\alpha$ quantil da distribuição do `Chi-quadrado`, então
 
 $$
 \begin{eqnarray*}
@@ -63,27 +70,30 @@ $$
 
 ---
 ## Exemplo
-### Intervalo de confiança para o desvio padrão das alturas dos filhos dos dados de Galton
+** Intervalo de confiança para o desvio padrão das alturas dos filhos dos dados de Galton**
 
-```{r}
-library(UsingR); data(father.son); x <- father.son$sheight
+```{r message=FALSE}
+library(UsingR,quietly = TRUE,verbose = FALSE); 
+data(father.son); 
+x <- father.son$sheight
 s <- sd(x); n <- length(x)
 round(sqrt( (n-1) * s ^ 2 / qchisq(c(.975, .025), n - 1) ), 3)
 ```
 
 ---
 
-## distribuição $t$ de Gosset 
+## Distribuição $t$ de Gosset 
+(mais conhecido como $t\ de\ Student$)
 
 - Inventado por William Gosset (sob o pseudônimo de "Student") em 1908
 - Tem caudas mais grossas do que o normal
-- É indexado por um grau de liberdade; Fica mais como um padrão normal como df fica maior
+- É indexado por um grau de liberdade; Fica mais como um padrão normal quando df fica maior
 - É obtido como
 
 $$
 \frac {Z} {\sqrt {\frac {\chi ^ 2} {df}}}
 $$
-Onde $Z$ e $\chi^2$ são padrões normais independentes e distribuições de Qui-quadrado, respectivamente
+Onde $Z$ e $\chi^2$ são padrões normais independentes e distribuições de Chi-quadrado, respectivamente
 
 ---
 
@@ -129,13 +139,12 @@ $$
 - Além disso, para distribuições distorcidas, não faz muito sentido centrar o intervalo na média
 - Neste caso, considere fazer registros ou usar um resumo diferente, como a mediana
 - Para dados altamente discretos, como binários, estão disponíveis outros intervalos
+
 ---
+
 ## Dados de sono
 
-Em R, digitar `data(sleep)` traz os dados de sono originalmente
-Analisado no documento Biométrika da Gosset, que mostra o aumento da
-Horas para 10 pacientes em dois soporific drogas. R trata os dados como dois
-Em vez de emparelhados.
+Em R, digitar `data(sleep)` traz os dados de sono originalmente analisado no documento Biométrika de Gosset, que mostra o aumento da horas para 10 pacientes em dois soporific drogas. R trata os dados como dois em vez de emparelhados.
 
 ---
 ## Os dados
@@ -147,10 +156,16 @@ head(sleep)
 
 ---
 ```{r}
-g1 <- sleep$extra[1 : 10]; g2 <- sleep$extra[11 : 20]
+g1 <- sleep$extra[1 : 10]; 
+g2 <- sleep$extra[11 : 20]
 difference <- g2 - g1
-mn <- mean(difference); s <- sd(difference); n <- 10
+mn <- mean(difference); 
+s <- sd(difference); n <- 10
 mn + c(-1, 1) * qt(.975, n-1) * s / sqrt(n)
 t.test(difference)$conf.int
 ```
 
+
+
+
+.

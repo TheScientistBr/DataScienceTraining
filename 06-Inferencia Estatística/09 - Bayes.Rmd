@@ -12,25 +12,27 @@ mode        : selfcontained # {standalone, draft}
 
 
 ## Análise bayesiana
-- Estatísticas bayesianas postulam a * prior * sobre o parâmetro de interesse
-- Todas as inferências são então realizadas na distribuição de o parâmetro dado os dados, chamado de posterior
+- Estatísticas bayesianas postulam a *prioi* sobre o parâmetro de interesse
+- Todas as inferências são então realizadas na distribuição de o parâmetro dado os dados, chamado de a *posteriori*
 - Em geral,
+
   $$
-  \mbox{A Posteriori} \propto \mbox{Prtobabilidade} \times \mbox{A Priori}
+  \mbox{A Posteriori} \propto \mbox{Probabilidade} \times \mbox{A Priori}
   $$
-- Portanto, como vimos nos testes diagnósticos, a o fator pelo qual nossas crenças prévias são atualizadas para produzir conclusões à luz dos dados recolhidos
+
+- Portanto, como vimos nos testes diagnósticos, o fator pelo qual nossas crenças prévias são atualizadas para produzir conclusões à luz dos dados recolhidos
 
 ---
 
 ## Especificação prévia
-- A distribuição beta é a prioridade a priori para parâmetros entre $0$ e $1$.
+- A distribuição beta é a probabilidade a priori para parâmetros entre $0$ e $1$.
 - A densidade beta depende de dois parâmetros $\alpha$ e $\beta$
 
 $$
 \frac{\Gamma(\alpha +  \beta)}{\Gamma(\alpha)\Gamma(\beta)}
  p ^ {\alpha - 1} (1 - p) ^ {\beta - 1} ~~~~\mbox{para} ~~ 0 \leq p \leq 1
 $$
-- A média da densidade beta é $\alpha / (\alpha + \beta) $
+- A média da densidade beta é $\alpha / (\alpha + \beta)$  
 - A variação da densidade beta é
 $$\frac {\alpha \beta} {(\alpha + \beta) ^ 2 (\alpha + \beta + 1)}$$
 - A densidade uniforme é o caso especial onde $\alpha = \beta = 1$
@@ -90,16 +92,6 @@ E[p ~|~ X] & =   \frac{\tilde \alpha}{\tilde \alpha + \tilde \beta}\\ \\
 $$
 
 MLE -> Maximum likelihood estimation
-
----
-
-## Pensamentos
-
-- A média posterior é uma mistura do MLE ($\hat p$) e do média anterior
-- $\pi$ vai para $1$ como $n$ fica grande; Para grandes $n$ os dados pântanos do anterior
-- Para pequenos $n$, a média anterior domina
-- Generaliza como a ciência idealmente deveria funcionar; À medida que os dados se tornam cada vez mais disponíveis, as crenças prévias deveriam impor-
-- Com um anterior que é degenerado em um valor, nenhuma quantidade de dados pode superar o anterior
 
 ---
 

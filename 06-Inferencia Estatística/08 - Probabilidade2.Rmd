@@ -13,7 +13,7 @@ mode        : selfcontained # {standalone, draft}
 ## Probabilidade
 
 - Uma abordagem comum e frutífera das estatísticas é assumir que os dados surgem de uma família de distribuições indexadas por um parâmetro que representa um resumo útil da distribuição
-- A **probabilidade** de uma colecção de dados é a densidade conjunta avaliada em função dos parâmetros com os dados fixos
+- A **probabilidade** de uma coleção de dados é a densidade conjunta avaliada em função dos parâmetros com os dados fixos
 - Análise de probabilidade de dados utiliza a probabilidade de executar inferência em relação ao parâmetro desconhecido
 
 ---
@@ -28,9 +28,18 @@ Dada uma função de massa de probabilidade estatística ou densidade, digamos $
 
 A probabilidade tem as seguintes propriedades:
 
-1. Razões de verossimilhança medem a evidência relativa de um valor do parâmetro desconhecido para outro.
+1. Razões de `verossimilhança` medem a evidência relativa de um valor do parâmetro desconhecido para outro.
 2. Dado um modelo estatístico e dados observados, todas as informações relevantes contidas nos dados relativos ao parâmetro desconhecido estão contidas na probabilidade.
 3. Se $\{X_i\}$ são variáveis aleatórias independentes, então suas probabilidades se multiplicam. Ou seja, a probabilidade dos parâmetros dados todos os $X_i$ é simplesmente o produto da probabilidade individual.
+
+**Verossimilhança**  
+O princípio da verossimilhança também pode ser utilizado para resumo dos dados. Veremos nesta seção que, se alguns princípios são aceitos, a função de verossimilhança deve ser utilizada como um dispositivo de redução dos dados.
+
+Em estatística, a **estimativa por máxima verossimilhança** (maximum-likelihood estimation - MLE) é um método para estimar os parâmetros de um modelo estatístico. Assim, a partir de um conjunto de dados e dado um modelo estatístico, a estimativa por máxima verossimilhança estima valores para os diferentes parâmetros do modelo.
+
+Por exemplo, alguém pode estar interessado na altura de girafas fêmeas adultas, mas devido à restrições de custo ou tempo, medir a altura de todas essas girafas de uma população pode ser impossível. Podemos assumir que as alturas são normalmente distribuídas (modelo estatístico), mas desconhecemos a média e variância (parâmetros do modelo) dessa distribuição. Esses parâmetros da distribuição podem então ser estimados por MLE a partir da medição de uma amostra da população. O método busca aqueles valores para os parâmetros de maneira a maximizar a probabilidade dos dados amostrados, dados o modelo assumido (no caso, distribuição normal).
+
+
 
 ---
 
@@ -115,7 +124,9 @@ Outra interpretação do MLE é que é o valor de $\theta$ que faria os dados qu
 ## Exemplo
 
 - Você viu 5 eventos de falha por 94 dias de monitoramento de uma bomba nuclear
-- Assumindo Poisson, trace a probabilidade
+- Assumindo `Poisson`, trace a probabilidade
+
+Na teoria da probabilidade e na estatística, a **Distribuição de Poisson** é uma distribuição de probabilidade de variável aleatória discreta que expressa a probabilidade de uma série de eventos ocorrer num certo período de tempo se estes eventos ocorrem independentemente de quando ocorreu o último evento.
 
 ---
 
@@ -129,4 +140,7 @@ lines(range(lambda[likelihood > 1/8]), rep(1/8, 2), lwd = 2)
 ```
 
 
+**Nota**
+Em muitas situações nos deparamos com a situação em que o número de ensaios $n$ é grande ($n\rightarrow\infty$) e $p$ é pequeno ($p\rightarrow 0$), no cálculo da função binomial, o que nos leva a algumas dificuldades, pois, como podemos analisar, para $n$ muito grande e $p$ pequeno, fica relativamente difícil calcularmos a probabilidade de $k$ sucessos a partir do modelo binomial, isto é, utilizando a função de probabilidade.
 
+.

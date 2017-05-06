@@ -12,7 +12,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## O canivete - (jackknife)
 
-- O jackknife é uma ferramenta para estimar os erros-padrão eo viés dos estimadores
+- O jackknife é uma ferramenta para estimar os erros-padrão e o viés dos estimadores
 - Como o nome sugere, o jackknife é uma ferramenta pequena e útil; Em contraste com o bootstrap, que é então o equivalente moral de uma oficina gigante cheia de ferramentas
 - Tanto o jackknife como o bootstrap envolvem dados de *reamostragem*; Ou seja, criar repetidamente novos conjuntos de dados a partir dos dados originais
 
@@ -59,12 +59,12 @@ data(father.son)
 x <- father.son$sheight
 n <- length(x)
 theta <- median(x)
-jk <- sapply(1 : n,
-             function(i) median(x[-i])
+jk <- sapply(1:n, function(i) median(x[-i])
              )
 thetaBar <- mean(jk)
 biasEst <- (n - 1) * (thetaBar - theta) 
 seEst <- sqrt((n - 1) * mean((jk - thetaBar)^2))
+c(biasEst, seEst)
 ```
 
 ---
@@ -72,7 +72,6 @@ seEst <- sqrt((n - 1) * mean((jk - thetaBar)^2))
 ## Exemplo
 
 ```{r}
-c(biasEst, seEst)
 library(bootstrap)
 temp <- jackknife(x, median)
 c(temp$jack.bias, temp$jack.se)
@@ -82,10 +81,10 @@ c(temp$jack.bias, temp$jack.se)
 
 ## Exemplo
 
-- Ambos os métodos (naturalmente) rendem um viés estimado de `r temp$jack.bias` e um se de` r temp$jack.se`
+- Ambos os métodos (naturalmente) rendem um `viés` (bias) estimado de `r temp$jack.bias` e um `se` de` r temp$jack.se`
 - Pouco fato: a estimativa jackknife do viés para a mediana é sempre $0$ quando o número de observações é mesmo
 - Foi mostrado que o jackknife é uma aproximação linear ao bootstrap
-- Geralmente não use o jackknife para quantiles amostra como a mediana; Como se mostrou ter algumas propriedades pobres
+- Geralmente não use o jackknife para quantis da amostra como a mediana; Como como demonstrado, algumas propriedades são pobres
 
 ---
 
@@ -150,10 +149,7 @@ iv. Essas medianas são aproximadamente tiradas da distribuição de amostragem 
 
 ```{r}
 B <- 1000
-resamples <- matrix(sample(x,
-                           n * B,
-                           replace = TRUE),
-                    B, n)
+resamples <- matrix(sample(x,n * B,replace = TRUE),B, n)
 medians <- apply(resamples, 1, median)
 sd(medians)
 quantile(medians, c(.025, .975))
@@ -171,7 +167,7 @@ hist(medians)
 ## Notas sobre o bootstrap
 
 - O bootstrap não é paramétrico
-- Melhor percentil bootstrap intervalos de confiança correto para viés
+- Melhora o percentil dos intervalos de confiança para viés correto 
 - Existem muitas variações nos procedimentos bootstrap; O livro "Uma Introdução ao Bootstrap" "por Efron e Tibshirani é um ótimo lugar para começar tanto para bootstrap e informação jackknife
 
 
@@ -192,9 +188,9 @@ boxplot(count ~ spray, data = InsectSprays)
 - Considere a hipótese nula de que a distribuição das observações de cada grupo é a mesma
 - Então, os rótulos de grupo são irrelevantes
 - Então descartamos os níveis do grupo e permute os dados combinados
-- Divida os dados permutados em dois grupos com $n_A$ e $n_B$ observações (digamos sempre tratando as primeiras observações de $ n_A $ como o primeiro grupo)
+- Divida os dados permutados em dois grupos com $n_A$ e $n_B$ observações (digamos sempre tratando as primeiras observações de $n_A$ como o primeiro grupo)
 - Avaliar a probabilidade de obter uma estatística tão grande ou maior do que a observada
-- Um exemplo estatístico seria a diferença nas médias entre os dois grupos; pode-se também usar uma estatística t
+- Um exemplo estatístico seria a diferença nas médias entre os dois grupos; pode-se também usar um teste estatístico t
 
 ---
 
@@ -261,3 +257,17 @@ plot(results)
 boot.ci(results, type="bca")
 ```
 
+**BCA - bias-corrected and accelerated**
+
+Outros valores possíveis: `c("norm","basic", "stud", "perc", "bca", "all")`
+
+### Para todos os tipos:
+```{r}
+boot.ci(results, type="all")
+
+```
+
+
+
+
+.

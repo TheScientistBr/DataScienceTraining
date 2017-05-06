@@ -18,8 +18,9 @@ mode        : selfcontained # {standalone, draft}
 ---
 
 ## Exemplo
-* Um índice de distúrbio respiratório de mais de $ 30 $ eventos / hora, digamos, é consideradas evidências de distúrbios respiratórios graves do sono (SDB).
-* Suponha que em uma amostra de $ 100 $ sujeitos com sobrepeso com fatores de risco para distúrbios respiratórios do sono em uma clínica de média RDI foi $ 32 $ eventos / hora com um desvio padrão de $ 10 $ eventos / hora.
+* Um índice de distúrbio respiratório de mais de $30$ eventos / hora, digamos, é consideradas evidências de distúrbios respiratórios graves do sono (SDB).
+* Suponha que em uma amostra de $100$ sujeitos com sobrepeso com fatores de risco para distúrbios respiratórios do sono em uma clínica de média RDI foi $32$ eventos / hora com um desvio padrão de $10$ eventos / hora.
+
 * Podemos querer testar a hipótese de que
 * $H_0: \mu = 30$
 * $H_a: \mu > 30$
@@ -41,9 +42,9 @@ $H_a$ | $H_0$ | Erro tipo 2 |
 ---
 
 ## Discussão
-* Considerar um tribunal de direito; A hipótese nula é que ao réu é inocente
+* Considerar um tribunal de direito; A hipótese nula é que o réu é inocente
 * Exigimos evidências para rejeitar a hipótese nula (convicto)
-* Se precisarmos de pouca evidência, então aumentaremos a percentagem de inocentes condenados (erros do tipo I); No entanto nós também aumentaria a porcentagem de culpados condenados (Rejeitando corretamente a hipótese nula)
+* Se precisarmos de pouca evidência, então aumentaremos a percentagem de inocentes condenados (erros do tipo I); No entanto nós também aumentariamos a porcentagem de culpados condenados (Rejeitando corretamente a hipótese nula)
 * Se precisamos de muita evidência, então nós aumentamos o percentagem de pessoas inocentes liberta (aceitando corretamente a hipótese nula), enquanto também aumentaríamos a porcentagem de pessoas culpadas deixe livre (erros de tipo II)
 
 ---
@@ -51,7 +52,7 @@ $H_a$ | $H_0$ | Erro tipo 2 |
 ## Exemplo
 - Considere nosso exemplo novamente
 - Uma estratégia razoável rejeitaria a hipótese nula se $\bar X$ foi maior do que alguma constante, digamos $C$
-- Normalmente, $ C $ é escolhido de modo que a probabilidade de um Tipo I erro, $\alpha$, é $.05$ (ou alguma outra constante relevante)
+- Normalmente, $C$ é escolhido de modo que a probabilidade de um erro Tipo I, $\alpha$, é $.05$ (ou alguma outra constante relevante)
 - $\alpha$ = Taxa de erro do tipo I = Probabilidade de rejeitar a hipótese nula quando, de fato, a hipótese nula está correta
 
 ---
@@ -72,8 +73,18 @@ $$
 ---
 
 ## Discussão
-* Em geral, não convertem $ C $ de volta para a escala original
-* Nós simplesmente rejeitamos porque o Z-score; Que é quantas erros padrão, a média da amostra está acima da média  
+* Em geral, não convertem $C$ de volta para a escala original
+* Nós simplesmente rejeitamos porque o `Z-score` está acima da média  
+
+**z-score**
+
+- É o quanto uma medida se afasta da média em termos de Desvios
+Padrão  
+- Quando o escore Z é positivo isto indica que o dado está acima da
+média e quando o mesmo é negativo significa que o dado está abaixo
+da média  
+- Seus valores oscilam entre $-3 < Z < +3$ e isto corresponde a $99,72$\% da
+área sob a curva da Distribuição Normal
 
 $$
   \frac{32 - 30}{10 / \sqrt{100}} = 2
@@ -91,7 +102,7 @@ $\sqrt{n} (\bar X - \mu_0) / s > Z_{1-\alpha}$
   * $H_1: \mu < \mu_0$
   * $H_2: \mu \neq \mu_0$
   * $H_3: \mu > \mu_0$ 
-* Teste estatístico $ TS = \frac{\bar{X} - \mu_0}{S / \sqrt{n}} $
+* Teste estatístico $TS = \frac{\bar{X} - \mu_0}{S / \sqrt{n}}$
 * Rejeitar a hipótese nula quando
   * $TS \leq -Z_{1 - \alpha}$
   * $|TS| \geq Z_{1 - \alpha / 2}$
@@ -180,20 +191,20 @@ Região de rejeição | Taxa de erro do tipo I |
 ---
 
 ## Notas
-* É impossível obter um teste de nível exato de 5% para este caso devido à discreteness do binômio.
+* É impossível obter um teste de nível exato de 5% para este caso devido à Discreção do binômio.
 * O mais próximo é a região de rejeição [7: 8]
 * Qualquer nível alfa inferior a `r 1/2 ^ 8` não é atingível.
 * Para amostras maiores, podemos fazer uma aproximação normal, mas você já sabia disso.
 * Teste de dois lados não é óbvio.
-* Dada uma maneira de fazer testes bilaterais, poderíamos tomar o conjunto de valores de $ p_0 $ para o qual não conseguimos rejeitar obter um intervalo de confiança binomial exato (chamado intervalo Clopper / Pearson, BTW)
-* Para esses problemas, as pessoas sempre criam um P-valor (próxima palestra) ao invés de computar a região de rejeição.
+* Dada uma maneira de fazer testes bilaterais, poderíamos tomar o conjunto de valores de $p_0$ para o qual não conseguimos rejeitar obter um intervalo de confiança binomial exato (chamado intervalo Clopper / Pearson, BTW)
+* Para esses problemas, as pessoas sempre criam um `p-value` (próximo tópico) ao invés de computar a região de rejeição.
 
 **Passos para o teste de hipótese**
 
 1. As hipóteses nula e alternativa
 2. Verifique suas suposições.
 3. Definir uma região crítica com um $\alpha = 0.05$ nível de significância.
-4. Calcule o valor da estatística de teste e indique sua conclusão.
+4. Calcule o valor do teste estatística e indique sua conclusão.
 
 **Exemplo**
 
@@ -238,13 +249,13 @@ phat <- 1755/(1755 + 2771)
 
 
 
-Nosso teste estatístico não é menor que 2.32, portanto não cai na região crítica. Assim, nós falhamos em rejeitar a hipótese nula de que a verdadeira proporção de alunos admitidos menos de 40% e dizer que os dados observados são consistentes com a reivindicação de $\alpha = 0.01$ de nível de significância.
+Nosso teste estatístico não é menor que 2.32, portanto não cai na região crítica. **Assim, nós falhamos em rejeitar a hipótese nula** de que a verdadeira proporção de alunos admitidos menos de 40% e dizer que os dados observados são consistentes com a reivindicação de $\alpha = 0.01$ de nível de significância.
 
 Vamos fazer o Exemplo novamente. Tudo será exatamente o mesmo com uma alteração. Suponha que escolhemos nível de significância $\alpha = 0.05$ em vez de $\alpha = 0.01$.
 
 Os dados de 1973 são consistentes com a alegação do autor?
 
-Nossas hipóteses nulas e alternativas são as mesmas. A nossa estatística de teste observada é a mesma e foi aproximadamente 1.68, mas note que o nosso valor crítico mudou: $\alpha = 0.05$ e $z_.05$ é:
+Nossas hipóteses nulas e alternativas são as mesmas. O nosso teste estatístico observado é o mesmo e foi aproximadamente 1.68, mas note que o nosso valor crítico mudou: $\alpha = 0.05$ e $z_.05$ é:
 
 ```{r}
 -qnorm(0.95)
@@ -252,7 +263,7 @@ Nossas hipóteses nulas e alternativas são as mesmas. A nossa estatística de t
 
 Nosso teste estatístico é menor que 1.64, então agora cai na região crítica!
 
-Rejeitamos agora a hipótese nula e concluímos que os dados de 1973 dão provas de que a verdadeira proporção de estudantes admitidos na escola de pós-graduação da UCB em 1973 foi significativamente inferior a 40%. Os dados não são consistentes com a reivindicação do oficial ser $\alpha = 0.05$ de nível de significância. 
+**Rejeitamos agora a hipótese nula** e concluímos que os dados de 1973 dão provas de que a verdadeira proporção de estudantes admitidos na escola de pós-graduação da UCB em 1973 foi significativamente inferior a 40%. Os dados não são consistentes com a reivindicação do oficial ser $\alpha = 0.05$ de nível de significância. 
 
 O que está acontecendo, aqui? Se escolhermos $\alpha = 0.05$ então nós rejeitamos a hipótese nula, mas se escolhemos $\alpha = 0.01$ então não conseguimos rejeitar a hipótese nula. 
 
@@ -260,10 +271,11 @@ Nossa conclusão final parece depender de nossa seleção do nível de signific�
 
 Claramente, para alguns níveis de significância que rejeitamos, e para alguns níveis de significância não. Onde está a fronteira? Ou seja, qual é o nível de significância para o qual nós rejeitamos em qualquer nível de significância maior, e nós falhamos em rejeitar em qualquer nível de significância menor? Esse valor limite tem um nome especial: é chamado de **p-value** do teste.
 
-O p-value, ou nível de significância observado, de um teste de hipótese é a probabilidade quando a hipótese nula é verdadeira para se obter o valor observado da estatística de teste (tal como $\rho$) ou valores mais extremos - o que significa, na direção da hipótese alternativa.
+O **p-value, ou nível de significância observado**, de um teste de hipótese é a probabilidade quando a hipótese nula é verdadeira para se obter o valor observado da estatística de teste (tal como $\rho$) ou valores mais extremos - o que significa, na direção da hipótese alternativa.
 
-Vamos calcular o valor de $\rho$ para o teste nos dois exemplos acima, o p-value para este teste é a probabilidade de obter um escore de $z$ igual ao nosso teste observado. 
-Estatística (que teve z-score $\approx -1.680919$) ou mais extremo, que neste exemplo é menor do que o teste estatístico observada. 
+Vamos calcular o valor de $\rho$ para o teste nos dois exemplos acima, o **p-value para este teste é a probabilidade de obter um escore de $z$ igual ao nosso teste observado**.
+
+Estatística (que teve z-score $\approx -1.680919$) ou mais extremo, que neste exemplo é menor do que o teste estatístico observado. 
 
 Em outras palavras, queremos conhecer a área sob uma curva normal padrão
 O intervalo ($\infty,  -1.680919$]. Podemos obter isto facilmente com:
@@ -273,13 +285,13 @@ pnorm(-1.680919)
 ```
 
 
-Vemos que o p-value é estritamente entre os níveis de significância $\alpha = 0.01$ e $\alpha = 0.05$.
+Vemos que o p-value está estritamente entre os níveis de significância $\alpha = 0.01$ e $\alpha = 0.05$.
 Isso faz sentido: ele tem que ser maior do que$\alpha = 0.01$ (caso contrário teríamos rejeitado $H_0$.
 
 No primeiro exemplo também deve ser menor que $\alpha = 0.05$ (caso contrário, não teríamos rejeitado $H_0$. 
 No segundo exemplo, na verdade, os valores de p são um indicador característico de rejeitados em níveis de significância variados, e por isso um estatístico muitas vezes cálcula as regiões críticas e valores críticos inteiramente. 
 
-Se ele (oficial) sabe o p-valuer, então ele sabe imediatamente se ele (ou quais) teria rejeitado em qualquer nível de significância.
+Se ele (oficial) sabe o p-value, então ele sabe imediatamente se ele (ou quais) teria rejeitado em qualquer nível de significância.
 
 Assim, outra maneira de expressar nosso procedimento de teste de significância é: rejeitaremos $H_0$ no nível de significância se o p-value for menor que $\alpha$.
 

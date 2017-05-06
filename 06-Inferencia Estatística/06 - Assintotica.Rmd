@@ -203,8 +203,10 @@ $$
 ## Dê um intervalo de confiança para a altura média dos filhos
 Nos dados de Galton
 
-```{r}
-library(UsingR);data(father.son); x <- father.son$sheight
+```{r message=FALSE}
+library(UsingR, quietly = TRUE,verbose = FALSE);
+data(father.son); 
+x <- father.son$sheight
 (mean(x) + c(-1, 1) * qnorm(.975) * sd(x) / sqrt(length(x))) / 12
 ```
 
@@ -218,13 +220,16 @@ library(UsingR);data(father.son); x <- father.son$sheight
 $$
     \hat p \pm z_{1 - \alpha/2}  \sqrt{\frac{p(1 - p)}{n}}
 $$
-- Substituindo $p$ por $\hat p$ no erro padrão resulta no que é chamado de intervalo de confiança para $p$
-- Observe também que $p(1-p) \leq 1/4$ para $0 \leq p \leq 1 $
-- Vamos $\alpha = .05$ para que $z_{1 - \alpha / 2} = 1.96 \approx 2$ então
+
+- Substituindo $p$ por $\hat p$ no erro padrão resulta no que é chamado de intervalo de confiança para $p$  
+- Observe também que $p(1-p) \leq 1/4$ para $0 \leq p \leq 1$  
+- Temos que $\alpha = .05$ para que $z_{1 - \alpha / 2} = 1.96 \approx 2$ então
 
 $$
     2  \sqrt{\frac{p(1 - p)}{n}} \leq 2 \sqrt{\frac{1}{4n}} = \frac{1}{\sqrt{n}} 
 $$
+
+
 - Portanto $\hat p \pm \frac {1} {\sqrt {n}}$ é uma estimativa rápida do `intervalo de confiança` para $p$
 
 ---
@@ -234,11 +239,13 @@ $$
 * Seu conselheiro da campanha disse-lhe que em uma amostra aleatória de 100 eleitores prováveis, 56 intenção de votar em você.
 * Você pode relaxar? Você tem essa corrida no saco?
 * Sem acesso a um computador ou calculadora, quão precisa é esta estimativa?
-* `1 / sqrt (100) =. 1` assim um back do cálculo do envelope dá um intervalo aproximado de 95% de `(0.46, 0.66)`
+* `1 / sqrt (100) =. 1` assim o cálculo dá um intervalo aproximado de 95% de `(0.46, 0.66)`
 * Não é suficiente para você relaxar, melhor ir fazer mais campanhas!
-* Diretrizes aproximadas, 100 para 1 casa decimal, 10.000 para 2, 1.000.000 para 
+* Diretrizes aproximadas, 100 para 1 casa decimal, 10.000 para 2, 1.000.000 para 3
 
 ```{r}
-round(1 / sqrt(10 ^ (1 : 6)), 3)
+round(1 / sqrt(10^(1:6)),3)
 ```
 
+
+.

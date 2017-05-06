@@ -39,7 +39,8 @@ $$
 ## Traçando todas as probabilidades possíveis para um n pequeno
 
 ---
-```{r, fig.height=6, fig.width=6, echo = FALSE, results='hide'}
+
+```{r, fig.height=6, fig.width=6, echo = TRUE, results='hide'}
 n <- 5
 pvals <- seq(0, 1, length = 1000)
 plot(c(0, 1), c(0, 1.2), type = "n", frame = FALSE, xlab = "p", ylab = "likelihood")

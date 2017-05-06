@@ -29,7 +29,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## O que é um p-value?
 
-__Idea__: Suponha que nada está acontecendo - quão incomum é ver a estimativa que temos?
+__Ideia__: Suponha que nada está acontecendo - quão incomum é ver a estimativa que temos?
 
 __Abordagem__:
 
@@ -56,28 +56,17 @@ pt(0.8, 15, lower.tail = FALSE)
 * Nossa estatística de teste foi $2$ para $H_0: \mu_0 = 30$ versus $H_a: \mu > 30$.
 * Observe que nós rejeitamos o teste um lado quando $\alpha = 0.05$, nós rejeitariamos se $\alpha = 0.01$, como sobre $0.001$?
 * O menor valor para alfa que você ainda rejeitar a hipótese nula é chamado de *nível de significância alcançado*
-* Isto é equivalente, mas filosoficamente um pouco diferente do *P-value*
+* Isto é equivalente, mas filosoficamente um pouco diferente do *p-value*
 
 ---
 
 ## Notas
-* Ao relatar um valor P o leitor pode executar o teste de hipótese em qualquer nível $\alpha$ que ele ou ela escolhe
+* Ao relatar um *valor P*p-value* o leitor pode executar o teste de hipótese em qualquer nível $\alpha$ que desejar
 * Se o p-value for menor que $\alpha$ você rejeita a hipótese nula
 * Para teste de hipótese de duas amostras pareadas, o dobro do menor dos dois em um teste de hipóteses lado ao lado de p-value
 
 ---
 
-## Revisitando um exemplo anterior
-
-- Suponha que um amigo tem $8$ crianças, $7$ de que são meninas e nenhum são gêmeos
-- Se cada sexo tem uma probabilidade de $50$% independente para cada nascimento, qual é a probabilidade de obter $7$ ou mais meninas de $8$ nascimentos?
-
-```{r}
-choose(8, 7) * .5 ^ 8 + choose(8, 8) * .5 ^ 8 
-pbinom(6, size = 8, prob = .5, lower.tail = FALSE)
-```
-
----
 
 ## exemplo Poisson
 
@@ -92,11 +81,13 @@ ppois(9, 5, lower.tail = FALSE)
 ```
 
 
+**Lembrete**
+Na teoria da probabilidade e na estatística, a distribuição de Poisson é uma distribuição de probabilidade de variável aleatória discreta que expressa a probabilidade de uma série de eventos ocorrer num certo período de tempo se estes eventos ocorrem independentemente de quando ocorreu o último evento.
 
 
 ### Interpretação
 
-O P-value, que depende diretamente de uma dada amostra, tenta fornnecer uma medida da força dos resultados de um teste, em contraste a uma simples rejeição ou não rejeição. 
+O *p-value*, que depende diretamente de uma dada amostra, tenta fornnecer uma medida da força dos resultados de um teste, em contraste a uma simples rejeição ou não rejeição. 
 
 Se a hipótese nula for verdadeira e a chance da variação aleatória for a única razão para as diferenças amostrais, então o P-value é uma medida quantitativa para alimentar o processo de tomada de decisão como evidência. A tabela seeguinte fornece uma interpretação razoável dos P-values:
 
