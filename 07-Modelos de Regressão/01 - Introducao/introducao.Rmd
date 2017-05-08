@@ -1,0 +1,210 @@
+---
+title       : Modelos de Regressão
+subtitle    : Introdução
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Um exemplo de motivação famoso
+
+```{r setup, cache = F, echo = F, message = F, warning = F, tidy = F, results='hide'}
+# make this an external chunk that can be included in any file
+options(width = 100)
+options(xtable.type = 'html')
+runif(1)
+```
+
+<img class=center src=fig/galton.jpg height=150>
+
+Francis Galton foi um antropólogo, meteorologista, matemático e estatístico inglês. Galton era o mais novo de nove filhos de um próspero banqueiro, nasceu em uma família socialmente abastada. (Wikipédia)
+
+**Galton** tinha um intelecto prolífero (um QI estimado de 200), e produziu mais de 340 artigos e livros em toda sua vida. Pesquisou a distribuição geográfica da beleza, a moda, as impressões digitais, a eficácia da oração religiosa e o levantamento de peso. Também **criou o conceito estatístico de correlação**, a amplamente promovida **regressão em direção à média** e várias invenções como um periscópio, um dispositivo para abrir cadeados e uma versão inicial da impressora de teletipo. Ele foi o primeiro a aplicar métodos estatísticos para o estudo das diferenças e herança humanas de inteligência, e *introduziu a utilização de questionários e pesquisas para coletar dados* sobre as comunidades humanas, o que ele precisava para obras genealógicas e biográficas e para os seus estudos antropométricos. Como pesquisador da mente humana, **fundou a psicometria** (a ciência da medição faculdades mentais) e a psicologia diferencial.
+
+### (Talvez surpreendentemente, este exemplo ainda é relevante)
+
+<img class=center src=fig/height.png height=150>
+
+[http://www.nature.com/ejhg/journal/v17/n8/full/ejhg20095a.html](http://www.nature.com/ejhg/journal/v17/n8/full/ejhg20095a.html)
+
+[Previsão de altura: a abordagem vitoriana bate genômica moderna](http://www.wired.com/wiredscience/2009/03/predicting-height-the-victorian-approach-beats-modern-genomics/)
+
+---
+
+## Perguntas para esta classe
+* Considere tentar responder os seguintes tipos de perguntas:
+  * Usar as alturas dos pais para prever as alturas das crianças.
+  * Para tentar encontrar um meio parcimonioso, que descreva facilmente a  relação entre as alturas dos pai e das crianças.
+  * Investigar a variação nas alturas das crianças que parecem não relacionadas à altura dos pais (variação residual).
+  * Quantificar o impacto que a informação do genótipo tem além da altura dos pais para explicar a altura da criança.
+  * Descobrir como/se e quais pressupostos são necessários para generalizar conclusões para além dos dados em questão.
+  * Por que as crianças de pais muito altos tendem a ser altas, mas um pouco mais baixas do que seus pais e por que os filhos de pais muito baixos tendem a ser baixos, mas um pouco mais altos do que seus pais? (Esta é uma pergunta famosa chamada "Regressão para o médio".)
+ 
+---
+
+## Galton's Data
+
+* Vejamos primeiro os dados usados por Francis Galton em 1885.
+* Galton foi um estatístico que inventou o termo e conceitos de regressão e correlação, fundou a revista Biometrika e era o primo de Charles Darwin.
+* Você pode precisar executar `install.packages ("UsingR ")` se a biblioteca `UsingR` não estiver instalada.
+* Vamos olhar para as distribuições marginais (pais desconsiderando as crianças e os filhos desconsiderando os pais) primeiro.
+* Distribuição dos pais é todos os casais heterossexuais.
+* Correção de gênero através da multiplicação das alturas femininas por 1,08.
+* Overplotting é uma questão de discretização.
+
+---
+## Code
+
+```{r galton,fig.height=3.5,fig.width=8, message=FALSE}
+library(UsingR,quietly = TRUE); 
+data(galton)
+par(mfrow=c(1,2))
+hist(galton$child,col="blue",breaks=100)
+hist(galton$parent,col="blue",breaks=100)
+```
+
+---
+
+## Encontrando o meio via mínimos quadrados
+* Considere apenas as alturas das crianças.
+* Como poderia descrever o "meio"?
+* Uma definição, seja $Y_i$ a altura da criança $i$ para $i = 1, \ldots, n = 928$, então defina o meio como o valor de $\ mu$ que minimiza $$\sum_ {i = 1} ^ n (Y_i - \mu) ^ 2$$
+* Este é o centro físico de massa do histrograma.
+* Você pode ter adivinhado que a resposta $\ mu = \bar X$.
+
+
+---
+## Experimento
+
+Use manipulate no RStudio para ver qual valor de $\ mu$ minimiza a soma dos desvios quadrados.
+
+```
+library(manipulate)
+myHist <- function(mu){
+  hist(galton$child,col="blue",breaks=100)
+  lines(c(mu, mu), c(0, 150),col="red",lwd=5)
+  mse <- mean((galton$child - mu)^2)
+  text(63, 150, paste("mu = ", mu))
+  text(63, 140, paste("MSE = ", round(mse, 2)))
+}
+manipulate(myHist(mu), mu = slider(62, 74, step = 0.5))
+```
+
+---
+
+## A estimativa dos mínimos quadrados é a média empírica
+
+```{r lsm, dependson="galton",fig.height=4,fig.width=4}
+  hist(galton$child,col="blue",breaks=100)
+  meanChild <- mean(galton$child)
+  lines(rep(meanChild,100),seq(0,150,length=100),col="red",lwd=5)
+```
+
+---
+
+### A matemática segue como:
+
+$$ 
+\begin{align} 
+\sum_{i=1}^n (Y_i - \mu)^2 & = \
+\sum_{i=1}^n (Y_i - \bar Y + \bar Y - \mu)^2 \\ 
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 \sum_{i=1}^n (Y_i - \bar Y)  (\bar Y - \mu) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu) \sum_{i=1}^n (Y_i - \bar Y)  +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \
+2 (\bar Y - \mu)  (\sum_{i=1}^n Y_i - n \bar Y) +\
+\sum_{i=1}^n (\bar Y - \mu)^2 \\
+& = \sum_{i=1}^n (Y_i - \bar Y)^2 + \sum_{i=1}^n (\bar Y - \mu)^2\\ 
+& \geq \sum_{i=1}^n (Y_i - \bar Y)^2 \
+\end{align} 
+$$
+
+---
+
+## Comparando as alturas das crianças e as alturas dos pais
+
+```{r, dependson="galton",fig.height=4,fig.width=4}
+plot(galton$parent,galton$child,pch=19,col="blue")
+```
+
+---
+Melhorando a visualização, o tamanho do ponto representa o número de pontos naquela combinação (X, Y) (veja o arquivo Rmd para o código).
+
+```{r freqGalton, dependson="galton",fig.height=6,fig.width=6,echo=FALSE}
+freqData <- as.data.frame(table(galton$child, galton$parent))
+names(freqData) <- c("child", "parent", "freq")
+plot(as.numeric(as.vector(freqData$parent)), 
+     as.numeric(as.vector(freqData$child)),
+     pch = 21, col = "black", bg = "lightblue",
+     cex = .15 * freqData$freq, 
+     xlab = "parent", ylab = "child")
+```
+
+---
+
+## Regressão através da origem
+
+* Suponha que $X_i$ são as alturas dos pais.
+* Considere como sendo a inclinação $\beta$ que minimiza 
+
+$$\sum_ {i = 1} ^ n (Y_i - X_i \beta) ^ 2$$
+* Isto é exatamente usando a origem como um ponto de pivô escolhendo a
+linha que minimiza a soma das distâncias verticais quadradas dos pontos à linha
+* Use a função manipulate do R studio para experimentar o processo
+* Subtraia os meios para que a origem seja a média do pai e alturas das crianças
+
+---
+
+```
+myPlot <- function(beta){
+  y <- galton$child - mean(galton$child)
+  x <- galton$parent - mean(galton$parent)
+  freqData <- as.data.frame(table(x, y))
+  names(freqData) <- c("child", "parent", "freq")
+  plot(
+    as.numeric(as.vector(freqData$parent)), 
+    as.numeric(as.vector(freqData$child)),
+    pch = 21, col = "black", bg = "lightblue",
+    cex = .15 * freqData$freq, 
+    xlab = "parent", 
+    ylab = "child"
+    )
+  abline(0, beta, lwd = 3)
+  points(0, 0, cex = 2, pch = 19)
+  mse <- mean( (y - beta * x)^2 )
+  title(paste("beta = ", beta, "mse = ", round(mse, 3)))
+}
+manipulate(myPlot(beta), beta = slider(0.6, 1.2, step = 0.02))
+```
+
+---
+
+## A solução
+### Nas próximas aulas vamos falar sobre por que esta é a solução
+
+```{r}
+lm(I(child - mean(child))~ I(parent - mean(parent)) - 1, data = galton)
+```
+
+---
+## Visualizando a melhor linha de ajuste
+### O tamanho dos pontos são frequências na combinação X, Y
+
+```{r, fig.height=5,fig.width=5,echo=FALSE}
+freqData <- as.data.frame(table(galton$child, galton$parent))
+names(freqData) <- c("child", "parent", "freq")
+plot(as.numeric(as.vector(freqData$parent)), 
+     as.numeric(as.vector(freqData$child)),
+     pch = 21, col = "black", bg = "lightblue",
+     cex = .05 * freqData$freq, 
+     xlab = "parent", ylab = "child")
+lm1 <- lm(galton$child ~ galton$parent)
+lines(galton$parent,lm1$fitted,col="red",lwd=3)
+```
+

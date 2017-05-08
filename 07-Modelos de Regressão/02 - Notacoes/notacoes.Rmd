@@ -1,0 +1,121 @@
+---
+title       : Modelos de Regressão
+subtitle    : Notações
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Algumas definições básicas
+
+* Neste módulo, vamos abordar algumas definições básicas e notação utilizada em toda a classe.
+* Vamos tentar minimizar a quantidade de matemática necessária para esta classe.
+* Nenhum caclculus é exigido.
+
+---
+
+## Notação para dados
+
+* Nós escrevemos $ X_1, X_2, \ ldots, X_n $ para descrever $ n $ dados pontos.
+* Como exemplo, considere o conjunto de dados $\{1, 2, 5 \}$ então $X_1 = 1$, $X_2 = 2$, $X_3 = 5$ e $n = 3$.
+* Costumamos usar uma letra diferente de $X$, como $Y1, \ldots, Y_n$.
+* Normalmente usaremos letras gregas para coisas que não sabemos. Tal como, $\mu$ é uma média que gostaríamos de estimar.
+* Usaremos letras maiúsculas para valores conceituais das variáveis e letras minúsculas para valores realizados.
+* Assim, desta forma podemos escrever $P(X_i> x)$.
+* $X_i$ é uma variável aleatória conceitual.
+* $X$ é um número que nós ligamos.
+
+---
+## A média empírica
+
+* Definir a média empírica como
+
+$$
+\bar X = \frac {1} {n} \sum_ {i = 1} ^ n X_i.
+$$
+* Observe se subtraímos a média dos pontos de dados, obtemos dados que têm média 0. Ou seja, se definimos
+
+$$
+\tilde X_i = X_i - \bar X.
+$$
+
+A média do $\tilde X_i$ é 0.
+* Este processo é chamado de "centralização" as variáveis aleatórias.
+* A média é uma medida de tendência central dos dados.
+* Lembre-se da palestra anterior de que a média é solução de mínimos quadrados para minimizar
+
+$$
+\sum_ {i = 1} ^ n (X_i - \mu) ^ 2
+$$
+
+---
+
+## O desvio padrão e variação empical
+
+* Definir a variância empírica como
+
+$$
+S^2 = \frac {1} {n-1} \sum_ {i = 1} ^ n (X_i - \bar X) ^ 2
+= \frac {1} {n-1} \left (\sum_ {i = 1} ^ n X_i ^ 2 - n \bar X ^ 2 \right)
+$$
+
+* O desvio padrão empírico é definido como
+$S = \sqrt {S ^ 2}$. Observe que o desvio padrão tem as mesmas unidades que os dados.
+* Os dados definidos por $X_i / s$ têm desvio padrão empírico 1. Isto é chamado de "escalar" os dados.
+* O desvio padrão empírico é uma medida de propagação.
+* Às vezes as pessoas dividem por $n$ em vez de $n-1$ (o último
+Produz uma estimativa imparcial).
+
+---
+
+## Normalização
+
+* Os dados definidos pelo
+
+$$
+Z_i = \frac {X_i - \bar X} {s}
+$$
+
+Têm média empírica zero e desvio padrão empírico 1.
+* O processo de centralização, em seguida, escalando os dados é chamado de "normalização" dos dados.
+* Os dados normalizados são centralizados em 0 e têm unidades iguais aos desvios padrão dos dados originais.
+* Exemplo, um valor de 2 dados normalizados forma significa que dados ponto
+Foi de dois desvios-padrão maiores que a média.
+
+---
+## A covariância empírica
+* Considere agora quando temos pares de dados, $(X_i, Y_i)$.
+* Sua covariância empírica é
+
+$$
+Cov (X, Y) =
+\frac {1} {n-1} \sum_ {i = 1} ^ n (X_i - \bar X) (Y_i - \bar Y)
+= \frac {1} {n-1} \left (\sum_ {i = 1} ^ n X_i Y_i - n \bar X \bar Y \right)
+$$
+
+* Algumas pessoas preferem dividir por $n$ em vez de $n-1$ (o último
+Produz uma estimativa imparcial).
+* A correlação é definida é
+
+$$
+cor (X, Y) = \frac {Cov (X, Y)} {S_x S_y}
+$$
+
+Onde $S_x$ e $S_y$ são as estimativas dos desvios-padrão
+Para as observações $X$ e as observações $Y$, respectivamente.
+
+---
+## Alguns fatos sobre correlação
+
+* $Cor(X, Y) = Cor (Y, X)$
+* $-1 \leq Cor (X, Y) \leq 1$
+* $Cor(X, Y) = 1$ e $Cor(X, Y) = -1$ somente quando as observações de $X$ ou $Y$ caem perfeitamente em uma linha inclinada positiva ou negativa, respectivamente.
+* $Cor(X, Y)$ mede a força da relação linear entre os dados $X$ e $Y$, com relações mais fortes como $Cor(X, Y)$ dirige para -1 ou 1.
+* $Cor(X, Y) = 0$ não implica relação linear.
+
+
+
+.

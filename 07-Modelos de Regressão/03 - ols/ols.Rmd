@@ -1,0 +1,237 @@
+---
+title       : Modelos de Regressão
+subtitle    : Estimativa dos mínimos quadrados das linhas de regressão
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+
+
+```{r setup, cache = FALSE, echo = FALSE, message = FALSE, warning = FALSE, tidy = FALSE}
+# make this an external chunk that can be included in any file
+options(width = 100)
+```
+
+## Generalizando mínimos quadrados para equações lineares
+Considere novamente os dados de altura de pai e filho de Galton
+
+```{r, fig.height=5, fig.width=5, message=FALSE}
+library(UsingR,quietly = TRUE)
+data(galton)
+freqData <- as.data.frame(table(galton$child, galton$parent))
+names(freqData) <- c("child", "parent", "freq")
+plot(as.numeric(as.vector(freqData$parent)), 
+     as.numeric(as.vector(freqData$child)),
+     pch = 21, col = "black", bg = "lightblue",
+     cex = .05 * freqData$freq, 
+     xlab = "parent", ylab = "child")
+```
+
+---
+## Ajustando a melhor linha
+* Seja $Y_i$ a altura da criança $i^{th}$ e $X_i$ a
+$I^{th}$ (média sobre o par de) alturas dos pais.
+* Considere encontrar a melhor linha
+* Altura da criança = $\beta_0$ + Altura do pai $\beta_1$
+* Use mínimos quadrados
+
+  $$
+  \sum_{i=1}^n \{Y_i - (\beta_0 + \beta_1 X_i)\}^2
+  $$
+  
+* Como fazemos isso?
+
+
+---
+
+## Vamos resolver este problema de forma generalizada
+
+* Deixe $\mu_i = \beta_0 + \beta_1 X_i$ e nossas estimativas
+$\hat \mu_i = \hat \beta_0 + \hat \beta_1 X_i$. 
+* Queremos minimizar
+
+$$ \dagger \sum_{i=1}^n (Y_i - \mu_i)^2 = \sum_{i=1}^n (Y_i - \hat \mu_i) ^ 2 + 2 \sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) + \sum_{i=1}^n (\hat \mu_i - \mu_i)^2$$
+
+* Suponha que $$\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = 0$$ então
+
+$$ \dagger 
+=\sum_{i=1}^n (Y_i - \hat \mu_i) ^ 2  + \sum_{i=1}^n (\hat \mu_i - \mu_i)^2\geq \sum_{i=1}^n (Y_i - \hat \mu_i) ^ 2$$
+
+---
+
+## Apenas regressão média
+* Então sabemos que se:
+$$ \sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = 0$$
+onde $\mu_i = \beta_0 + \beta_1 X_i$ and $\hat \mu_i = \hat \beta_0 + \hat \beta_1 X_i$ Então a linha
+$$Y = \hat \beta_0 + \hat \beta_1 X$$
+É a linha de mínimos quadrados.
+* Considere forçar $\beta_1 = 0$ and thus $\hat \beta_1=0$; 
+Isto é, considerando apenas linhas horizontais
+* A solução funciona para
+$$\hat \beta_0 = \bar Y.$$
+
+---
+## Vamos mostrar
+$$\begin{align} \
+\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) 
+= & \sum_{i=1}^n (Y_i - \hat \beta_0) (\hat \beta_0 - \beta_0) \\
+= & (\hat \beta_0 - \beta_0) \sum_{i=1}^n (Y_i   - \hat \beta_0) \
+\end{align} $$
+
+Assim, este será igual a 0 se $\sum_{i=1}^n (Y_i  - \hat \beta_0)
+= n\bar Y - n \hat \beta_0=0$
+
+Portanto $\hat \beta_0 = \bar Y.$
+
+---
+## Regressão através da origem
+* Lembre-se que se:
+$$ \sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = 0$$
+Onde $\mu_i = \beta_0 + \beta_1 X_i$ and $\hat \mu_i = \hat \beta_0 + \hat \beta_1 X_i$ então a linha 
+$$Y = \hat \beta_0 + \hat \beta_1 X$$
+É a linha de mínimos quadrados.
+* Considere forçar $\beta_0 = 0$ and thus $\hat \beta_0=0$; 
+Isto é, considerando apenas linhas através da origem
+* A solução funciona para ser
+$$\hat \beta_1 = \frac{\sum_{i=1^n} Y_i X_i}{\sum_{i=1}^n X_i^2}.$$
+
+
+
+## Vamos descobrir
+
+$$\begin{align} \
+\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) 
+= & \sum_{i=1}^n (Y_i - \hat\beta_0 - \hat\beta_1 X_i) (\hat \beta_0 + \hat \beta_1 X_i - \beta_0 - \beta_1 X_i) \\
+= & (\hat \beta_0 - \beta_0) \sum_{i=1}^n (Y_i - \hat\beta_0 - \hat \beta_1 X_i) + (\beta_1 - \beta_1)\sum_{i=1}^n (Y_i - \hat\beta_0 - \hat \beta_1 X_i)X_i\\
+\end{align}$$
+
+Observe que
+
+
+$$0=\sum_{i=1}^n (Y_i - \hat\beta_0 - \hat \beta_1 X_i) = n \bar Y - n \hat \beta_0 - n \hat \beta_1 \bar X ~~\mbox{implies that}~~\hat \beta_0 = \bar Y - \hat \beta_1 \bar X $$
+
+Então
+$$\sum_{i=1}^n (Y_i  - \hat\beta_0 - \hat \beta_1 X_i) X_i =  \sum_{i=1}^n (Y_i  - \bar Y + \hat \beta_1 \bar X - \hat \beta_1 X_i)X_i$$
+
+---
+
+## Continuando ...
+
+$$=\sum_{i=1}^n \{(Y_i  - \bar Y) - \hat \beta_1 (X_i - \bar X) \}X_i$$
+
+E então
+
+$$ \sum_{i=1}^n (Y_i  - \bar Y)X_i - \hat \beta_1 \sum_{i=1}^n
+(X_i - \bar X) X_i = 0.$$
+
+E lembre-se
+
+$$
+\hat \beta_1 =
+\frac{\sum_{i=1}^n \{(Y_i  - \bar Y)X_i}{\sum_{i=1}^n
+(X_i - \bar X) X_i} = 
+\frac{\sum_{i=1}^n (Y_i  - \bar Y)(X_i - \bar X)}{\sum_{i=1}^n
+(X_i - \bar X) (X_i - \bar X)}
+= Cor(Y, X) \frac{Sd(Y)}{Sd(X)}.
+$$
+
+E lembre-se
+
+$$
+\hat \beta_0 = \bar Y - \hat \beta_1 \bar X.
+$$
+
+---
+## Consequências
+* O modelo de mínimos quadrados se ajusta à linha $Y = \beta_0 + \beta_1 X$ através dos pares de dados $(X_i, Y_i)$ com $Y_i$ como o resultado obtém a linha $Y = \hat \beta_0 + \hat \Beta_1 X$ onde $\Hat \beta_1 = Cor(Y, X) \frac {Sd (Y)} {Sd (X)} ~~~ \hat \beta_0 = \barra Y - \hat \beta_1 \bar X$$
+* $\Hat \beta_1$ tem as unidades de $Y / X$, $\hat \beta_0$ tem as unidades de $Y$.
+* A linha passa pelo ponto $(\bar X, \bar Y )$
+* A inclinação da linha de regressão com $X$ como resultado e $Y$ como preditor é $Cor(Y, X)Sd(X) / Sd (Y)$.
+* A inclinação é o mesmo que você obteria se você centrou os dados,
+$(X_i - \bar X, Y_i - \bar Y)$, e fez regressão através da origem.
+* Se você normalizou os dados, $\ {\frac {X_i - \bar X} {Sd (X)}, \frac {Y_i - \bar Y} {Sd (Y)} \}$, a inclinação é $Cor (Y, X)$.
+
+---
+
+## Revisitando dados de Galton
+### Verifique os nossos cálculos usando R
+
+```{r, fig.height=4,fig.width=4,echo=TRUE}
+y <- galton$child
+x <- galton$parent
+beta1 <- cor(y, x) *  sd(y) / sd(x)
+beta0 <- mean(y) - beta1 * mean(x)
+rbind(c(beta0, beta1), coef(lm(y ~ x)))
+```
+
+---
+### Inverter a relação resultado / preditor
+
+```{r, fig.height=4,fig.width=4,echo=TRUE}
+beta1 <- cor(y, x) *  sd(x) / sd(y)
+beta0 <- mean(x) - beta1 * mean(y)
+rbind(c(beta0, beta1), coef(lm(x ~ y)))
+```
+
+---
+### A regressão através da origem produz um declive equivalente se você centrar os dados primeiro
+
+
+```{r, fig.height=4,fig.width=4,echo=TRUE}
+yc <- y - mean(y)
+xc <- x - mean(x)
+beta1 <- sum(yc * xc) / sum(xc ^ 2)
+c(beta1, coef(lm(y ~ x))[2])
+```
+
+---
+### A regressão através da origem produz um declive equivalente se você centrar os dados primeiro
+
+```{r, echo=TRUE}
+yn <- (y - mean(y))/sd(y)
+xn <- (x - mean(x))/sd(x)
+c(cor(y, x), cor(yn, xn), coef(lm(yn ~ xn))[2])
+```
+
+
+---
+## Plotando  o ajuste
+* Tamanho de pontos são freqüências em que X, Y combinados.
+* Para a criança o resultado é vermelho
+* Para o azul, o pai é o resultado (contabilizando o fato de que a resposta é plotada no eixo horizontal).
+* A linha preta assume $Cor (Y, X) = 1$ (a inclinação é $Sd (Y) / Sd (X)$).
+* Ponto preto grande é $(\bar X, \bar Y)$.
+
+---
+
+```
+abline(mean(y) - mean(x) * cor(y, x) * sd(y) / sd(x), 
+  sd(y) / sd(x) * cor(y, x), 
+  lwd = 3, col = "red")
+abline(mean(y) - mean(x) * sd(y) / sd(x) / cor(y, x), 
+  sd(y) cor(y, x) / sd(x), 
+  lwd = 3, col = "blue")
+abline(mean(y) - mean(x) * sd(y) / sd(x), 
+  sd(y) / sd(x), 
+  lwd = 2)
+points(mean(x), mean(y), cex = 2, pch = 19)
+```
+
+---
+```{r, fig.height=6,fig.width=6,echo=FALSE}
+freqData <- as.data.frame(table(galton$child, galton$parent))
+names(freqData) <- c("child", "parent", "freq")
+plot(as.numeric(as.vector(freqData$parent)), 
+     as.numeric(as.vector(freqData$child)),
+     pch = 21, col = "black", bg = "lightblue",
+     cex = .05 * freqData$freq, 
+     xlab = "parent", ylab = "child", xlim = c(62, 74), ylim = c(62, 74))
+abline(mean(y) - mean(x) * cor(y, x) * sd(y) / sd(x), sd(y) / sd(x) * cor(y, x), lwd = 3, col = "red")
+abline(mean(y) - mean(x) * sd(y) / sd(x) / cor(y, x), sd(y) / sd(x) / cor(y, x), lwd = 3, col = "blue")
+abline(mean(y) - mean(x) * sd(y) / sd(x), sd(y) / sd(x), lwd = 2)
+points(mean(x), mean(y), cex = 2, pch = 19)
+```
