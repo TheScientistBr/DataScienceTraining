@@ -1,0 +1,78 @@
+---
+title       : Modelos de Regressão
+subtitle    : Regressão à media
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+## Uma idéia historicamente famosa, Regression to the Mean
+* Por que é que os filhos de pais altos tendem a ser altos, mas não tão altos quanto seus pais?
+* Por que as crianças de pais baixos tendem a ser baixos, mas não tão baixos quanto seus pais?
+* Por que os pais de crianças muito baixas, tendem a ser baixos, mas não baixo como seu filho? E o mesmo com os pais de crianças muito altas?
+* Por que os melhores atletas este ano tendem a fazer um pouco pior no ano seguinte?
+
+---
+
+## Regressão para a média
+
+* Estes fenómenos são todos exemplos da assim chamada regressão à média
+* Inventado por Francis Galton no artigo "Regressão para a mediocridade em estatura hereditária" O Jornal do Instituto Antropológico da Grã-Bretanha e Irlanda, Vol. 15, (1886).
+* Pense nisso desta forma, imagine se você simulou pares de normais aleatórios
+* Os primeiros seriam os maiores por acaso, e a probabilidade de que haja valor menor para a segunda simulação é alta.
+* Pense na linha de regressão como parte intrísica.
+* A menos que $Cor (Y, X) = 1$ a parte intrínseca não é perfeita
+
+---
+
+## Regressão para a média
+* Suponha que normalizamos $X$ (altura da criança) e $Y$ (altura do pai) para que ambos tenham média 0 e variância 1.
+* Então, lembre-se, nossa linha de regressão passa por $(0,0)$ (a média dos X e Y).
+* Se a inclinação da linha de regressão é $Cor(Y, X)$, independentemente da variável que é o resultado (lembre-se, ambos os desvios padrão são 1).
+* Observe se $X$ é o resultado e você cria um gráfico onde $X$ é o eixo horizontal, a inclinação da linha de mínimos quadrados que você traça é $1/ Cor (Y, X)$.
+
+---
+
+## Normalização dos dados e definição dos parâmetros de plotagem
+
+```{r, message=FALSE}
+library(UsingR,quietly = TRUE)
+data(father.son)
+y <- (father.son$sheight - mean(father.son$sheight)) / sd(father.son$sheight)
+x <- (father.son$fheight - mean(father.son$fheight)) / sd(father.son$fheight)
+rho <- cor(x, y)
+myPlot <- function(x, y) {
+  plot(x, y, 
+       xlab = "Altura do pai, normalizada",
+       ylab = "Altura do filho, normalizada",
+       xlim = c(-3, 3), ylim = c(-3, 3),
+       bg = "lightblue", col = "black", cex = 1.1, pch = 21, 
+       frame = FALSE)
+}
+```
+
+---
+
+## Traçar os dados, o código
+```{r, fig.height=6,fig.width=6,echo=FALSE}
+myPlot(x, y)                                 # se houvesse correlação perfeita
+abline(0, 1,col = "blue")                    # pai prevê filho
+abline(0, rho, lwd = 2,col = "red")          # filho prediz pai, filho em eixo vertical
+abline(0, 1 / rho, lwd = 2,col = "green")    # filho prediz pai, filho em eixo vertical
+abline(h = 0); abline(v = 0,col = "magenta") #linhas de referência para nenhum relacionamento
+```
+
+---
+
+## Discussão
+* Se você tivesse que prever a altura normalizada de um filho, seria $Cor (Y, X) * X_i$
+* Se você tivesse que prever a altura normalizada de um pai, seria $Cor (Y, X) * Y_i$
+* A multiplicação por esta correlação encolhe para 0 (regressão em relação à média)
+* Se a correlação é 1 não há regressão à média (se a altura do pai determinar perfeitamente a altura da criança e vice-versa)
+
+
+
+.
