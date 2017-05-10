@@ -1,0 +1,180 @@
+---
+title       : "Modelos de Regressão"
+subtitle    : "Múltiplas Variáveis"
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+# Regressão multivariável
+* Temos uma aula inteira sobre previsão e aprendizado de máquina, por isso vamos nos concentrar na modelagem.
+* A previsão tem um conjunto diferente de critérios, necessidades de interpretabilidade e padrões de generalização.
+* Na modelagem, nosso interesse reside em representações parcimoniosas e interpretáveis dos dados que melhoram nossa compreensão dos fenômenos em estudo.
+* Um modelo é uma lente através da qual olhar para os seus dados. (Eu atribuo esta citação a Scott Zeger)
+* Sob esta filosofia, qual é o modelo certo? Qualquer modelo conecta os dados a uma declaração verdadeira, parcimoniosa sobre o que você está estudando.
+* Há maneiras quase incontáveis de que um modelo pode estar errado, nesta aula, vamos nos concentrar na inclusão e exclusão de variáveis.
+* Como quase todos os aspectos da estatística, boas decisões de modelagem dependem do contexto.
+* Um bom modelo para predição versus um para estudar mecanismos versus um para tentar estabelecer efeitos causais pode não ser o mesmo.
+
+---
+
+## O trio Rumsfeldian
+
+* Existem conhecidos *conhecidos*. Essas são coisas que sabemos *que sabemos*. Existem incógnitas conhecidas. Ou seja, há coisas que sabemos *que não sabemos*. Mas também há incógnitas desconhecidas. Há coisas que não sabemos *que não sabemos*. `Donald Rumsfeld`
+
+**Em nosso contexto**
+
+* (*Conhecidos conhecidos*) Regressores que sabemos que devemos verificar para incluir no modelo e temos eles disponíveis.
+* (*Desconhecidos conhecidos*) Regressores que gostaríamos de incluir no modelo, mas não temos disponíveis.
+* (*Desconhecido Desconhecido*) Regressores que nem sequer sabemos sobre o que devemos ter incluído no modelo.
+
+---
+
+## Regras gerais
+
+* Omitindo variáveis resulta em viés nos coeficientes de interesse - a menos que seus regressores não sejam correlacionados com os omitidos.
+* Esta é a razão pela qual randomizamos tratamentos, ele tenta uncorrelate nosso indicador de tratamento com variáveis que não temos de colocar no modelo.
+* (Se houver demasiadas variáveis de confusão não observadas, mesmo a randomização não o ajudará.)
+* Incluindo variáveis que não devemos ter aumentos erros-padrão das variáveis de regressão.
+* Na verdade, incluindo quaisquer novas variáveis aumentam (reais, não estimados) erros padrão de outros regressores. Portanto, não queremos lançar variáveis indevidamente no modelo.
+* O modelo deve tender para um ajuste perfeito à medida que o número de regressores não redundantes se aproxima de $n$.
+* $R^2$ aumenta de forma monotônica à medida que mais regressores são incluídos.
+* O SSE diminui monotonicamente como mais regressores são incluídos.
+
+---
+
+## Plotando $R^2$ versus $n$
+
+Para simulações como o número de variáveis incluídas iguais aumenta para $n = 100$.
+
+Nenhuma relação de regressão real existe em qualquer simulação
+
+```{r, fig.height=5, fig.width=5, echo=FALSE}
+ n <- 100
+plot(c(1, n), 0 : 1, type = "n", frame = FALSE, xlab = "p", ylab = "R^2")
+r <- sapply(1 : n, function(p)
+      {
+        y <- rnorm(n); x <- matrix(rnorm(n * p), n, p)
+        summary(lm(y ~ x))$r.squared 
+      }
+    )
+lines(1 : n, r, lwd = 2)
+abline(h = 1)
+```
+
+---
+
+## Variação da inflação
+
+```{r, echo = TRUE}
+n <- 100; nosim <- 1000
+x1 <- rnorm(n); x2 <- rnorm(n); x3 <- rnorm(n); 
+betas <- sapply(1 : nosim, function(i){
+  y <- x1 + rnorm(n, sd = .3)
+  c(coef(lm(y ~ x1))[2], 
+    coef(lm(y ~ x1 + x2))[2], 
+    coef(lm(y ~ x1 + x2 + x3))[2])
+})
+round(apply(betas, 1, sd), 5)
+```
+
+---
+
+ou
+
+```{r, echo = TRUE}
+n <- 100; nosim <- 1000
+x1 <- rnorm(n); x2 <- x1/sqrt(2) + rnorm(n) /sqrt(2)
+x3 <- x1 * 0.95 + rnorm(n) * sqrt(1 - 0.95^2); 
+betas <- sapply(1 : nosim, function(i){
+  y <- x1 + rnorm(n, sd = .3)
+  c(coef(lm(y ~ x1))[2], 
+    coef(lm(y ~ x1 + x2))[2], 
+    coef(lm(y ~ x1 + x2 + x3))[2])
+})
+round(apply(betas, 1, sd), 5)
+```
+
+
+---
+
+## Factores de inflação de variância
+
+- A inflação de desvio de nota foi muito pior quando incluímos uma variável que estava altamente relacionado com $x_1$.
+- Não sabemos $\sigma$, portanto, só podemos estimar o aumento no erro padrão real dos coeficientes para incluir um regressor.
+- No entanto, $\sigma$ cai fora dos erros padrão relativos. Se um sequencialmente adiciona variáveis, pode-se verificar a variação (ou sd) inflação para incluir cada um.
+- Quando os outros regressores são realmente ortogonais ao regressor de interesse, então não há inflação de variação.
+- O fator de inflação de variância (`VIF`) é o aumento na variância para o i-ésimo regressor comparado ao ajuste ideal onde é ortogonal aos outros regressores.
+- (A raiz quadrada do VIF é o aumento no sd ...)
+- Lembre-se, a inflação de variação é apenas parte da imagem. Queremos incluir certas variáveis, mesmo que elas infundam dramaticamente nossa variância.
+
+---
+
+## Revistando nossa simulação anterior
+
+```{r, echo = TRUE}
+## não depende de qual y você usa,
+y <- x1 + rnorm(n, sd = .3)
+a <- summary(lm(y ~ x1))$cov.unscaled[2,2]
+c(summary(lm(y ~ x1 + x2))$cov.unscaled[2,2],
+  summary(lm(y~ x1 + x2 + x3))$cov.unscaled[2,2]) / a
+temp <- apply(betas, 1, var); temp[2 : 3] / temp[1]
+```
+
+---
+
+## Swiss data
+
+```{r}
+data(swiss); 
+fit1 <- lm(Fertility ~ Agriculture, data = swiss)
+a <- summary(fit1)$cov.unscaled[2,2]
+fit2 <- update(fit1, Fertility ~ Agriculture + Examination)
+fit3 <- update(fit1, Fertility ~ Agriculture + Examination + Education)
+  c(summary(fit2)$cov.unscaled[2,2],
+    summary(fit3)$cov.unscaled[2,2]) / a 
+```
+
+---
+
+## Swiss data VIFs, 
+
+```{r}
+library(car,quietly = TRUE,verbose = FALSE)
+fit <- lm(Fertility ~ . , data = swiss)
+vif(fit)
+sqrt(vif(fit)) #I prefer sd 
+```
+
+---
+
+Supondo que o modelo é linear com erros aditivos de iid (com variância finita), podemos descrever matematicamente o impacto da omissão de variáveis necessárias ou incluindo as desnecessárias.
+
+* Se sob ajuste do modelo a estimativa de variância é tendenciosa.
+* Se corretamente ou overfit o modelo, incluindo todas as covariáveis necessárias e / ou covariates desnecessários, a estimativa de variância é imparcial.
+* No entanto, a variância da variância é maior se incluir variáveis desnecessárias.
+
+---
+
+## Seleção do modelo de covariável
+
+A seleção automatizada de covariáveis é um tópico difícil. Depende muito da riqueza de um espaço covariado que se queira explorar.
+* O espaço dos modelos explode rapidamente à medida que você adiciona interações e termos polinomiais.
+* Na classe de previsão, vamos abordar muitos métodos modernos para percorrer grandes espaços modelo para fins de previsão.
+* Principais componentes ou modelos analíticos fatoriais em covariáveis são freqüentemente úteis para reduzir espaços covariados complexos.
+* O bom design pode muitas vezes eliminar a necessidade de pesquisas de modelos complexas nas análises; Embora muitas vezes o controle sobre o projeto é limitado.
+* Se os modelos de interesse estão aninhados e sem muitos parâmetros diferenciando-os, é bastante incontroverso usar testes de razão de verosimilhança aninhada. (Exemplo a seguir.)
+* Minha abordagem favoriate é a seguinte. Dado um coeficiente que me interessa, eu gosto de usar o ajuste de covariáveis e vários modelos para testar esse efeito para avaliá-lo para a robustez e para ver o que outras covariantes nocauteá-lo. Esta não é uma abordagem terrivelmente sistemática, mas tende a ensinar-lhe muito sobre os dados como você começar suas mãos sujas.
+
+---
+
+## Como fazer teste de modelo aninhado em R
+
+```{r}
+fit1 <- lm(Fertility ~ Agriculture, data = swiss)
+fit3 <- update(fit, Fertility ~ Agriculture + Examination + Education)
+fit5 <- update(fit, Fertility ~ Agriculture + Examination + Education + Catholic + Infant.Mortality)
+anova(fit1, fit3, fit5)
+```

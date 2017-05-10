@@ -1,0 +1,186 @@
+---
+title       : Modelos de Regressão
+subtitle    : Inferência
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+
+## Lembre-se do nosso modelo e valores ajustados
+
+* Considere o modelo
+
+$$
+Y_i = \beta_0 + \beta_1 X_i + \epsilon_i
+$$
+
+* $\epsilon \sim N(0, \sigma^2)$. 
+* Assumimos que o verdadeiro modelo é conhecido.
+* Nós assumimos que você já viu intervalos de confiança e testes de hipóteses antes.
+* $\hat \beta_0 = \bar Y - \hat \beta_1 \bar X$
+* $\hat \beta_1 = Cor(Y, X) \frac{Sd(Y)}{Sd(X)}$.
+
+---
+
+## Revisão
+
+- Estatísticas como $\frac {\hat \theta - \theta} { \hat \sigma _ {\hat \theta}}$ têm frequentemente as seguintes propriedades.
+
+1. É distribuído normalmente e tem uma amostra finita de distribuição T de Student se a variância estimada for substituída por uma estimativa de amostra (sob hipóteses de normalidade).
+
+2. Pode ser usado para testar $H_0: \theta = \theta_0$ versus $H_a: \theta>, <, \neq \theta_0$.
+
+3. Pode ser usado para criar um intervalo de confiança para $\theta$ via $\hat \theta \pm Q_ {1- \alpha / 2} \hat \sigma _ {\hat \theta}$ Onde $Q_ {1- \alpha / 2}$ é o quantil relevante de uma distribuição normal ou T.
+
+* No caso de regressão com hipóteses de amostragem de iid e erros normais, nossas inferências seguirão muito similarmente ao que você viu em sua classe de inferência.
+* Não vamos cobrir asymptotics para análise de regressão, mas basta dizer que sob suposições
+Sobre as formas em que os valores $X$ são coletados, o modelo de amostragem iid e o modelo médio, os resultados normais manter para criar intervalos e intervalos de confiança
+
+---
+
+## Erros padrão (condicionados em X)
+
+$$
+\begin{align}
+Var(\hat \beta_1) & =
+Var\left(\frac{\sum_{i=1}^n (Y_i - \bar Y) (X_i - \bar X)}{\sum_{i=1}^n (X_i - \bar X)^2}\right) \\
+& = \frac{Var\left(\sum_{i=1}^n Y_i (X_i - \bar X) \right) }{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
+& = \frac{\sum_{i=1}^n \sigma^2(X_i - \bar X)^2}{\left(\sum_{i=1}^n (X_i - \bar X)^2 \right)^2} \\
+& = \frac{\sigma^2}{\sum_{i=1}^n (X_i - \bar X)^2} \\
+\end{align}
+$$
+
+---
+
+## Results
+
+* $\sigma_{\hat \beta_1}^2 = Var(\hat \beta_1) = \sigma^2 / \sum_{i=1}^n (X_i - \bar X)^2$
+* $\sigma_{\hat \beta_0}^2 = Var(\hat \beta_0)  = \left(\frac{1}{n} + \frac{\bar X^2}{\sum_{i=1}^n (X_i - \bar X)^2 }\right)\sigma^2$
+* Na prática, $\sigma$ é substituído pela sua estimativa.
+* Provavelmente não é surpreendente que sob erros iid Gaussianos 
+
+$$
+\frac{\hat \beta_j - \beta_j}{\hat \sigma_{\hat \beta_j}}
+$$
+Segue uma distribuição $t$ com $n-2$ graus de liberdade e uma distribuição normal para grandes $n$.
+* Isso pode ser usado para criar intervalos de confiança e testes de hipóteses.
+
+---
+
+## Exemplo de conjunto dos dados de diamantes
+
+```{r message=FALSE}
+library(UsingR, quietly = TRUE); 
+data(diamond)
+y <- diamond$price; x <- diamond$carat; n <- length(y)
+beta1 <- cor(y, x) * sd(y) / sd(x)
+beta0 <- mean(y) - beta1 * mean(x)
+e <- y - beta0 - beta1 * x
+sigma <- sqrt(sum(e^2) / (n-2)) 
+ssx <- sum((x - mean(x))^2)
+seBeta0 <- (1 / n + mean(x) ^ 2 / ssx) ^ .5 * sigma 
+seBeta1 <- sigma / sqrt(ssx)
+tBeta0 <- beta0 / seBeta0; tBeta1 <- beta1 / seBeta1
+pBeta0 <- 2 * pt(abs(tBeta0), df = n - 2, lower.tail = FALSE)
+pBeta1 <- 2 * pt(abs(tBeta1), df = n - 2, lower.tail = FALSE)
+coefTable <- rbind(c(beta0, seBeta0, tBeta0, pBeta0), c(beta1, seBeta1, tBeta1, pBeta1))
+colnames(coefTable) <- c("Estimate", "Std. Error", "t value", "P(>|t|)")
+rownames(coefTable) <- c("(Intercept)", "x")
+coefTable
+```
+
+Isso tudo pode ser resumido ao código ...
+
+---
+
+## Continuando com o exemplo
+
+```{r}
+fit <- lm(y ~ x); 
+summary(fit)$coefficients
+```
+
+---
+
+## Obtendo um intervalo de confiança
+
+```{r}
+sumCoef <- summary(fit)$coefficients
+sumCoef[1,1] + c(-1, 1) * qt(.975, df = fit$df) * sumCoef[1, 2]
+sumCoef[2,1] + c(-1, 1) * qt(.975, df = fit$df) * sumCoef[2, 2]
+```
+
+Com 95% de confiança, estimamos que um aumento de 0,1 quilO no tamanho do diamante resulta em um aumento no preço de  `r round((sumCoef[2,1] - qt(.975, df = fit$df) * sumCoef[2, 2]) / 10, 1)` para `r round((sumCoef[2,1] + qt(.975, df = fit$df) * sumCoef[2, 2]) / 10, 1)` 
+
+---
+
+## Previsão de resultados
+* Considerar a previsão de $Y$ a um valor de $X$
+* Prever o preço de um diamante dado o quilate
+* Previsão da altura de uma criança dada a altura dos pais
+* A estimativa óbvia para a predição no ponto $x_0$ é
+
+$$
+\hat \beta_0 + \hat \beta_1 x_0
+$$
+
+* Um erro padrão é necessário para criar um intervalo de previsão.
+* Há uma distinção entre intervalos para a regressão linha no ponto $x_0$ ea previsão do que a $y$ seria no ponto $x_0$.
+* Linha em $x_0$ se, $\hat \sigma\sqrt{\frac{1}{n} +  \frac{(x_0 - \bar X)^2}{\sum_{i=1}^n (X_i - \bar X)^2}}$
+* Intervalo de predição se em $x_0$, $\hat \sigma\sqrt{1 + \frac{1}{n} + \frac{(x_0 - \bar X)^2}{\sum_{i=1}^n (X_i - \bar X)^2}}$
+
+---
+
+## Plotando x, y e intervalos de predição
+
+```{r, fig.height=5, fig.width==5, echo = FALSE, results='hide'}
+plot(x, y, frame=FALSE,xlab="Carat",ylab="Dollars",pch=21,col="black", bg="lightblue", cex=2)
+abline(fit, lwd = 2)
+xVals <- seq(min(x), max(x), by = .01)
+yVals <- beta0 + beta1 * xVals
+se1 <- sigma * sqrt(1 / n + (xVals - mean(x))^2/ssx)
+se2 <- sigma * sqrt(1 + 1 / n + (xVals - mean(x))^2/ssx)
+lines(xVals, yVals + 2 * se1)
+lines(xVals, yVals - 2 * se1)
+lines(xVals, yVals + 2 * se2)
+lines(xVals, yVals - 2 * se2)
+```
+
+---
+## Discussão
+* Ambos os intervalos têm larguras variadas.
+* Menor largura na média dos Xs.
+* Estamos bastante confiantes na linha de regressão, de modo que intervalo é muito estreito.
+* Se soubéssemos $\beta_0$ e $\beta_1$ este intervalo teria uma largura zero.
+* O intervalo de previsão deve incorporar a variabilidade
+Nos dados ao redor da linha.
+* Mesmo se soubéssemos $\beta_0$ e $\beta_1$ este intervalo ainda teria largura.
+
+---
+
+## Plotando preditores e intervalos de predição
+
+```{r, fig.height=5, fig.width=5, echo=FALSE,results='hide'}
+newdata <- data.frame(x = xVals)
+p1 <- predict(fit, newdata, interval = ("confidence"))
+p2 <- predict(fit, newdata, interval = ("prediction"))
+plot(x, y, frame=FALSE,xlab="Carat",ylab="Dollars",pch=21,col="black", bg="lightblue", cex=2)
+abline(fit, lwd = 2)
+lines(xVals, p1[,2]); lines(xVals, p1[,3])
+lines(xVals, p2[,2]); lines(xVals, p2[,3])
+```
+
+  
+  
+  
+  
+  
+  
+
+
+
+

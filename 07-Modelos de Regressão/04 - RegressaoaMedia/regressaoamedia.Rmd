@@ -9,7 +9,8 @@ widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
 
-## Uma idéia historicamente famosa, Regression to the Mean
+## Uma idéia historicamente famosa, Regressão para a Media
+
 * Por que é que os filhos de pais altos tendem a ser altos, mas não tão altos quanto seus pais?
 * Por que as crianças de pais baixos tendem a ser baixos, mas não tão baixos quanto seus pais?
 * Por que os pais de crianças muito baixas, tendem a ser baixos, mas não baixo como seu filho? E o mesmo com os pais de crianças muito altas?

@@ -1,0 +1,269 @@
+---
+title       : Modelos de Regressão
+subtitle    : Regressão Linear
+author      : Delermando Branquinho Filho
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+
+Créditos:
+Este documento usa conteúdo originalmente desenvolvido por Adelmo Filho  
+aguiar.soul@gmail.com - 04 Junho, 2016 em: https://rpubs.com/adelmofilho/post1
+
+
+## Modelo de regressão básico com erros aditivos Gaussianos.
+* Mínimos quadrados é uma ferramenta de estimação, como fazemos inferência?
+* Considerar o desenvolvimento de um modelo probabilístico para regressão linear
+
+$$
+Y_i = \beta_0 + \beta_1 X_i + \epsilon_{i}
+$$
+Os modelos lineares de regressão são utilizados para modelar a relação entre variáveis quantitativas:
+
+Variável Resposta ($y$): variável quantitativa (também chamada de variável dependente).
+Variáveis Preditoras ($x$): variáveis quantitativas (também chamadas de variáveis independentes).
+
+### A função `lm`
+
+A função utilizada para construir modelos lineares de regressão é a função `lm` que tem os seguintes argumentos principais:
+
+`lm( formula, data, weights, subset, na.action)`
+
+`formula` - é uma fórmula estatística que indica o modelo a ser ajustado. Possui a mesma forma básica que foi vista na funções gráficas.
+`data` - o conjunto de dados (data.frame).
+`weights` - são os pesos para regressão ponderada.
+`subset` - um vetor com as condições que definem um sub-conjunto dos dados.
+`na.acation` - função que especifica o que fazer no caso de observações perdidas (NA). O valor default é `na.omit` que elimina as linhas (observações) que possuem observações perdidas nas variáveis definidas na fórmula.
+
+Sendo $Y$ a variável de resposta, $a$ o intercepto, $b$ o coeficiente angular e $X$ a variável explanatória. Ou seja, em uma regressão linear, $Y$ varia em função de $bX$ mais um valor constante $a$. Quando $X = 0$, $a = Y$ (intercepto). O coeficiente angular $b$ representa a taxa com que $Y$ aumenta em relação a $X$. 
+
+A partir de um conjunto de dados é possível estimar os valores de $a$ e $b$, assim com os erros associados a estes parâmetros. Ao fazer isso, podemos traçar a reta que melhor se ajusta aos nossos dados, ou seja, aquela que minimiza a soma de quadrados do Erro.
+
+
+
+## Na prática
+
+Primeiramente, vamos criar dois conjuntos de dados (“x” e “y”) apenas para realizar o exemplo
+
+```{r}
+x <- c(1,2,3,4,5,6,7,8,9,10)
+y <- c(2,5,8,5,3,9,10, 12, 9, 10)
+```
+
+A função para regressão é “lm” e não requer pacote estatístico (variavel resposta ~ variável preditora). Sumário dos resultados do modelo é `summary(resmodelo)`.
+
+
+```{r}
+resmodelo<-lm(x~y)
+resmodelo
+```
+
+Precisamos fazer o Teste para NORMALIDADE (valores de p > 0,05 indicam dados normais)
+
+
+```{r}
+shapiro.test(rstudent(resmodelo))   ##teste de shapiro wilk (normalidade)
+```
+
+
+**Resíduos** - Os resíduos de uma regressão linear são as diferenças entre os pontos observados e a curva que estimamos. Ou seja, você tem lá valores reais que você observou do fenômeno que está analisando e tem a equação da reta que você estimou através de um método qualquer. A diferença entre esses dois valores é o seu resíduo.
+
+Exemplo prático:
+
+Por exemplo, suponha que você queira saber quanto o imposto sobre bebidas alcoólicas e o limite de velocidade de uma via afetam o número de acidentes. Utilizando um método qualquer, você obtém a equação abaixo:
+
+$$
+y_i = 100 - 14 * \beta_1 + 0.5\beta_2
+$$
+
+Onde $y_i$ é o número de acidentes na via $i$, $\beta_1$ é o imposto sobre bebidas alcoólicas e $\beta_2$ é o limite de velocidade nesta via.
+
+Se tivermos uma avenida $X$ em uma cidade em que o imposto sobre as bebidas é de 20% e o limite de velocidade desta via for 60 km/h, nossa equação nos diz que o número de acidentes da via $X$ deve ser de $100 – 14*0,2 + 0,5* 60 = 127,2$.
+
+Observamos que na avenida $X$, o número de acidentes no mês foi $130$. Ou seja, nosso resíduo aqui é de 2,8.
+
+**Voltando ao nosso exemplo anterior**
+
+Agora que já entendemos claramente o que é o resíduo, precisamos saber como analisá-lo. Lembre-se que o resíduo deve ter esperança zero. Colocado de outra maneira, o que você precisa, é plotar os valores o seu resíduo com sua variável resposta e obter o gráfico abaixo. Análise visual para homogeneidade dos resíduos, visualmente eles devem se distribuir igualmente abaixo e acima da linha:
+
+```{r}
+plot(rstudent(resmodelo) ~ fitted(resmodelo), pch = 19)
+abline(h = 0, lty = 2)
+
+```
+
+
+Visualização gráfica lty é o tipo da linha 
+1: linha contínua; 
+2: linha descontínua
+
+```{r}
+plot(x~y)
+abline(resmodelo,lty=2) 
+
+```
+
+O resultado final deverá ser um $R^2$ ajustado = 0,55. Para montar a equação é necessário pegar o valor do intercepto e da inclinação: $y = 0,3586 + 0,7043x$. Além disso, por meio do teste de Shapiro Wilk (W) é possível atestar a normalidade dos dados (p = 0,33) e através da inspeção visual dos resíduos verifica-se que os mesmos distribuem-se de forma igual.
+
+Um dos principais resultados da regressão é o $R^2$, que é o coeficiente de determinação. Esse valor varia de -1 a 1 (repostas positivas e negativas) e indica o grau de associação entre as duas variáveis testadas. Já o parâmetro da inclinação demonstra o quanto a variável resposta varia em função da preditora. Desta forma uma inclinação igual a zero indicaria a falta de associação entre elas.
+
+
+## Outro exemplo
+
+Para o nosso exemplo de regressão linear simples em R usaremos o conjunto de dados “cars”. Ele é composto por 50 observações da velocidade de diferentes carros da década de 20 e da respectiva distância alcançada pelo carros durante o experimento.
+
+```{r}
+str(cars)
+```
+
+
+Antes de ajustar qualquer modelo, vamos observar o comportamento dos dados com base em algumas técnicas exploratórias gráficas e parâmetros estatísticos. Com a função stat.desc do pacote pastecs podemos verificar estimativas para a média, mediana, range, variância, dentre outros.
+
+```{r}
+
+library(pastecs,quietly = TRUE)
+stat.desc(cars)
+```
+
+Neste momento, os valores tabelados acima não nos agregaram mais informações do que visualizando, propriamente dito, os dados. Se queremos um modelo, é esperado que a variável resposta e as preditores possuam uma boa correlação entre si. Para isso, plotemos os valores de velocidade contra as distâncias:
+
+```{r}
+par(mar = c(5,4,2,2))
+
+plot(x = cars$speed, 
+     y = cars$dist,
+     xlab = "Velocidade (mph)", 
+     ylab = "distância (ft)",
+     pch = 16)
+cor(cars$speed,cars$dist)
+```
+
+
+O gráfico acima apresenta uma boa relação entre a velocidade do carro e a distância percorrida por eles no experimento. O coeficiente de correlação de pearson concorda com o gráfico, obtendo um valor igual a 0.8068949.
+
+Com os boxplots abaixo, observamos um possível ponto anormal (outlier) em nossos dados. Em geral, estamos acostumados com a ideia de um outlier em modelo, ou seja, alguma observação (dados) que o nosso modelo não tem boa aderência e por isso produz um alto resíduo. Não é este o caso.
+
+```{r}
+par(mar = c(4,4,2,2))
+
+# boxplot dos dados de velocidade e distância
+boxplot(cars$speed, cars$dist,
+        names = c("Velocidade", "Distância"),
+        col = c("lightgray", "lightblue"))
+```
+
+
+Para construção de nosso modelo $distancia = \alpha .velocidade+\beta$ vamos utilizar a função nativa do R `lm` (do inglês, linear model). Nela escrevemos a equação anterior com a seguinte sintaxe: Y ~ X. Ou seja, $Y$ é nossa variável resposta (distância) e $X$ nossa preditora (velocidade). o simbolo “~” equivale a dizer “é função de”. A função lm, então estima o coeficiente da variável preditora e a constante da função por padrão.
+
+```{r}
+modelo.simples = lm(cars$dist ~ cars$speed)
+summary(modelo.simples)
+```
+A função retorna no console (acima) diversas informações sobre o modelo e sua adequação.
+
+Na linha **Call** temos a função ajustada pela função lm. Na linha Residual são apresentadas algumas informações sobre os resíduos do modelo (valor mínimo, máximo, mediana, 1° e 3° Quartis).
+
+Na linha **Coeficients** é apresentada uma tabela contendo o valor dos coeficientes (Estimate), o erro padrão do coeficiente (Std. Error), o valor da estatística t (t value) e finalmente o p-valor do teste t para significância do coeficiente (Pr(>|t|)).
+
+Ao lado direito do p-valor do teste dos coeficientes, ainda é apresentado por meio de símbolos (explicados na linha abaixo), para qual nível de significância os coeficientes são significativos.
+
+Por fim, é realizado um teste F para adequação do modelo, apresentado para isso o número de graus de liberdade envolvidos, o erro padrão residual, os valores para o R2 e o R2 ajustado, o consequente valor da estatística F e seu respectivo p-valor. Caso deseje-se obter a tabela de ANOVA separadamente, basta entrar com a função:
+
+
+```{r}
+anova(modelo.simples)
+```
+
+**Teste F** - Na teoria da probabilidade e estatística, a distribuição F de Fisher-Snedecor, é uma distribuição de probabilidade contínua que surge frequentemente como a distribuição nula de uma estatística de teste, particularmente na análise da variância.
+
+Também conhecida como distribuição F de Fisher (em honra a Ronald Fisher) ou distribuição F de Snedecor (em honra a George W. Snedecor) **mede a razão entre dois chi-quadrados         independentes**.
+
+
+
+Com base nas informações acima, podemos afirmar que o modelo é estatisticamente significante (p-valor do teste F aproximadamente nulo), da mesma forma que com os coeficientes de regressão (p-valor do teste T). O valor do $R^2$ indica um aderência moderada aos dados (~ 0.6).
+
+Contudo, o que garante que as conclusões anteriores sejam verdadeiras? A estimativa dos p-valores, do $R^2$ e dos coeficientes é em sua essência uma função matemática, independente dos valores utilizados, um resultado será obtido. Então, o que garante os resultados tenham valor estatístico?
+
+Resposta: O cumprimento das considerações do modelo de mínimos quadrados:
+
+- Resíduos com distribuição normal  
+- **Homoscedasticidade** dos resíduos (variância constante)  
+- Aleatoriedade dos resíduos frente ao valor predito e às variáveis preditoras  
+- Estas condições vem do desenvolvimento do métodos dos mínimos quadrados a partir do método da - máxima verossimilhança e devem ser avaliados a posteriori da construção do modelo.
+
+
+## Validação do modelo linear
+Inicialmente, avaliemos a hipótese de homoscedasticidade dos resíduos de forma gráfica, plotando os valores preditos pelo modelo por aqueles observados (distância).
+
+```{r}
+par(mar = c(5,4,2,2))
+
+plot(x = cars$dist, 
+     y = modelo.simples$fitted.values,
+     xlim = c(0, 120), 
+     ylim = c(0, 120),
+     pch = 16,
+     xlab = "Valores observados",
+     ylab = "Valores preditos")
+
+abline(a = 0, b = 1, lty = 2, col = "red")
+```
+
+Com base no gráfico anterior, verifica-se que para valores acima de 80 para a distância, a predição do modelo começa a ser prejudicada, estimando valores menores do que o observado. Observe também que o modelo pode estimar valores negativos para a distância quando valores baixos de velocidade são utilizados, o que compromete o domínio de aplicação do modelo.
+
+A mesma conclusão pode ser obtida avaliando o gráfico a direta no painel a seguir. À esquerda, no gráfico de resíduos versus a variável preditora, por outro lado, não se encontra indícios visuais da não-aleatoriedade dos resíduos.
+
+```{r}
+par(mfrow = c(1, 2), mar = c(5,4,2,2))
+
+plot(x = cars$speed, 
+     y = modelo.simples$residuals,
+     pch = 16,
+     col = "red",
+     xlab = "Velocidade (mph)", ylab = "Resíduos")
+
+plot(x = cars$dist, 
+     y = modelo.simples$residuals,
+     pch = 16,
+     col = "lightblue",
+     xlab = "Distância (ft)", ylab = "Resíduos")
+```
+
+
+A distribuição de probabilidade dos resíduos pode ser verificada visualmente a partir de um histograma dos resíduos. Que conforme a figura abaixo indica uma cauda não simétrica a direita da distribuição, o que sugere a não normalidade dos resíduos.
+
+```{r}
+par(mar = c(5,4,2,2))
+hist(x = modelo.simples$residuals,
+     xlab = "Resíduos",
+     ylab = "Densidade de Probabilidade",
+     main = "",
+     col = "lightgreen",
+     probability = TRUE)
+
+lines(density(modelo.simples$residuals))
+```
+
+Aplicando o teste de Shapiro-Wilk para os resíduos (shapiro.test), concluímos que para um nível de significância de 5%, nossos dados não vêm de uma distribuição normal.
+
+```{r}
+shapiro.test(modelo.simples$residuals)
+```
+
+Esse teste calcula (estatística W) se uma amostra aleatória de tamanho n provém de uma distribuição normal. Valores pequenos de W são evidência de desvios da normalidade 
+
+A validação do modelo demonstrou até certo ponto que as considerações necessárias para o método dos mínimos quadrados não foram atendidos. Aplicabilidade e significância estatística, são, contudo, aspectos diferentes.
+
+A validação não é finalizada apenas com estas análises, técnicas como a chamada “crossvalidation” ainda podem ser aplicadas.
+
+Outra questão interessante a ser discutida é a robustez dos teste estatísticos (F e t) contra a fuga da normalidade ou aleatoriedade dos resíduos.
+
+
+
+.
+
+
+

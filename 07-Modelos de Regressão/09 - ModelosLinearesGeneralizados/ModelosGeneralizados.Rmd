@@ -1,0 +1,131 @@
+---
+title: "Modelos de Regressão"
+subtitle: "Modelos de Regressão Generalizados"
+author: "Delermando Branquinho Filho"
+highlighter: highlight.js
+hitheme: tomorrow
+mode: selfcontained
+framework: io2012
+widgets: mathjax
+---
+
+## Regressão Linear Generalizada
+
+A regressão linear normal pode ser inadequada quando a distribuição de $Y_i$ é assimétrica, representa dados de contagens ou então dados binários. Para lidar com esse problema, McCulagh e Nelder estenderam a família de distribuições para ajuste da regressão para distribuições da família exponencial. Tal família inclui as distribuições normal, poisson, gama, normal inversa e binomial (incluindo bernoulli), entre outras. Também existe uma forma de adaptar os MLG para a distribuição binomial negativa.
+
+A definição dos MLG é dada por
+$$
+Y_i \approx F(\mu_i,\phi)
+$$
+e
+
+$$
+\mu_i = g^{−1} (\alpha + \beta_1 x_{i1} + \beta_p x_{ip})
+$$
+O parâmetro $\phi$ é o parâmetro de precisão (inverso do parâmetro de dispersão) e $g$ é a função de ligação, que geralmente tem o papel de jogar o intervalo de vação de $\mu_i$ (espaço paramétrico) no intervalo ($−\infty,\infty$).
+
+Para ajustar um modelo linear generalizado, basta utilizar a função `glm` e informar, além da fórmula, a família de distribuições da resposta.
+
+
+**Famílias de distribuições**
+
+Family	 | Link
+---------|-------------------------
+gaussian	| identity
+binomial	| logit, probit, cloglog
+poisson	| log, identity, sqrt
+Gamma	| inverse, identity, log
+inverse.gaussian	| $\frac{1}{\mu_2}$
+quasi	| definido pelo usuário
+
+## Ajuste do modelo
+
+```r
+ajuste_glm <- glm(resposta ~ explicativas, data = dados, family = distribuicao)
+```
+Para ver a lista de distribuições que podem ser passadas ao parâmetro family, execute `?family` no R.
+
+Outro componente importante em modelos lineares generalizados é a função de ligação. De modo mais geral, o código para ajsutar um MLG fica assim:
+
+```r
+ajuste_glm <- glm(resposta ~ explicativas, data = dados, family = distribuicao(link = funcao_de_ligacao))
+```
+Repare que agora existe a parte (`link = funcao_de_ligacao`) depois do nome da distribuição escolhida. É comum trocar a ligação inversa de uma regressão Gama para uma ligação log, por exemplo. Em R, ficaria:
+
+```r
+ajuste_gama <- glm(Y ~ X + I(X^2) + Z, data = dados, family = Gamma(link = "log"))
+```
+
+Todas as funções úteis para lm() continuam sendo úteis para glm().
+
+### Exemplo: Regressão logística
+
+A regressão logística se caracteriza por assumir distribuição binomial à variável resposta. Para exemplificar um ajuste de regressão logística, vamos aproveitar o mesmo banco mtcars, mas agora vamos modelar am em vez de mpg.
+
+**Breve descritiva**
+
+```{r}
+library(dplyr,verbose = FALSE,quietly = TRUE)
+data(mtcars)
+mtcars %>%
+  group_by(am) %>%
+  summarise("N" = n(),
+            "Missing" = sum(is.na(wt)),
+            "Media" = mean(wt),
+            "DesvPad" = sd(wt),
+            "Minimo" = min(wt),
+            "Q1" = quantile(wt, 0.25),
+            "Mediana" = quantile(wt, 0.50),
+            "Q3" = quantile(wt, 0.75),
+            "Maximo" = max(wt)) %>%
+  mutate_each(funs(round(.,1)), -am)
+```
+
+** Boxplot
+
+```{r}
+library("ggplot2",verbose = FALSE,quietly = TRUE)
+ggplot(mtcars) +
+  geom_boxplot(aes(x = factor(am), y = wt))
+```
+
+
+**Ajuste**
+
+```{r}
+ajuste_glm <- glm(am ~ wt, data = mtcars, family = binomial)
+summary(ajuste_glm)
+```
+
+
+```{r}
+table(mtcars$am, predict(ajuste_glm) > 0.5)
+```
+
+Por padrão, a função de ligação da distribuição binomial é a logit. Se quisermos usar a função probit, precisamos especificar isto no parâmetro family.
+
+```{r}
+ajuste_glm_probit <- glm(am ~ wt, data = mtcars, family = binomial(link = "probit"))
+summary(ajuste_glm_probit)
+```
+
+**Gráfico das curvas ajustadas:**
+
+```{r}
+ggplot(mtcars, aes(x=wt, y=am)) + 
+  geom_point() + 
+  stat_smooth(aes(colour = "Logit"), method="glm", method.args = list(family = "binomial"), se=FALSE) +
+  stat_smooth(aes(colour = "Probit"), method="glm", method.args = list(family = binomial(link = "probit")), se=FALSE) +
+  stat_smooth(aes(colour = "Complementar Log-Log"), method="glm",method.args = list(family = binomial(link = "cloglog")), se=FALSE) + labs(colour = "Função de ligação")
+```
+
+O teste Chi quadrado pode ser mais indicado para regressão logística.
+
+
+```{r}
+anova(ajuste_glm, test="Chisq")
+```
+
+
+
+.

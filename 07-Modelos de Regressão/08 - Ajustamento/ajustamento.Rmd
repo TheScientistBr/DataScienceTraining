@@ -1,0 +1,237 @@
+---
+title: "Modelos de Regressão"
+subtitle: "Ajustamento"
+author: "Delermando Branquinho Filho"
+highlighter: highlight.js
+hitheme: tomorrow
+mode: selfcontained
+framework: io2012
+widgets: mathjax
+---
+
+## Considere os seguintes dados simulados
+Código para a primeira parcela, restante omitido 
+
+```{r}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), runif(n/2)); 
+beta0 <- 0; beta1 <- 2; tau <- 1; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+
+---
+## Simulação 1
+
+```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), runif(n/2)); 
+beta0 <- 0; beta1 <- 2; tau <- 1; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+---
+
+## Discussão
+
+### Algumas observações nesta simulação
+* A variável $X$ não está relacionada ao status do grupo
+* A variável $X$ está relacionada a $Y$, mas a intercepção depende no status do grupo.
+* A variável de grupo está relacionada com $Y$.
+* A relação entre o status do grupo e $Y$ é constante dependendo de $X$.
+* A relação entre o grupo e Y desconsiderando X é aproximadamente o mesmo que segurando $X$ constante
+
+---
+
+## Simulação 2
+
+```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), 1.5 + runif(n/2)); 
+beta0 <- 0; beta1 <- 2; tau <- 0; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+
+---
+## Discussão
+
+### Algumas observações nesta simulação
+
+* A variável $X$ está altamente relacionada ao status do grupo
+* A variável $X$ está relacionada a $Y$, a intercepção não depende da variável de grupo.
+* A variável $X$ permanece relacionada à constante de status do grupo $Y$
+* A variável de grupo é ligeiramente relacionada a Y desconsiderando $X$.
+* O modelo estimaria nenhum efeito ajustado devido ao grupo.
+* Não há dados para informar a relação entre Grupo e $Y$.
+* Esta conclusão é inteiramente baseada no modelo. 
+
+---
+## Simulação 3
+
+```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), .9 + runif(n/2)); 
+beta0 <- 0; beta1 <- 2; tau <- -1; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+---
+
+## Discussão
+
+### Algumas observações nesta simulação
+
+* Associação marginal tem grupo vermelho maior que azul.
+* A relação ajustada tem o grupo azul mais alto do que o vermelho.
+* Status do grupo relacionado ao $X$.
+* Há alguma evidência direta para comparar o vermelho eo azul mantendo $X$ fixo.
+
+
+
+---
+
+## Simulação 4
+
+```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(.5 + runif(n/2), runif(n/2)); 
+beta0 <- 0; beta1 <- 2; tau <- 1; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+---
+
+## Discussão
+
+### Algumas observações nesta simulação
+* Nenhuma associação marginal entre o status do grupo e $Y$.
+* Relação ajustada forte.
+* O status do grupo não está relacionado ao $X$.
+* Há muita evidência direta para comparar o vermelho eo azul
+Mantendo $X$ fixo.
+
+---
+
+## Simulação 5
+
+```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2, -1, 1), runif(n/2, -1, 1)); 
+beta0 <- 0; beta1 <- 2; tau <- 0; tau1 <- -4; sigma <- .2
+y <- beta0 + x * beta1 + t * tau + t * x * tau1 + rnorm(n, sd = sigma)
+plot(x, y, type = "n", frame = FALSE)
+abline(lm(y ~ x), lwd = 2)
+abline(h = mean(y[1 : (n/2)]), lwd = 3)
+abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
+fit <- lm(y ~ x + t + I(x * t))
+abline(coef(fit)[1], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2] + coef(fit)[4], lwd = 3)
+points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
+points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
+```
+
+---
+
+## Discussão
+### Algumas observações desta simulação
+* Não há tal coisa como um efeito de grupo aqui.
+  * O impacto do grupo inverte-se dependendo de $X$.
+  * Tanto a intercepção como a inclinação dependem do grupo.
+* Grupo status e $X$ não relacionados.
+  * Há muita informação sobre os efeitos de grupo segurando $X$ fixo.
+
+---
+
+### Simulação 6
+
+```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+p <- 1
+n <- 100; x2 <- runif(n); x1 <- p * runif(n) - (1 - p) * x2 
+beta0 <- 0; beta1 <- 1; tau <- 4 ; sigma <- .01
+y <- beta0 + x1 * beta1 + tau * x2 + rnorm(n, sd = sigma)
+plot(x1, y, type = "n", frame = FALSE)
+abline(lm(y ~ x1), lwd = 2)
+co.pal <- heat.colors(n)
+points(x1, y, pch = 21, col = "black", bg = co.pal[round((n - 1) * x2 + 1)], cex = 2)
+```
+
+---
+
+### Faça isso para investigar a relação bivariada
+
+```{r}
+library(rgl)
+plot3d(x1, x2, y)
+```
+
+---
+
+### Relação residual
+
+```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+plot(resid(lm(x1 ~ x2)), resid(lm(y ~ x2)), frame = FALSE, col = "black", bg = "lightblue", pch = 21, cex = 2)
+abline(lm(I(resid(lm(x1 ~ x2))) ~ I(resid(lm(y ~ x2)))), lwd = 2)
+```
+
+
+---
+
+## Discussão
+
+### Algumas observações desta simulação
+
+* $X_1$ não relacionado a $X_2$
+* $X_2$ fortemente relacionado a $Y$
+* Relação ajustada entre $X_1$ e $Y$ praticamente inalterada considerando $X_2$.
+* Quase nenhuma variabilidade residual após a contabilização de $X_2$.
+
+---
+
+## Alguns pensamentos finais
+* Modelar relacionamentos multivariados é difícil.
+* Jogue com simulações para ver como o inclusão ou exclusão de outra variável pode alterar os resultados.
+* Os resultados destas análises dizem respeito ao impacto das variáveis nas associações.
+* Determinar mecanismos ou causa são assuntos difíceis a ser adicionado em cima da dificuldade em compreender associações multivariadas.
+
+
+.

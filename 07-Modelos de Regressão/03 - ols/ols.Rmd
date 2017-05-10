@@ -1,6 +1,6 @@
 ---
-title       : Modelos de Regressão
-subtitle    : Estimativa dos mínimos quadrados das linhas de regressão
+title       : "Modelos de Regressão"
+subtitle    : "Estimativa dos mínimos quadrados das linhas de regressão"
 author      : Delermando Branquinho Filho
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
