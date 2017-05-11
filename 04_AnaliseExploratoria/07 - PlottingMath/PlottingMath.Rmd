@@ -1,0 +1,65 @@
+---
+title: "AnÃ¡lise ExploratÃ³ria"
+author: "Delermando Branquinho Filho"
+output:
+  html_document: default
+  pdf_document: default
+subtitle: lattice
+job: The Scientist
+---
+
+## Anotações Matemáticas
+
+R pode produzir símbolos LaTeX-like em um gráfico para anotação matemática. Isto é muito útil e é útil para fazer o divertimento de pessoas que usam outros pacotes estatísticos.
+
+- Os símbolos matemáticos são "expressões" em R e precisam ser embrulhados na função `expression`
+- Existe uma lista de símbolos permitidos e isso está documentado em? Plotmath
+- Traçar funções que tomam argumentos para texto geralmente permitem expressões para símbolos matemáticos
+
+---
+
+## Anotações Matemáticas
+
+Alguns exemplos.
+
+```{r}
+plot(0, 0, main = expression(theta == 0),
+     ylab = expression(hat(gamma) == 0),
+     xlab = expression(sum(x[i] * y[i], i==1, n)))
+```
+
+Criando strings juntas
+
+```{r}
+x <- rnorm(100)
+hist(x,
+     xlab=expression("The mean (" * bar(x) * ") is " *
+                     sum(x[i]/n,i==1,n)))
+```
+
+---
+
+## Substituindo
+
+What if you want to use a computed value in the annotation?
+
+```{r}
+x <- rnorm(100)
+y <- x + rnorm(100, sd = 0.5)
+plot(x, y,
+     xlab=substitute(bar(x) == k, list(k=mean(x))),
+     ylab=substitute(bar(y) == k, list(k=mean(y)))
+     )
+```
+
+Ou em um loop de Plots
+
+```{r}
+par(mfrow = c(2, 2))
+for(i in 1:4) {
+        x <- rnorm(100)
+        hist(x, main=substitute(theta==num,list(num=i)))
+}
+```
+
+---

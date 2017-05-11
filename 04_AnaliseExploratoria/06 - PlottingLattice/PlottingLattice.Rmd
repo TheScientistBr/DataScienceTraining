@@ -1,0 +1,182 @@
+---
+title: "Análise Exploratória"
+author: "Delermando Branquinho Filho"
+output: pdf_document
+subtitle: lattice
+job: The Scientist
+---
+
+## The Lattice Plotting System
+
+O sistema de trama de rede é implementado usando as seguintes embalagens:
+
+- * lattice *: contém código para produzir gráficos Trellis, que são Independente do sistema gráfico "base"; Inclui funções como `Xyplot`,` bwplot`, `levelplot`
+
+- * grid *: implementa um sistema gráfico diferente, independente do Sistema "base"; O pacote * lattice * é construído em cima de *grid*
+- Nós raramente chamamos funções do pacote *grid* diretamente
+
+- O sistema de traçado de rede não tem um aspecto "bifásico" com Plotagem e anotação separadas como na plotagem de base
+
+- Todas as plotagens / anotações são feitas de uma só vez com uma única chamada de função
+
+
+---
+
+## Lattice Funções
+
+- `xyplot`: esta é a principal função para criar scatterplots
+- `bwplot`: parcelas de box-and-whiskers (" boxplots ")
+- `histograma`: histogramas
+- `stripplot`: como um boxplot mas com pontos reais
+- `dotplot`: pontos de plotagem em" cordas de violino "
+- `splom`: matriz de dispersão; Como "pares" no sistema de traçado de base
+- `levelplot`,` contourplot`: para traçar dados de "imagem"
+
+---
+
+## Lattice Funções
+
+As funções da estrutura geralmente tomam uma fórmula para seu primeiro argumento, geralmente da forma
+
+```r
+xyplot(y ~ x | f * g, data)
+```
+- Usamos a * notação de fórmula * aqui, daí o `` `.
+
+- À esquerda da ~ é a variável do eixo y, à direita é a Variável do eixo x
+
+- f e g são _ variáveis de condicionamento_ - são opcionais - o * indica uma interação entre duas variáveis
+
+- O segundo argumento é a estrutura ou lista de dados a partir da qual o Variáveis na fórmula devem ser procuradas
+
+- Se nenhuma moldura ou lista de dados for passada, então a moldura pai será usada.
+
+- Se nenhum outro argumento for passado, existem padrões que podem ser usados.
+
+--
+## Simples Lattice Plot
+
+```{r,fig.height=5}
+library(lattice)
+library(datasets)
+## Simple scatterplot
+xyplot(Ozone ~ Wind, data = airquality)
+```
+
+---
+
+## Simples Lattice Plot
+
+```{r,fig.width=12,fig.height=4}
+library(datasets)
+library(lattice)
+## Convert 'Month' to a factor variable
+airquality <- transform(airquality, Month = factor(Month)) 
+xyplot(Ozone ~ Wind | Month, data = airquality, layout = c(5, 1))
+```
+
+---
+
+## Lattice Behavior
+
+Lattice functions behave differently from base graphics functions in
+one critical way.
+
+- Base graphics functions plot data directly to the graphics device
+  (screen, PDF file, etc.)
+
+- Lattice graphics functions return an object of class **trellis**
+
+- The print methods for lattice functions actually do the work of
+  plotting the data on the graphics device.
+
+- Lattice functions return "plot objects" that can, in principle, be
+  stored (but it’s usually better to just save the code + data).
+
+- On the command line, trellis objects are *auto-printed* so that it
+  appears the function is plotting the data
+
+---
+
+## Lattice - Comportamento
+
+```{r,fig.height=4,fig.width=5}
+p <- xyplot(Ozone ~ Wind, data = airquality)  ## Nothing happens!
+print(p)  ## Plot appears
+```
+
+
+```{r,eval=FALSE}
+xyplot(Ozone ~ Wind, data = airquality)  ## Auto-printing
+```
+
+---
+## Lattice Painel Funções
+
+* As funções de estrutura têm uma ** função de painel ** que controla o que acontece dentro de cada painel da trama.
+
+* O pacote * lattice * vem com funções de painel padrão, mas você pode fornecer o seu próprio se você quiser personalizar o que acontece em cada painel
+
+* As funções do painel recebem as coordenadas x / y dos pontos de dados no seu painel (juntamente com quaisquer argumentos opcionais)
+
+---
+
+## Funções do Painel de Lattice
+
+```{r,fig.height=4,fig.width=8}
+set.seed(10)
+x <- rnorm(1000)
+f <- rep(0:1, each = 50)
+y <- x + f - f * x+ rnorm(100, sd = 0.5)
+f <- factor(f, labels = c("Group 1", "Group 2"))
+xyplot(y ~ x | f, layout = c(2, 1))  ## Plot with 2 panels
+```
+
+---
+
+## Funções do Painel de Lattice
+
+```{r,fig.height=4}
+## Custom panel function
+xyplot(y ~ x | f, panel = function(x, y, ...) {
+       panel.xyplot(x, y, ...)  ## First call the default panel function for 'xyplot'
+       panel.abline(h = median(y), lty = 2)  ## Add a horizontal line at the median
+})
+```
+
+---
+
+## Lattice Panel Functions: Regression line
+
+```{r,fig.height=4}
+## Custom panel function
+xyplot(y ~ x | f, panel = function(x, y, ...) {
+               panel.xyplot(x, y, ...)  ## First call default panel function
+               panel.lmline(x, y, col = 2)  ## Overlay a simple linear regression line
+       })
+```
+
+---
+## Muitas Placas de Painel: Exemplo de MAACS
+
+* Estudo: Estudo de coorte de alérgenos e asma em ratos (MAACS)
+
+* Temas de estudo: Crianças com asma vivendo em Baltimore City, muitos alérgico ao alérgeno do rato
+
+* Projeto: Estudo observacional, visita domiciliar de referência + a cada 3 meses por um ano.
+
+* Pergunta: Como o alérgeno de rato aerotransportado interior varia ao longo do tempo e em todos os assuntos?
+
+
+[Ahluwalia et al., * Journal of Allergy and Clinical Immunology *, 2013] (http://www.ncbi.nlm.nih.gov/pubmed/23810154)
+
+---
+
+## Muitos painéis Lattice Plot
+
+```{r,echo=FALSE,cache=TRUE,fig.width=12}
+library(lattice)
+env <- readRDS("maacs_env.rds")
+env <- transform(env, MxNum = factor(MxNum))
+xyplot(log2(airmus) ~ VisitNum | MxNum, data = env, strip = FALSE, pch = 20, xlab = "Visit Number", ylab = expression(Log[2] * " Airborne Mouse Allergen"), main = "Mouse Allergen and Asthma Cohort Study (Baltimore City)")
+```

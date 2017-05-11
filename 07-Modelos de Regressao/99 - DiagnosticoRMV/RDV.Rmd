@@ -1,0 +1,191 @@
+---
+title: "Modelos de Regressão"
+subtitle: "Residuais, diagnóstico, variação"
+author: "Delermando Branquinho Filho"
+highlighter: highlight.js
+hitheme: tomorrow
+mode: selfcontained
+framework: io2012
+widgets: mathjax
+---
+
+
+## O modelo linear
+
+- Especificado como $Y_i = \sum_ {k = 1} ^ p X_ {ik} \beta_j + \epsilon_ {i}$
+- Assumiremos também que $\epsilon_i \stackrel {iid} {\sim} N (0, \sigma ^ 2)$
+- Definir os resíduos como
+$E_i = Y_i - \hat Y_i = Y_i - \sum_ {k = 1} ^ p X_ {ik} \hat \beta_j$
+- Nossa estimativa da variação residual é $\hat \sigma ^ 2 = \frac {\sum_ {i = 1} ^ n e_i ^ 2} {np}$, o $np$ para que $E[\hat \sigma ^2] = \sigma ^ 2$
+
+---
+
+### O dataset
+
+Medidas de fertilidade padronizadas e indicadores socioeconômicos para cada uma das 47 províncias francófonas da Suíça, por volta de 1888.
+
+```
+[,1]	Fertility	Ig, ‘Medida padronizada comum de fertilidade’
+[,2]	Agriculture	% Dos homens envolvidos na agricultura como ocupaçã
+[,3]	Examination	% Recrutados recebendo a marca mais alta no exame do exército
+[,4]	Education	% Educação para além da escola primária para os recrutas.
+[,5]	Catholic	% "Católico" (em oposição a "protestante’).
+[,6]	Infant.Mortality	Nascidos vivos que vivem menos de 1 ano.
+```
+
+```{r, fig.height = 5, fig.width = 5}
+data(swiss)
+head(swiss)
+```
+
+Ajustando o modelo
+
+```{r}
+par(mfrow = c(2, 2))
+fit <- lm(Fertility ~ . , data = swiss); plot(fit)
+```
+
+---
+
+## Influência, alta alavancagem e pontos periféricos
+
+```{r, fig.height = 5, fig.width=5, echo = FALSE, results='hide'}
+n <- 100; x <- rnorm(n); y <- x + rnorm(n, sd = .3)
+plot(c(-3, 6), c(-3, 6), type = "n", frame = FALSE, xlab = "X", ylab = "Y")
+abline(lm(y ~ x), lwd = 2)
+points(x, y, cex = 2, bg = "lightblue", col = "black", pch = 21)
+points(0, 0, cex = 2, bg = "darkorange", col = "black", pch = 21)
+points(0, 5, cex = 2, bg = "darkorange", col = "black", pch = 21)
+points(5, 5, cex = 2, bg = "darkorange", col = "black", pch = 21)
+points(5, 0, cex = 2, bg = "darkorange", col = "black", pch = 21)
+```
+
+---
+
+## Resumo da trama
+
+Chamar um ponto um outlier é vago.
+
+* Outliers pode ser o resultado de processos espúrios ou reais.
+* Outliers pode ter diferentes graus de influência.
+* Os valores atípicos podem estar em conformidade com a relação de regressão (isto é, ser marginalmente distante em X ou Y, mas não periférico, dada a relação de regressão).
+* O ponto superior da mão esquerda tem baixa alavancagem, baixa influência, outlies de uma forma que não está de acordo com a relação de regressão.
+* Ponto inferior da mão esquerda tem baixa alavancagem, baixa influência e não deve ser um outlier em qualquer sentido.
+* O ponto superior direito tem alta alavancagem, mas escolhe não extert-lo e, portanto, teria baixa influência real, em conformidade com a relação de regressão dos outros pontos.
+* O ponto mais baixo da mão direita tem alta alavancagem e iria exercê-lo se fosse incluído no ajuste.
+
+---
+
+## Medidas de influência
+
+* Faça ``??influence.measures` para ver o conjunto completo de medidas de influência nas estatísticas. 
+
+As medidas incluem
+
+* `rstandard` - resíduos normalizados, resíduos divididos pelos seus desvios-padrão)
+* `rstudent` - resíduos normalizados, resíduos divididos pelos seus desvios-padrão, em que o i-ésimo ponto de dados foi suprimido no cálculo do desvio-padrão para o residual seguir uma distribuição t
+* `hatvalues` - medidas de alavancagem
+* `dffits` - mudança na resposta prevista quando o ponto $i^{th}$ é apagado ao ajustar o modelo.
+* `dfbetas` - alteração dos coeficientes individuais quando o ponto $i^{th}$ é eliminado ao ajustar o modelo.
+* `cooks.distance` - mudança total nos coeficientes quando o ponto $i^{th}$ é apagado.
+* `resid` - retorna os resíduos ordinários
+
+Onde `fit` é o ajuste de modelo linear retorna os resíduos, ou seja, os resíduos de validação cruzada *leave one out* - a diferença na resposta ea resposta predita a dados Ponto $i$, onde não foi incluído no modelo de montagem.
+
+---
+
+## Como uso todas essas coisas?
+
+* Desconfie de regras simplistas para parcelas e medidas de diagnóstico. O uso dessas ferramentas é específico do contexto. É melhor entender o que eles estão tentando realizar e usá-los judiciosamente.
+* Nem todas as medidas têm escalas absolutas significativas. Você pode olhar para eles em relação aos valores em todos os dados.
+* Eles sonda seus dados de diferentes maneiras para diagnosticar diferentes problemas.
+* Padrões em suas parcelas residuais geralmente indicam algum aspecto pobre do ajuste do modelo. 
+Estes podem incluir:  
+  * Heteroscedasticidade (variância não constante).
+  * Falta de termos de modelo.
+  * Padrões temporais (resíduos de parcela versus ordem de coleta).
+  * As parcelas de QQ residual investigam a normalidade dos erros.
+  * As medidas de alavancagem (hat values) podem ser úteis para diagnosticar erros de entrada de dados.
+  * Influência medidas chegar à linha de fundo, 'como excluir ou incluir este ponto impacto de um aspecto particular do modelo'.
+
+---
+## Case 1
+
+```{r, fig.height=5, fig.width=5, echo=FALSE}
+x <- c(10, rnorm(n)); y <- c(10, c(rnorm(n)))
+plot(x, y, frame = FALSE, cex = 2, pch = 21, bg = "lightblue", col = "black")
+abline(lm(y ~ x))            
+```
+
+---
+
+## O código
+
+```
+n <- 100; x <- c(10, rnorm(n)); y <- c(10, c(rnorm(n)))
+plot(x, y, frame = FALSE, cex = 2, pch = 21, bg = "lightblue", col = "black")
+abline(lm(y ~ x))            
+```
+* O ponto `c(10, 10)` criou uma relação de regressão forte onde não deve haver uma.
+
+---
+
+## Mostrando um par de valores de diagnóstico
+
+```{r}
+fit <- lm(y ~ x)
+round(dfbetas(fit)[1 : 10, 2], 3)
+round(hatvalues(fit)[1 : 10], 3)
+```
+
+---
+
+## Case 2
+
+```{r, fig.height=5, fig.width=5, echo=FALSE}
+x <- rnorm(n); y <- x + rnorm(n, sd = .3)
+x <- c(5, x); y <- c(5, y)
+plot(x, y, frame = FALSE, cex = 2, pch = 21, bg = "lightblue", col = "black")
+fit2 <- lm(y ~ x)
+abline(fit2)            
+```
+
+---
+
+## Analisando alguns dos diagnósticos
+
+```{r, echo = TRUE}
+round(dfbetas(fit2)[1 : 10, 2], 3)
+round(hatvalues(fit2)[1 : 10], 3)
+```
+
+---
+
+## Exemplo descrito por Stefanski TAS 2007 Vol. 61.
+
+```{r, fig.height=4, fig.width=4}
+## Don't everyone hit this server at once.  Read the paper first.
+dat <- read.table('http://www4.stat.ncsu.edu/~stefanski/NSF_Supported/Hidden_Images/orly_owl_files/orly_owl_Lin_4p_5_flat.txt', header = FALSE)
+pairs(dat)
+```
+
+---
+## Got our P-values, should we bother to do a residual plot?
+```{r}
+summary(lm(V1 ~ . -1, data = dat))$coef
+```
+
+---
+## Residual plot
+### P-values significant, O RLY?
+```{r, fig.height=4, fig.width=4, echo = TRUE}
+fit <- lm(V1 ~ . - 1, data = dat); plot(predict(fit), resid(fit), pch = '.')
+```
+
+---
+## Back to the Swiss data
+```{r, fig.height = 5, fig.width = 5, echo=FALSE}
+data(swiss); par(mfrow = c(2, 2))
+fit <- lm(Fertility ~ . , data = swiss); plot(fit)
+```
+

@@ -1,0 +1,801 @@
+"indice";"genero";"formacao";"religiao";"peso";"altura";"salario";"filho";"automovel"
+"1";1;"Feminino";"Superior completo";"Budismo";84.7;1.82;2056.88;0;0
+"2";2;"Masculino";"Superior completo";"Islamismo";81.1;1.64;1814.91;1;2
+"3";3;"Masculino";"Doutorado";"Cristianismo";75.3;1.7;1772.38;4;1
+"4";4;"Masculino";"Mestrado";"Nd";106.1;1.73;1299.63;1;1
+"5";5;"Masculino";"Superior incompleto";"Nd";80.3;1.79;548.07;2;2
+"6";6;"Feminino";"Médio";"Nd";93.6;1.76;2227.81;1;2
+"7";7;"Masculino";"Doutorado";"Budismo";69.7;1.72;2057.15;1;1
+"8";8;"Feminino";"Superior incompleto";"Hinduísmo";81;1.76;1311.99;2;0
+"9";9;"Masculino";"Doutorado";"Nd";65.7;1.74;2010.46;0;1
+"10";10;"Masculino";"Mestrado";"Cristianismo";65.5;1.73;2540.58;4;2
+"11";11;"Masculino";"Mestrado";"Hinduísmo";66.3;1.69;2070.78;3;2
+"12";12;"Masculino";"Médio";"Nd";73.6;1.76;2167.97;0;1
+"13";13;"Feminino";"Mestrado";"Nd";62.9;1.72;1763.29;3;0
+"14";14;"Masculino";"Superior incompleto";"Islamismo";85.4;1.83;1925.58;1;0
+"15";15;"Masculino";"Doutorado";"Cristianismo";82.7;1.86;1909;3;1
+"16";16;"Masculino";"Doutorado";"Hinduísmo";58.9;1.74;2595.31;3;0
+"17";17;"Feminino";"Superior completo";"Cristianismo";80.9;1.69;1752.62;0;1
+"18";18;"Masculino";"Superior completo";"Nd";75.9;1.75;1671.29;2;1
+"19";19;"Feminino";"Médio";"Cristianismo";75.6;1.74;2198.6;3;0
+"20";20;"Masculino";"Superior completo";"Cristianismo";87.8;1.74;2202.04;1;0
+"21";21;"Feminino";"Superior completo";"Islamismo";84.7;1.82;1487.22;0;1
+"22";22;"Masculino";"Superior completo";"Hinduísmo";76;1.79;2452.77;1;2
+"23";23;"Feminino";"Médio";"Hinduísmo";83.9;1.79;1921.02;3;1
+"24";24;"Feminino";"Superior completo";"Cristianismo";88.6;1.72;1134.45;3;1
+"25";25;"Feminino";"Mestrado";"Hinduísmo";83.6;1.72;1863.94;1;2
+"26";26;"Masculino";"Superior completo";"Nd";80.9;1.79;1526.15;3;2
+"27";27;"Feminino";"Pós-graducação";"Islamismo";95.5;1.76;2442.12;3;0
+"28";28;"Masculino";"Mestrado";"Budismo";68.7;1.78;2084.47;0;0
+"29";29;"Feminino";"Pós-graducação";"Hinduísmo";73.2;1.74;2658.21;1;2
+"30";30;"Masculino";"Superior completo";"Nd";80.6;1.71;2987.02;2;2
+"31";31;"Feminino";"Mestrado";"Islamismo";74;1.75;2775.04;2;1
+"32";32;"Masculino";"Médio";"Budismo";85.5;1.73;3143.6;2;0
+"33";33;"Masculino";"Superior incompleto";"Islamismo";82.7;1.84;1657.27;1;1
+"34";34;"Masculino";"Pós-graducação";"Cristianismo";70.2;1.76;1686.9;2;0
+"35";35;"Masculino";"Pós-graducação";"Cristianismo";78.5;1.78;1500.76;4;0
+"36";36;"Feminino";"Médio";"Islamismo";67.8;1.74;2799.23;2;0
+"37";37;"Masculino";"Superior completo";"Budismo";79.3;1.71;2029.74;2;0
+"38";38;"Feminino";"Superior incompleto";"Nd";85.1;1.73;1994.62;4;1
+"39";39;"Feminino";"Superior incompleto";"Budismo";81.2;1.77;1792.77;4;0
+"40";40;"Masculino";"Superior completo";"Cristianismo";68.8;1.76;2045.97;3;2
+"41";41;"Feminino";"Médio";"Budismo";80.2;1.7;2574.9;3;2
+"42";42;"Masculino";"Pós-graducação";"Cristianismo";81.8;1.72;2315.97;0;0
+"43";43;"Feminino";"Mestrado";"Nd";78.4;1.76;2146.56;2;2
+"44";44;"Masculino";"Superior completo";"Islamismo";89;1.75;2301.17;1;1
+"45";45;"Feminino";"Superior completo";"Islamismo";79.1;1.79;3043.9;2;1
+"46";46;"Masculino";"Médio";"Budismo";73.8;1.72;2600.84;4;2
+"47";47;"Masculino";"Doutorado";"Islamismo";79.7;1.75;1642.82;4;0
+"48";48;"Feminino";"Mestrado";"Nd";70.2;1.79;1963.64;3;2
+"49";49;"Feminino";"Superior incompleto";"Cristianismo";80.9;1.75;1731.83;4;1
+"50";50;"Feminino";"Pós-graducação";"Cristianismo";88.3;1.72;1838.92;1;1
+"51";51;"Feminino";"Doutorado";"Cristianismo";73.1;1.68;1703.87;0;0
+"52";52;"Feminino";"Pós-graducação";"Budismo";93.6;1.69;2237.86;3;1
+"53";53;"Feminino";"Pós-graducação";"Cristianismo";85.1;1.74;2060.2;2;1
+"54";54;"Feminino";"Médio";"Islamismo";62.8;1.72;2407.68;3;0
+"55";55;"Feminino";"Superior incompleto";"Nd";58.4;1.88;1540.55;2;0
+"56";56;"Masculino";"Mestrado";"Cristianismo";86.5;1.74;2057.93;3;2
+"57";57;"Masculino";"Superior completo";"Islamismo";61.3;1.83;2459.62;4;0
+"58";58;"Masculino";"Pós-graducação";"Islamismo";82.9;1.75;2411.84;0;1
+"59";59;"Masculino";"Doutorado";"Budismo";81.9;1.81;1564.64;2;2
+"60";60;"Masculino";"Pós-graducação";"Islamismo";86.2;1.7;2972.84;2;1
+"61";61;"Masculino";"Mestrado";"Budismo";86.2;1.75;2169.23;2;1
+"62";62;"Feminino";"Mestrado";"Islamismo";100.4;1.89;2747.13;3;1
+"63";63;"Feminino";"Superior completo";"Hinduísmo";70.7;1.77;2256.1;3;0
+"64";64;"Feminino";"Superior incompleto";"Hinduísmo";75.4;1.8;1730.15;3;1
+"65";65;"Feminino";"Superior completo";"Budismo";82;1.77;2475.51;1;2
+"66";66;"Feminino";"Doutorado";"Budismo";66.5;1.78;2158.28;2;2
+"67";67;"Masculino";"Pós-graducação";"Cristianismo";71.9;1.77;1726.18;4;2
+"68";68;"Masculino";"Superior completo";"Hinduísmo";74.5;1.73;1296.68;3;2
+"69";69;"Masculino";"Mestrado";"Nd";86.3;1.73;2103.46;4;1
+"70";70;"Masculino";"Superior completo";"Cristianismo";86.4;1.65;825.41;1;0
+"71";71;"Masculino";"Médio";"Budismo";56.1;1.67;1412;2;1
+"72";72;"Feminino";"Mestrado";"Cristianismo";84.1;1.74;1815.19;2;1
+"73";73;"Feminino";"Mestrado";"Cristianismo";81.2;1.82;2254.66;0;2
+"74";74;"Feminino";"Médio";"Islamismo";86.7;1.71;1580.61;2;2
+"75";75;"Masculino";"Superior incompleto";"Budismo";67.2;1.73;1804.93;1;2
+"76";76;"Feminino";"Superior completo";"Cristianismo";76.8;1.74;2827.76;2;2
+"77";77;"Masculino";"Doutorado";"Budismo";101.4;1.73;2179;1;0
+"78";78;"Masculino";"Doutorado";"Islamismo";80.7;1.78;1807.1;2;0
+"79";79;"Feminino";"Médio";"Budismo";80;1.72;1713.83;0;2
+"80";80;"Feminino";"Pós-graducação";"Nd";95.5;1.82;2211.81;0;2
+"81";81;"Feminino";"Superior incompleto";"Islamismo";79.3;1.82;2211.11;1;0
+"82";82;"Feminino";"Superior completo";"Budismo";83;1.76;1749.71;3;1
+"83";83;"Masculino";"Doutorado";"Budismo";92.7;1.76;1538.47;2;2
+"84";84;"Feminino";"Pós-graducação";"Budismo";66.2;1.79;2019.18;2;2
+"85";85;"Masculino";"Mestrado";"Nd";74.4;1.71;1157.43;2;1
+"86";86;"Masculino";"Pós-graducação";"Cristianismo";92.8;1.75;1668.23;2;2
+"87";87;"Masculino";"Superior completo";"Cristianismo";88.6;1.77;2499.07;0;0
+"88";88;"Feminino";"Doutorado";"Nd";78.1;1.69;2485.91;4;1
+"89";89;"Masculino";"Mestrado";"Budismo";108;1.79;3143.69;1;0
+"90";90;"Masculino";"Mestrado";"Budismo";83.9;1.69;1829.02;4;1
+"91";91;"Masculino";"Médio";"Nd";83.7;1.76;2293.29;3;0
+"92";92;"Masculino";"Mestrado";"Nd";86.4;1.89;1899.41;3;0
+"93";93;"Feminino";"Médio";"Cristianismo";60.9;1.72;2186.32;4;1
+"94";94;"Masculino";"Médio";"Nd";86.2;1.76;2106.24;0;1
+"95";95;"Feminino";"Superior incompleto";"Nd";79;1.63;2180.02;0;1
+"96";96;"Feminino";"Médio";"Nd";93;1.71;2652.5;3;2
+"97";97;"Feminino";"Superior completo";"Hinduísmo";85.7;1.6;2029.91;0;2
+"98";98;"Masculino";"Médio";"Nd";85;1.73;2243.36;4;1
+"99";99;"Feminino";"Superior incompleto";"Islamismo";81.1;1.65;1801.55;3;0
+"100";100;"Masculino";"Doutorado";"Budismo";73.9;1.72;2428.87;1;0
+"101";101;"Masculino";"Médio";"Cristianismo";93.8;1.78;2965.84;3;2
+"102";102;"Masculino";"Pós-graducação";"Hinduísmo";97.4;1.71;2884.13;0;2
+"103";103;"Masculino";"Doutorado";"Hinduísmo";72;1.79;1615.46;3;1
+"104";104;"Masculino";"Mestrado";"Budismo";85.5;1.74;1957.58;3;1
+"105";105;"Feminino";"Superior incompleto";"Nd";71.4;1.81;1754.37;4;1
+"106";106;"Masculino";"Pós-graducação";"Islamismo";82.5;1.71;1588.1;1;2
+"107";107;"Feminino";"Superior completo";"Hinduísmo";94.1;1.71;2531.79;1;0
+"108";108;"Masculino";"Mestrado";"Cristianismo";77.9;1.77;1732.42;1;0
+"109";109;"Feminino";"Doutorado";"Nd";75.2;1.74;2264.59;3;2
+"110";110;"Masculino";"Doutorado";"Budismo";84.9;1.73;1891.78;3;0
+"111";111;"Feminino";"Superior incompleto";"Islamismo";68.5;1.79;1486.9;1;0
+"112";112;"Masculino";"Médio";"Nd";78.6;1.83;1999.47;3;1
+"113";113;"Masculino";"Médio";"Cristianismo";79.2;1.78;1769.68;3;0
+"114";114;"Feminino";"Pós-graducação";"Cristianismo";71.9;1.77;1972.67;4;2
+"115";115;"Feminino";"Superior incompleto";"Budismo";85.9;1.73;1524.89;0;1
+"116";116;"Feminino";"Doutorado";"Nd";80.9;1.72;877.94;2;1
+"117";117;"Feminino";"Mestrado";"Nd";90.3;1.74;1703.43;0;1
+"118";118;"Feminino";"Médio";"Nd";70.5;1.66;1999.17;0;1
+"119";119;"Masculino";"Superior completo";"Nd";98.4;1.71;2713.42;0;1
+"120";120;"Feminino";"Mestrado";"Budismo";77.4;1.71;1976.03;3;2
+"121";121;"Feminino";"Superior completo";"Cristianismo";75.8;1.8;2168.97;0;0
+"122";122;"Masculino";"Pós-graducação";"Nd";76.8;1.75;3140.47;4;0
+"123";123;"Feminino";"Superior completo";"Cristianismo";83.5;1.74;1215.44;0;1
+"124";124;"Masculino";"Superior completo";"Islamismo";95.5;1.69;2381.57;3;0
+"125";125;"Feminino";"Pós-graducação";"Budismo";69.1;1.82;2262.54;4;0
+"126";126;"Masculino";"Pós-graducação";"Hinduísmo";86.6;1.78;2411.22;3;2
+"127";127;"Feminino";"Mestrado";"Islamismo";68.7;1.83;2131.51;0;0
+"128";128;"Masculino";"Pós-graducação";"Nd";67.9;1.69;1816.85;0;0
+"129";129;"Feminino";"Superior completo";"Islamismo";80.1;1.71;2152.42;0;1
+"130";130;"Masculino";"Superior incompleto";"Cristianismo";71.8;1.62;1417.7;4;0
+"131";131;"Feminino";"Médio";"Cristianismo";74;1.75;1717.18;1;0
+"132";132;"Feminino";"Superior incompleto";"Islamismo";69.3;1.76;2386.71;0;2
+"133";133;"Feminino";"Superior incompleto";"Islamismo";75.1;1.71;3003.22;4;1
+"134";134;"Feminino";"Mestrado";"Budismo";78.6;1.74;2008.41;0;0
+"135";135;"Feminino";"Superior completo";"Hinduísmo";62.5;1.77;1883.94;0;0
+"136";136;"Feminino";"Superior incompleto";"Islamismo";97.5;1.72;2119.62;3;2
+"137";137;"Feminino";"Doutorado";"Hinduísmo";66.9;1.75;2695.06;0;2
+"138";138;"Feminino";"Superior incompleto";"Islamismo";97.5;1.82;2287.19;4;1
+"139";139;"Feminino";"Superior completo";"Nd";82.4;1.8;2953.68;4;2
+"140";140;"Feminino";"Doutorado";"Budismo";92.1;1.69;1643.02;2;0
+"141";141;"Feminino";"Superior completo";"Islamismo";67.2;1.75;2337.78;0;1
+"142";142;"Feminino";"Pós-graducação";"Budismo";84;1.7;2078.09;4;0
+"143";143;"Masculino";"Superior completo";"Nd";83.5;1.73;1696.29;4;1
+"144";144;"Feminino";"Pós-graducação";"Cristianismo";75;1.76;1340.83;3;1
+"145";145;"Masculino";"Superior completo";"Nd";96.8;1.82;2360.47;1;0
+"146";146;"Feminino";"Superior completo";"Cristianismo";67.4;1.73;2903.24;0;0
+"147";147;"Masculino";"Médio";"Islamismo";74.1;1.75;626;3;0
+"148";148;"Feminino";"Superior incompleto";"Cristianismo";78.6;1.73;2041.4;2;0
+"149";149;"Masculino";"Doutorado";"Cristianismo";71;1.75;2264.8;3;1
+"150";150;"Feminino";"Mestrado";"Hinduísmo";71.3;1.77;2706.05;0;2
+"151";151;"Masculino";"Pós-graducação";"Hinduísmo";80.8;1.69;859.85;2;2
+"152";152;"Feminino";"Médio";"Budismo";69.6;1.77;2213.1;2;0
+"153";153;"Masculino";"Pós-graducação";"Islamismo";74.2;1.69;2005.14;0;0
+"154";154;"Masculino";"Pós-graducação";"Cristianismo";72.1;1.78;2899.91;1;2
+"155";155;"Masculino";"Doutorado";"Nd";75.8;1.82;2088.36;3;0
+"156";156;"Feminino";"Médio";"Budismo";83.9;1.81;1549.14;1;1
+"157";157;"Masculino";"Superior completo";"Cristianismo";53.2;1.8;1967.82;1;1
+"158";158;"Feminino";"Pós-graducação";"Cristianismo";84.6;1.74;2441.93;4;2
+"159";159;"Feminino";"Superior completo";"Budismo";83.4;1.74;2792.08;4;0
+"160";160;"Feminino";"Médio";"Islamismo";76.5;1.73;1621.99;4;2
+"161";161;"Feminino";"Superior completo";"Nd";73.2;1.76;1857.99;2;2
+"162";162;"Feminino";"Superior incompleto";"Islamismo";73.7;1.75;1582.97;1;1
+"163";163;"Feminino";"Doutorado";"Budismo";72;1.85;1850.24;3;1
+"164";164;"Feminino";"Superior completo";"Cristianismo";80.7;1.76;1166.02;3;2
+"165";165;"Feminino";"Superior completo";"Budismo";76.7;1.69;2996.78;0;0
+"166";166;"Feminino";"Pós-graducação";"Nd";79.5;1.8;2152.89;1;0
+"167";167;"Masculino";"Pós-graducação";"Cristianismo";82.8;1.65;2248.17;4;0
+"168";168;"Feminino";"Superior incompleto";"Budismo";75.7;1.79;2228.22;2;0
+"169";169;"Masculino";"Superior completo";"Budismo";107;1.74;1893.29;2;1
+"170";170;"Masculino";"Médio";"Cristianismo";94.1;1.84;2694.74;3;2
+"171";171;"Masculino";"Mestrado";"Cristianismo";80.5;1.77;2290.83;1;0
+"172";172;"Feminino";"Médio";"Hinduísmo";85.7;1.7;2253.04;4;2
+"173";173;"Masculino";"Doutorado";"Nd";72.4;1.82;3019.85;2;0
+"174";174;"Feminino";"Doutorado";"Nd";78.4;1.72;2296.85;2;1
+"175";175;"Masculino";"Médio";"Budismo";71.2;1.78;1674.29;0;1
+"176";176;"Feminino";"Doutorado";"Hinduísmo";69.5;1.73;1878.09;1;1
+"177";177;"Masculino";"Pós-graducação";"Budismo";90.2;1.78;2069.13;2;0
+"178";178;"Masculino";"Pós-graducação";"Islamismo";102.2;1.7;2731.38;1;1
+"179";179;"Feminino";"Médio";"Budismo";89.1;1.69;2714.61;1;0
+"180";180;"Feminino";"Superior completo";"Cristianismo";70.7;1.75;2466.09;4;2
+"181";181;"Feminino";"Doutorado";"Hinduísmo";87.5;1.66;1904.66;0;2
+"182";182;"Masculino";"Doutorado";"Hinduísmo";59;1.83;1383.22;1;1
+"183";183;"Masculino";"Doutorado";"Nd";80.2;1.74;1956.42;4;1
+"184";184;"Feminino";"Pós-graducação";"Islamismo";97.3;1.78;1384.83;4;0
+"185";185;"Feminino";"Superior completo";"Nd";88.9;1.87;2465.47;0;1
+"186";186;"Feminino";"Doutorado";"Budismo";63.9;1.78;2198.92;3;1
+"187";187;"Feminino";"Superior completo";"Cristianismo";92.1;1.7;1275.22;1;1
+"188";188;"Masculino";"Superior completo";"Nd";81.8;1.76;1726.13;3;1
+"189";189;"Feminino";"Doutorado";"Nd";86.2;1.7;2027.82;4;1
+"190";190;"Masculino";"Médio";"Cristianismo";80.6;1.74;1199.5;4;1
+"191";191;"Masculino";"Médio";"Nd";71.6;1.78;2796.41;2;0
+"192";192;"Feminino";"Doutorado";"Budismo";59.4;1.67;1429.02;1;2
+"193";193;"Feminino";"Superior incompleto";"Nd";87;1.86;2182.69;0;1
+"194";194;"Feminino";"Médio";"Cristianismo";80.6;1.75;2262.53;2;0
+"195";195;"Masculino";"Doutorado";"Budismo";73.7;1.8;2203.73;3;0
+"196";196;"Masculino";"Doutorado";"Cristianismo";61.1;1.76;2689.09;0;1
+"197";197;"Masculino";"Mestrado";"Islamismo";93;1.69;1845.59;0;0
+"198";198;"Feminino";"Doutorado";"Islamismo";89.8;1.81;1755.94;1;1
+"199";199;"Masculino";"Superior incompleto";"Nd";97.9;1.69;1861.02;3;0
+"200";200;"Masculino";"Mestrado";"Islamismo";83.7;1.79;2498;4;2
+"201";201;"Feminino";"Superior completo";"Nd";89.1;1.73;2601.07;3;0
+"202";202;"Feminino";"Mestrado";"Hinduísmo";86.2;1.82;1468.69;4;0
+"203";203;"Feminino";"Superior incompleto";"Budismo";91.6;1.79;1655.59;4;1
+"204";204;"Masculino";"Doutorado";"Islamismo";96.3;1.82;1071.31;2;2
+"205";205;"Masculino";"Superior incompleto";"Nd";74.5;1.75;3094.09;1;1
+"206";206;"Feminino";"Doutorado";"Budismo";88.2;1.82;2134.21;1;1
+"207";207;"Masculino";"Doutorado";"Budismo";68.7;1.81;2432.58;3;1
+"208";208;"Masculino";"Superior incompleto";"Hinduísmo";67.2;1.67;1831.9;4;2
+"209";209;"Feminino";"Superior incompleto";"Nd";67.5;1.8;2668.48;1;1
+"210";210;"Masculino";"Superior incompleto";"Islamismo";59.3;1.69;716.63;0;2
+"211";211;"Masculino";"Médio";"Islamismo";86.6;1.77;2720.36;1;1
+"212";212;"Masculino";"Superior completo";"Hinduísmo";84.3;1.75;2060.46;3;1
+"213";213;"Feminino";"Superior incompleto";"Budismo";85.7;1.73;1754.44;0;0
+"214";214;"Feminino";"Superior completo";"Cristianismo";96.2;1.76;2123.64;0;2
+"215";215;"Feminino";"Superior incompleto";"Cristianismo";96.8;1.8;2251.28;1;1
+"216";216;"Masculino";"Superior completo";"Nd";92.7;1.7;1133.83;0;1
+"217";217;"Feminino";"Médio";"Nd";62.7;1.7;2033.88;2;0
+"218";218;"Feminino";"Pós-graducação";"Nd";69.8;1.72;2593.59;2;1
+"219";219;"Feminino";"Médio";"Nd";73;1.77;2124.77;1;2
+"220";220;"Masculino";"Superior incompleto";"Cristianismo";72.3;1.73;2013.5;4;2
+"221";221;"Masculino";"Superior completo";"Nd";81.8;1.78;2859.12;2;1
+"222";222;"Feminino";"Médio";"Budismo";80.1;1.73;2149.43;3;0
+"223";223;"Feminino";"Doutorado";"Hinduísmo";77.3;1.8;1776.1;1;2
+"224";224;"Feminino";"Mestrado";"Budismo";74.4;1.73;754.85;2;1
+"225";225;"Feminino";"Doutorado";"Hinduísmo";83.6;1.75;1825.22;1;0
+"226";226;"Masculino";"Superior incompleto";"Hinduísmo";73.9;1.73;1338.57;0;1
+"227";227;"Feminino";"Mestrado";"Nd";92;1.75;2262.19;3;2
+"228";228;"Masculino";"Superior completo";"Islamismo";92.5;1.69;2606.57;4;0
+"229";229;"Masculino";"Médio";"Islamismo";89.6;1.61;1835.29;2;1
+"230";230;"Feminino";"Médio";"Islamismo";75.6;1.74;2122.95;1;0
+"231";231;"Feminino";"Superior incompleto";"Budismo";81.1;1.73;1650.75;0;1
+"232";232;"Feminino";"Superior incompleto";"Budismo";88.4;1.72;1179.91;0;0
+"233";233;"Masculino";"Superior completo";"Nd";82.7;1.69;2195.48;1;2
+"234";234;"Masculino";"Médio";"Islamismo";67.5;1.63;2097.34;3;0
+"235";235;"Feminino";"Doutorado";"Hinduísmo";101.9;1.73;1811.22;3;2
+"236";236;"Masculino";"Mestrado";"Hinduísmo";69.6;1.83;2442.31;1;2
+"237";237;"Feminino";"Mestrado";"Budismo";71.6;1.73;1255.23;4;0
+"238";238;"Masculino";"Superior incompleto";"Islamismo";74;1.67;2364.04;2;1
+"239";239;"Feminino";"Médio";"Islamismo";92.4;1.71;2637.36;1;2
+"240";240;"Feminino";"Superior completo";"Islamismo";83.3;1.69;1128;4;2
+"241";241;"Masculino";"Mestrado";"Budismo";69.5;1.69;2521.62;2;1
+"242";242;"Masculino";"Pós-graducação";"Islamismo";88.8;1.61;1251.01;1;0
+"243";243;"Feminino";"Mestrado";"Hinduísmo";86;1.84;2072.21;1;2
+"244";244;"Feminino";"Superior completo";"Cristianismo";82.5;1.76;1895.33;3;2
+"245";245;"Feminino";"Superior completo";"Cristianismo";76.7;1.71;2563.36;1;0
+"246";246;"Masculino";"Superior incompleto";"Cristianismo";92.7;1.86;2585.27;1;2
+"247";247;"Masculino";"Superior incompleto";"Islamismo";82.6;1.77;2627.38;3;1
+"248";248;"Feminino";"Mestrado";"Hinduísmo";63.5;1.82;2085.99;0;0
+"249";249;"Feminino";"Médio";"Hinduísmo";76.7;1.77;1808.97;3;0
+"250";250;"Masculino";"Pós-graducação";"Cristianismo";79.3;1.85;2387.28;1;1
+"251";251;"Feminino";"Pós-graducação";"Budismo";71.8;1.78;1611;3;2
+"252";252;"Masculino";"Doutorado";"Budismo";73.9;1.79;2064.23;0;2
+"253";253;"Feminino";"Médio";"Islamismo";76.7;1.79;1870.59;2;1
+"254";254;"Feminino";"Superior incompleto";"Cristianismo";63.2;1.79;1966.21;2;1
+"255";255;"Feminino";"Mestrado";"Hinduísmo";67.2;1.7;2602.98;0;1
+"256";256;"Masculino";"Médio";"Cristianismo";90.5;1.76;2032.96;1;1
+"257";257;"Masculino";"Pós-graducação";"Cristianismo";78.2;1.79;1652.84;2;0
+"258";258;"Feminino";"Superior incompleto";"Hinduísmo";89.4;1.77;1721.03;3;1
+"259";259;"Feminino";"Superior incompleto";"Islamismo";82.6;1.73;2121.02;2;1
+"260";260;"Masculino";"Doutorado";"Cristianismo";96.2;1.64;2140.61;3;2
+"261";261;"Masculino";"Superior incompleto";"Budismo";82.1;1.76;2037.33;1;1
+"262";262;"Masculino";"Superior incompleto";"Budismo";73.8;1.76;1385.55;3;1
+"263";263;"Feminino";"Pós-graducação";"Islamismo";70.6;1.78;2127.94;4;0
+"264";264;"Masculino";"Doutorado";"Hinduísmo";73.8;1.75;1573.81;2;2
+"265";265;"Feminino";"Pós-graducação";"Hinduísmo";70.6;1.69;1559.36;0;0
+"266";266;"Masculino";"Doutorado";"Hinduísmo";68.9;1.73;1982.2;2;2
+"267";267;"Feminino";"Doutorado";"Budismo";68.6;1.68;2376.06;2;1
+"268";268;"Feminino";"Médio";"Hinduísmo";84.4;1.78;2199.58;1;1
+"269";269;"Feminino";"Pós-graducação";"Cristianismo";81.8;1.73;1222.91;4;1
+"270";270;"Feminino";"Superior completo";"Islamismo";78.1;1.7;2442.83;0;1
+"271";271;"Masculino";"Superior completo";"Islamismo";78.9;1.75;1880.16;4;2
+"272";272;"Feminino";"Médio";"Nd";107.9;1.72;2647.08;0;0
+"273";273;"Feminino";"Superior incompleto";"Budismo";85.8;1.8;2702.13;4;0
+"274";274;"Masculino";"Mestrado";"Islamismo";60.4;1.77;2151.84;1;1
+"275";275;"Feminino";"Médio";"Cristianismo";88.1;1.7;2122.46;2;2
+"276";276;"Feminino";"Superior incompleto";"Nd";71.6;1.83;2438.83;0;2
+"277";277;"Feminino";"Superior incompleto";"Budismo";92.8;1.87;1901.67;1;1
+"278";278;"Masculino";"Médio";"Hinduísmo";94.7;1.73;2373.53;0;1
+"279";279;"Feminino";"Superior completo";"Hinduísmo";81;1.76;1766.85;0;0
+"280";280;"Masculino";"Superior incompleto";"Hinduísmo";58.8;1.84;2838.69;4;2
+"281";281;"Masculino";"Superior incompleto";"Hinduísmo";66.4;1.76;1973.56;0;1
+"282";282;"Feminino";"Superior completo";"Nd";70.2;1.74;2504.87;3;0
+"283";283;"Masculino";"Superior incompleto";"Budismo";83.5;1.73;2603.97;2;1
+"284";284;"Masculino";"Superior completo";"Hinduísmo";85.1;1.81;1851.47;1;2
+"285";285;"Feminino";"Doutorado";"Islamismo";63.8;1.76;2263.38;1;0
+"286";286;"Masculino";"Mestrado";"Hinduísmo";87.3;1.71;1208.22;0;1
+"287";287;"Feminino";"Doutorado";"Cristianismo";86.2;1.74;1875.39;3;0
+"288";288;"Masculino";"Superior completo";"Hinduísmo";99.5;1.8;2148.1;2;2
+"289";289;"Feminino";"Mestrado";"Hinduísmo";84.5;1.8;1182.35;2;1
+"290";290;"Masculino";"Mestrado";"Nd";71.9;1.6;1950.4;4;2
+"291";291;"Masculino";"Superior completo";"Cristianismo";85.8;1.8;2124.12;4;2
+"292";292;"Masculino";"Mestrado";"Hinduísmo";75.8;1.73;1101.85;1;2
+"293";293;"Masculino";"Superior incompleto";"Hinduísmo";73.2;1.73;1774.45;0;2
+"294";294;"Masculino";"Doutorado";"Hinduísmo";77.5;1.8;1949.11;1;1
+"295";295;"Feminino";"Médio";"Cristianismo";85.2;1.73;2598.45;2;1
+"296";296;"Feminino";"Superior completo";"Nd";95.8;1.69;1738.17;4;1
+"297";297;"Feminino";"Superior completo";"Islamismo";66.3;1.73;2044.92;2;0
+"298";298;"Masculino";"Pós-graducação";"Cristianismo";94.6;1.76;2758.43;2;2
+"299";299;"Masculino";"Médio";"Cristianismo";84.3;1.73;2116.07;2;2
+"300";300;"Feminino";"Doutorado";"Hinduísmo";84.7;1.67;1980.75;3;1
+"301";301;"Masculino";"Superior completo";"Cristianismo";72.5;1.76;2552.02;4;1
+"302";302;"Feminino";"Doutorado";"Nd";77.9;1.67;1231.36;3;0
+"303";303;"Feminino";"Doutorado";"Budismo";78;1.74;2008.29;0;0
+"304";304;"Masculino";"Superior incompleto";"Budismo";73.1;1.74;1933.31;0;2
+"305";305;"Masculino";"Médio";"Islamismo";84.6;1.83;2284.93;2;0
+"306";306;"Masculino";"Mestrado";"Nd";48.1;1.83;2568.06;3;1
+"307";307;"Masculino";"Pós-graducação";"Nd";67;1.73;1901.78;2;2
+"308";308;"Masculino";"Doutorado";"Nd";90.4;1.81;2125.14;3;2
+"309";309;"Feminino";"Superior completo";"Budismo";66.4;1.65;2019.69;2;1
+"310";310;"Feminino";"Pós-graducação";"Islamismo";86;1.66;1624.13;1;2
+"311";311;"Masculino";"Superior incompleto";"Hinduísmo";92.5;1.69;2291.99;0;0
+"312";312;"Feminino";"Mestrado";"Hinduísmo";82.4;1.77;1824.94;4;0
+"313";313;"Masculino";"Superior completo";"Budismo";66.8;1.73;2237.33;1;1
+"314";314;"Feminino";"Médio";"Islamismo";81.9;1.71;2345.19;3;1
+"315";315;"Feminino";"Pós-graducação";"Hinduísmo";96.1;1.79;1714.24;3;1
+"316";316;"Feminino";"Superior completo";"Nd";93.4;1.71;2103.26;3;0
+"317";317;"Feminino";"Doutorado";"Islamismo";103.9;1.81;2202.53;0;0
+"318";318;"Masculino";"Mestrado";"Cristianismo";72.1;1.76;2840.09;2;1
+"319";319;"Masculino";"Doutorado";"Budismo";84.6;1.77;2281.78;1;2
+"320";320;"Feminino";"Pós-graducação";"Budismo";77.1;1.73;1143.52;2;2
+"321";321;"Feminino";"Superior completo";"Islamismo";61.1;1.78;2450.34;4;2
+"322";322;"Feminino";"Superior completo";"Islamismo";78.5;1.71;2811.84;4;2
+"323";323;"Feminino";"Superior completo";"Islamismo";75.8;1.7;2671.94;3;1
+"324";324;"Masculino";"Doutorado";"Cristianismo";100.3;1.77;1691.16;0;2
+"325";325;"Feminino";"Doutorado";"Cristianismo";81.6;1.76;1296.29;2;2
+"326";326;"Feminino";"Doutorado";"Islamismo";86;1.69;2117.83;3;0
+"327";327;"Feminino";"Superior incompleto";"Budismo";87.6;1.77;2150;0;0
+"328";328;"Feminino";"Doutorado";"Hinduísmo";70.5;1.68;2811.04;1;1
+"329";329;"Feminino";"Mestrado";"Budismo";72.4;1.76;1631.87;4;2
+"330";330;"Masculino";"Mestrado";"Budismo";90.3;1.69;2355.81;1;0
+"331";331;"Masculino";"Pós-graducação";"Budismo";82;1.64;2231.26;1;1
+"332";332;"Feminino";"Pós-graducação";"Nd";100.6;1.8;2133.16;2;0
+"333";333;"Feminino";"Médio";"Nd";78.7;1.76;1158.73;0;1
+"334";334;"Feminino";"Superior incompleto";"Cristianismo";91.5;1.72;1817.66;3;2
+"335";335;"Feminino";"Superior incompleto";"Cristianismo";84.3;1.77;2543;1;2
+"336";336;"Masculino";"Pós-graducação";"Budismo";74.5;1.84;1511.95;1;2
+"337";337;"Feminino";"Superior incompleto";"Budismo";82.1;1.79;2121.36;1;1
+"338";338;"Masculino";"Superior incompleto";"Islamismo";84.8;1.8;1982.82;3;2
+"339";339;"Masculino";"Superior completo";"Islamismo";78.9;1.66;2867.98;3;1
+"340";340;"Masculino";"Superior completo";"Nd";83.2;1.69;1763.33;1;0
+"341";341;"Masculino";"Doutorado";"Cristianismo";85.1;1.71;1140.42;3;1
+"342";342;"Masculino";"Médio";"Hinduísmo";75;1.72;1636.16;4;0
+"343";343;"Feminino";"Mestrado";"Nd";78;1.72;2117.86;3;1
+"344";344;"Masculino";"Médio";"Nd";87.6;1.77;1575.66;0;2
+"345";345;"Feminino";"Doutorado";"Budismo";74.2;1.79;2126.87;3;2
+"346";346;"Masculino";"Médio";"Budismo";87.6;1.71;2058.39;3;0
+"347";347;"Masculino";"Doutorado";"Nd";69.2;1.65;1666.93;2;1
+"348";348;"Masculino";"Mestrado";"Budismo";87.9;1.81;3037.59;1;0
+"349";349;"Feminino";"Superior incompleto";"Hinduísmo";81.8;1.75;1478.28;4;1
+"350";350;"Feminino";"Pós-graducação";"Islamismo";76.1;1.79;3172.67;1;0
+"351";351;"Feminino";"Superior completo";"Nd";70.2;1.69;2380.64;1;1
+"352";352;"Masculino";"Doutorado";"Nd";81.8;1.79;2136.85;1;1
+"353";353;"Feminino";"Superior incompleto";"Islamismo";80.2;1.84;1824.78;0;0
+"354";354;"Masculino";"Médio";"Hinduísmo";62.6;1.77;1926.11;0;2
+"355";355;"Feminino";"Superior completo";"Hinduísmo";69.5;1.72;1942.4;4;1
+"356";356;"Masculino";"Pós-graducação";"Islamismo";79.1;1.68;1512.04;1;0
+"357";357;"Feminino";"Mestrado";"Hinduísmo";80.2;1.77;1888.05;2;0
+"358";358;"Masculino";"Mestrado";"Cristianismo";97.2;1.72;1966.84;1;2
+"359";359;"Masculino";"Pós-graducação";"Islamismo";59.9;1.77;1878.51;1;1
+"360";360;"Masculino";"Superior incompleto";"Budismo";84.5;1.72;2067.2;0;0
+"361";361;"Feminino";"Pós-graducação";"Nd";93.2;1.75;2424.54;3;1
+"362";362;"Feminino";"Pós-graducação";"Budismo";70.7;1.67;1863.33;4;2
+"363";363;"Feminino";"Superior incompleto";"Islamismo";82.1;1.76;1884.44;2;1
+"364";364;"Feminino";"Superior incompleto";"Hinduísmo";79.5;1.76;1818.65;0;2
+"365";365;"Feminino";"Pós-graducação";"Cristianismo";84.6;1.76;2377.65;4;1
+"366";366;"Feminino";"Médio";"Budismo";84.9;1.76;1289.48;2;0
+"367";367;"Masculino";"Superior incompleto";"Budismo";81.8;1.76;1848.26;0;0
+"368";368;"Masculino";"Superior incompleto";"Cristianismo";94;1.66;1517.15;0;0
+"369";369;"Feminino";"Mestrado";"Nd";89.5;1.84;1633.31;2;2
+"370";370;"Masculino";"Doutorado";"Hinduísmo";88.4;1.71;1425.82;4;1
+"371";371;"Masculino";"Doutorado";"Cristianismo";74.6;1.79;1003.38;1;0
+"372";372;"Masculino";"Superior incompleto";"Budismo";77.9;1.71;2333.4;2;0
+"373";373;"Feminino";"Mestrado";"Nd";69.5;1.72;2830.3;1;0
+"374";374;"Masculino";"Superior completo";"Cristianismo";73.6;1.77;2898.14;4;0
+"375";375;"Feminino";"Doutorado";"Cristianismo";62.3;1.79;1839.77;2;1
+"376";376;"Masculino";"Pós-graducação";"Nd";68.7;1.75;1480.84;3;2
+"377";377;"Masculino";"Superior incompleto";"Cristianismo";63.9;1.75;1425.22;3;2
+"378";378;"Masculino";"Mestrado";"Budismo";74.2;1.77;2299.65;0;1
+"379";379;"Masculino";"Pós-graducação";"Cristianismo";85;1.74;2357.8;0;0
+"380";380;"Masculino";"Médio";"Hinduísmo";83.7;1.75;1791.29;2;1
+"381";381;"Masculino";"Médio";"Hinduísmo";82.9;1.75;1897;4;1
+"382";382;"Feminino";"Superior incompleto";"Hinduísmo";61;1.76;2121.31;2;0
+"383";383;"Feminino";"Doutorado";"Islamismo";73.8;1.78;1969.64;4;0
+"384";384;"Feminino";"Superior completo";"Islamismo";75.5;1.7;1210.11;4;1
+"385";385;"Masculino";"Doutorado";"Cristianismo";75;1.74;2500.16;1;2
+"386";386;"Masculino";"Superior completo";"Budismo";76.7;1.75;1506.34;4;2
+"387";387;"Masculino";"Mestrado";"Nd";65.9;1.73;2647.2;2;2
+"388";388;"Masculino";"Superior incompleto";"Nd";74;1.76;2444.91;0;2
+"389";389;"Masculino";"Superior completo";"Islamismo";78.7;1.79;1313.81;3;0
+"390";390;"Feminino";"Doutorado";"Budismo";68.6;1.78;1860.17;3;0
+"391";391;"Feminino";"Pós-graducação";"Hinduísmo";84.6;1.78;1888.85;1;0
+"392";392;"Masculino";"Pós-graducação";"Hinduísmo";82.7;1.76;2476.63;2;0
+"393";393;"Masculino";"Doutorado";"Cristianismo";91.4;1.68;1847.03;2;1
+"394";394;"Feminino";"Superior incompleto";"Islamismo";87;1.76;2775.92;4;1
+"395";395;"Masculino";"Mestrado";"Islamismo";98.6;1.83;1964.22;0;1
+"396";396;"Masculino";"Mestrado";"Nd";102.9;1.73;1586.38;2;2
+"397";397;"Masculino";"Superior completo";"Nd";85.9;1.83;2359.79;3;1
+"398";398;"Masculino";"Médio";"Islamismo";58.5;1.75;1785.44;4;1
+"399";399;"Feminino";"Superior incompleto";"Islamismo";81.2;1.82;2680.76;2;1
+"400";400;"Masculino";"Pós-graducação";"Islamismo";75.5;1.65;2255.48;0;2
+"401";401;"Feminino";"Médio";"Islamismo";98.4;1.76;1811.06;4;2
+"402";402;"Feminino";"Doutorado";"Islamismo";67.7;1.72;1729.29;0;1
+"403";403;"Feminino";"Pós-graducação";"Cristianismo";60.9;1.7;1968.58;2;1
+"404";404;"Feminino";"Superior completo";"Hinduísmo";81.3;1.81;1828.88;0;0
+"405";405;"Masculino";"Superior completo";"Budismo";86.8;1.74;2224.3;0;1
+"406";406;"Masculino";"Doutorado";"Hinduísmo";80.4;1.83;1857.44;2;2
+"407";407;"Feminino";"Pós-graducação";"Cristianismo";91;1.74;2757.85;2;1
+"408";408;"Masculino";"Médio";"Budismo";66.9;1.71;1706.74;1;0
+"409";409;"Feminino";"Pós-graducação";"Cristianismo";81.5;1.72;2354.12;1;2
+"410";410;"Masculino";"Doutorado";"Nd";79.4;1.63;2222.69;0;0
+"411";411;"Masculino";"Pós-graducação";"Hinduísmo";89.4;1.87;2825.58;3;2
+"412";412;"Feminino";"Pós-graducação";"Nd";71;1.78;1679;1;2
+"413";413;"Masculino";"Mestrado";"Nd";89.9;1.79;1173.19;0;2
+"414";414;"Feminino";"Mestrado";"Nd";88.1;1.77;1261.16;3;2
+"415";415;"Feminino";"Superior completo";"Nd";83.7;1.82;1325.71;4;1
+"416";416;"Masculino";"Doutorado";"Cristianismo";70.3;1.77;2418.79;2;0
+"417";417;"Masculino";"Mestrado";"Cristianismo";90.5;1.74;1239.03;0;2
+"418";418;"Masculino";"Superior incompleto";"Nd";95.2;1.69;1634.42;3;0
+"419";419;"Feminino";"Pós-graducação";"Islamismo";89.7;1.71;1468.15;0;2
+"420";420;"Feminino";"Superior incompleto";"Islamismo";85;1.77;1339.61;2;1
+"421";421;"Feminino";"Pós-graducação";"Nd";74.9;1.75;1571.98;2;1
+"422";422;"Feminino";"Doutorado";"Nd";81.8;1.8;2462.6;0;0
+"423";423;"Masculino";"Doutorado";"Budismo";80.9;1.76;2202.66;2;2
+"424";424;"Feminino";"Médio";"Hinduísmo";85.4;1.7;2038.88;1;2
+"425";425;"Masculino";"Superior incompleto";"Hinduísmo";63.6;1.74;2172.25;3;0
+"426";426;"Feminino";"Pós-graducação";"Cristianismo";85.4;1.75;2358.85;1;2
+"427";427;"Masculino";"Pós-graducação";"Hinduísmo";70.5;1.8;829.42;1;2
+"428";428;"Feminino";"Mestrado";"Budismo";68.6;1.77;2612.62;3;0
+"429";429;"Masculino";"Pós-graducação";"Islamismo";80.5;1.77;2414.57;2;2
+"430";430;"Feminino";"Médio";"Cristianismo";88.9;1.74;2579.32;1;1
+"431";431;"Feminino";"Mestrado";"Nd";88.1;1.71;2194.51;2;2
+"432";432;"Masculino";"Doutorado";"Budismo";74.7;1.71;1830.91;2;2
+"433";433;"Masculino";"Superior incompleto";"Budismo";97.3;1.84;1790.87;0;0
+"434";434;"Masculino";"Superior completo";"Cristianismo";93.1;1.75;1583.57;0;0
+"435";435;"Feminino";"Mestrado";"Hinduísmo";86.8;1.74;2096.05;4;1
+"436";436;"Masculino";"Doutorado";"Hinduísmo";90.8;1.81;2223.55;3;2
+"437";437;"Masculino";"Superior completo";"Hinduísmo";83.1;1.79;2520.68;4;1
+"438";438;"Masculino";"Superior incompleto";"Cristianismo";74.1;1.78;1481.97;4;0
+"439";439;"Masculino";"Doutorado";"Hinduísmo";57.6;1.69;2222.79;4;2
+"440";440;"Masculino";"Superior incompleto";"Islamismo";98.5;1.8;2090.15;1;2
+"441";441;"Masculino";"Pós-graducação";"Islamismo";100.9;1.78;1868.42;1;2
+"442";442;"Masculino";"Doutorado";"Cristianismo";77;1.82;983;3;0
+"443";443;"Masculino";"Mestrado";"Hinduísmo";89.4;1.75;2117.93;1;2
+"444";444;"Masculino";"Médio";"Hinduísmo";77.9;1.71;1508.99;2;2
+"445";445;"Feminino";"Mestrado";"Hinduísmo";79.7;1.83;2297.96;4;2
+"446";446;"Masculino";"Mestrado";"Nd";91.8;1.77;2015.73;4;0
+"447";447;"Feminino";"Superior completo";"Hinduísmo";86.6;1.76;2954.47;3;0
+"448";448;"Feminino";"Pós-graducação";"Islamismo";76.4;1.65;1922.46;1;0
+"449";449;"Masculino";"Médio";"Hinduísmo";87.1;1.73;2120.69;1;2
+"450";450;"Masculino";"Doutorado";"Islamismo";87.8;1.65;2294.12;2;1
+"451";451;"Feminino";"Mestrado";"Islamismo";64.3;1.73;2291.76;2;2
+"452";452;"Masculino";"Superior incompleto";"Cristianismo";93.2;1.74;2138.35;1;2
+"453";453;"Masculino";"Médio";"Budismo";87.6;1.79;1846.56;1;1
+"454";454;"Masculino";"Doutorado";"Hinduísmo";70.1;1.75;2540.05;3;0
+"455";455;"Masculino";"Mestrado";"Hinduísmo";95.2;1.71;1715.9;4;1
+"456";456;"Masculino";"Mestrado";"Islamismo";86.7;1.79;2062.73;4;0
+"457";457;"Masculino";"Superior incompleto";"Islamismo";96.1;1.77;2610.32;1;2
+"458";458;"Masculino";"Doutorado";"Budismo";94.9;1.71;1104.04;2;2
+"459";459;"Masculino";"Superior completo";"Cristianismo";81;1.78;1967.05;4;2
+"460";460;"Feminino";"Superior incompleto";"Islamismo";79.6;1.82;2334.34;2;0
+"461";461;"Feminino";"Pós-graducação";"Nd";64.8;1.78;1414.59;1;1
+"462";462;"Feminino";"Superior incompleto";"Nd";83.4;1.78;3093.92;1;2
+"463";463;"Masculino";"Doutorado";"Nd";88.9;1.77;2177.98;0;1
+"464";464;"Masculino";"Médio";"Nd";71.4;1.74;1776.31;0;1
+"465";465;"Feminino";"Superior completo";"Hinduísmo";79.6;1.8;1935.78;0;2
+"466";466;"Masculino";"Pós-graducação";"Islamismo";78.2;1.74;2052.84;3;0
+"467";467;"Masculino";"Superior completo";"Nd";88.8;1.75;879.87;3;0
+"468";468;"Masculino";"Pós-graducação";"Nd";81.9;1.72;2512.3;1;2
+"469";469;"Feminino";"Doutorado";"Hinduísmo";81.5;1.78;2038.11;2;0
+"470";470;"Feminino";"Médio";"Nd";80.5;1.76;2400.16;1;2
+"471";471;"Masculino";"Pós-graducação";"Budismo";90.2;1.7;2124.01;1;0
+"472";472;"Masculino";"Superior incompleto";"Islamismo";95.5;1.76;1663.93;3;1
+"473";473;"Masculino";"Médio";"Nd";92.8;1.7;2588.43;1;0
+"474";474;"Feminino";"Mestrado";"Hinduísmo";81.8;1.7;2655.43;1;0
+"475";475;"Feminino";"Superior incompleto";"Cristianismo";67;1.77;1956.71;3;0
+"476";476;"Masculino";"Médio";"Hinduísmo";84.8;1.7;1218.84;2;1
+"477";477;"Masculino";"Doutorado";"Nd";79.7;1.71;1231.85;1;2
+"478";478;"Masculino";"Médio";"Hinduísmo";79.3;1.8;1704.74;2;2
+"479";479;"Masculino";"Mestrado";"Budismo";102.8;1.76;2032.77;0;2
+"480";480;"Masculino";"Superior incompleto";"Nd";80.5;1.75;1911.38;1;2
+"481";481;"Masculino";"Mestrado";"Cristianismo";63.8;1.75;2448.4;3;1
+"482";482;"Masculino";"Médio";"Hinduísmo";92;1.69;1803.78;3;2
+"483";483;"Feminino";"Médio";"Nd";106.7;1.76;1545.05;3;0
+"484";484;"Masculino";"Mestrado";"Islamismo";70.3;1.77;2505.35;2;2
+"485";485;"Masculino";"Médio";"Islamismo";87.1;1.84;1407.89;4;2
+"486";486;"Masculino";"Pós-graducação";"Cristianismo";82;1.75;2707.8;0;0
+"487";487;"Feminino";"Superior completo";"Cristianismo";96.5;1.74;1840.05;1;2
+"488";488;"Feminino";"Doutorado";"Hinduísmo";84.2;1.77;2492.77;3;2
+"489";489;"Masculino";"Médio";"Nd";60.6;1.71;2305.43;1;1
+"490";490;"Feminino";"Pós-graducação";"Nd";84.9;1.73;2433;4;2
+"491";491;"Feminino";"Superior incompleto";"Hinduísmo";85.9;1.79;2502.52;4;0
+"492";492;"Masculino";"Superior incompleto";"Hinduísmo";56.2;1.68;3038.08;1;1
+"493";493;"Masculino";"Médio";"Hinduísmo";69.9;1.69;1828.56;0;1
+"494";494;"Masculino";"Superior incompleto";"Cristianismo";69.5;1.78;2423.27;0;2
+"495";495;"Masculino";"Pós-graducação";"Hinduísmo";92.4;1.72;1608.93;0;0
+"496";496;"Masculino";"Pós-graducação";"Cristianismo";67.4;1.73;1741.35;4;2
+"497";497;"Masculino";"Médio";"Hinduísmo";82.4;1.74;2189.71;0;2
+"498";498;"Masculino";"Superior incompleto";"Budismo";78.8;1.73;2337.91;1;0
+"499";499;"Feminino";"Médio";"Hinduísmo";84.2;1.7;2151.55;0;0
+"500";500;"Masculino";"Médio";"Cristianismo";73.5;1.71;2203.11;0;0
+"501";501;"Masculino";"Mestrado";"Islamismo";66.4;1.76;2141.39;1;1
+"502";502;"Masculino";"Superior incompleto";"Islamismo";88.9;1.69;1366.16;3;2
+"503";503;"Masculino";"Doutorado";"Cristianismo";73.7;1.68;1890.81;4;2
+"504";504;"Masculino";"Pós-graducação";"Budismo";74.4;1.83;1891.08;4;1
+"505";505;"Masculino";"Superior completo";"Islamismo";82.5;1.72;1921.4;2;1
+"506";506;"Feminino";"Médio";"Nd";75.9;1.69;2946.74;3;2
+"507";507;"Masculino";"Mestrado";"Cristianismo";78.8;1.72;2682.36;0;0
+"508";508;"Masculino";"Médio";"Nd";61.7;1.71;2193.11;0;2
+"509";509;"Masculino";"Superior incompleto";"Budismo";74.2;1.8;2096.76;3;1
+"510";510;"Masculino";"Pós-graducação";"Nd";107.6;1.69;2951.21;1;0
+"511";511;"Masculino";"Superior completo";"Hinduísmo";90.9;1.73;2606.71;0;1
+"512";512;"Feminino";"Médio";"Nd";80.7;1.76;1950.81;2;2
+"513";513;"Masculino";"Superior incompleto";"Cristianismo";74.5;1.8;2244.29;3;1
+"514";514;"Feminino";"Superior incompleto";"Budismo";61.6;1.7;2332.22;2;2
+"515";515;"Feminino";"Superior incompleto";"Budismo";69.2;1.73;2228.97;0;1
+"516";516;"Masculino";"Superior incompleto";"Cristianismo";83.2;1.85;1370.76;2;1
+"517";517;"Masculino";"Superior completo";"Cristianismo";71;1.74;1962.67;4;0
+"518";518;"Masculino";"Doutorado";"Cristianismo";85.6;1.78;1809.45;2;0
+"519";519;"Feminino";"Doutorado";"Nd";73.3;1.75;1716.67;1;0
+"520";520;"Feminino";"Doutorado";"Nd";80.5;1.74;1787.94;3;0
+"521";521;"Masculino";"Mestrado";"Nd";82;1.78;2010.61;4;1
+"522";522;"Feminino";"Médio";"Nd";61.2;1.7;1391.9;4;1
+"523";523;"Masculino";"Pós-graducação";"Islamismo";76.3;1.81;1494.66;2;1
+"524";524;"Masculino";"Mestrado";"Budismo";73.8;1.76;2574.1;2;2
+"525";525;"Feminino";"Doutorado";"Hinduísmo";78.5;1.8;2553.85;2;1
+"526";526;"Masculino";"Doutorado";"Nd";73.7;1.75;2278.35;4;1
+"527";527;"Feminino";"Doutorado";"Budismo";84.6;1.77;1973.48;4;2
+"528";528;"Feminino";"Mestrado";"Islamismo";67;1.75;1581.51;1;0
+"529";529;"Feminino";"Superior incompleto";"Nd";88.4;1.69;714.97;2;2
+"530";530;"Feminino";"Mestrado";"Islamismo";83.8;1.72;1929.81;1;0
+"531";531;"Feminino";"Superior completo";"Nd";75.2;1.72;1523.3;3;1
+"532";532;"Masculino";"Doutorado";"Budismo";80.6;1.71;1851.78;4;1
+"533";533;"Masculino";"Superior incompleto";"Nd";76.7;1.73;1568.04;2;2
+"534";534;"Feminino";"Doutorado";"Nd";84;1.72;2916.11;3;1
+"535";535;"Feminino";"Pós-graducação";"Cristianismo";82.9;1.75;1076.04;2;2
+"536";536;"Feminino";"Superior completo";"Nd";82.2;1.76;2010.64;3;2
+"537";537;"Masculino";"Superior incompleto";"Cristianismo";76.9;1.79;1878.98;2;1
+"538";538;"Feminino";"Médio";"Islamismo";78;1.71;2344.71;0;2
+"539";539;"Feminino";"Médio";"Cristianismo";89.8;1.78;1165.33;3;2
+"540";540;"Feminino";"Mestrado";"Hinduísmo";72.6;1.75;1706.22;4;2
+"541";541;"Feminino";"Superior completo";"Hinduísmo";83.7;1.77;2907.47;0;2
+"542";542;"Masculino";"Médio";"Hinduísmo";66;1.77;1166.25;1;1
+"543";543;"Feminino";"Superior incompleto";"Cristianismo";73.8;1.78;2186.39;2;2
+"544";544;"Masculino";"Médio";"Nd";94;1.74;2262.2;0;0
+"545";545;"Masculino";"Superior completo";"Nd";84.2;1.75;2051.89;0;2
+"546";546;"Feminino";"Doutorado";"Islamismo";76;1.76;2875.2;4;1
+"547";547;"Masculino";"Superior completo";"Nd";100.3;1.69;2578.29;0;0
+"548";548;"Masculino";"Pós-graducação";"Cristianismo";75.2;1.77;1908.7;3;0
+"549";549;"Feminino";"Superior completo";"Hinduísmo";74.2;1.78;1544.15;0;1
+"550";550;"Feminino";"Superior incompleto";"Budismo";72.1;1.77;1978.96;3;1
+"551";551;"Feminino";"Médio";"Cristianismo";79.2;1.71;2247.67;3;0
+"552";552;"Masculino";"Doutorado";"Cristianismo";84.9;1.76;2385.2;2;2
+"553";553;"Feminino";"Superior incompleto";"Cristianismo";69.1;1.79;1680.9;3;1
+"554";554;"Feminino";"Doutorado";"Nd";65.9;1.77;2773.71;3;2
+"555";555;"Feminino";"Superior incompleto";"Cristianismo";69.8;1.8;2311.68;3;1
+"556";556;"Masculino";"Médio";"Budismo";92.2;1.68;2219.32;2;0
+"557";557;"Feminino";"Superior completo";"Cristianismo";69.6;1.7;2447.48;4;1
+"558";558;"Masculino";"Superior incompleto";"Islamismo";56;1.67;1960.81;4;1
+"559";559;"Feminino";"Superior incompleto";"Islamismo";98.6;1.8;2021.55;3;2
+"560";560;"Masculino";"Superior completo";"Islamismo";84.7;1.73;2993.76;2;2
+"561";561;"Feminino";"Superior incompleto";"Nd";73.5;1.83;1643.77;0;0
+"562";562;"Masculino";"Médio";"Budismo";91.4;1.75;2372.16;2;2
+"563";563;"Feminino";"Médio";"Islamismo";107.6;1.71;2533.53;2;1
+"564";564;"Feminino";"Doutorado";"Cristianismo";79.3;1.64;2088.37;4;0
+"565";565;"Masculino";"Mestrado";"Budismo";82.6;1.67;2326.97;2;2
+"566";566;"Masculino";"Pós-graducação";"Nd";79.6;1.74;2670.98;0;2
+"567";567;"Masculino";"Superior completo";"Nd";74.6;1.75;2497.82;4;0
+"568";568;"Feminino";"Mestrado";"Islamismo";97.2;1.76;1585.41;2;1
+"569";569;"Feminino";"Médio";"Budismo";87.6;1.76;1438.48;4;0
+"570";570;"Masculino";"Superior incompleto";"Islamismo";68.6;1.77;1657.01;1;2
+"571";571;"Masculino";"Doutorado";"Nd";104.5;1.68;1834.51;0;1
+"572";572;"Feminino";"Doutorado";"Hinduísmo";67.4;1.85;2033.39;4;2
+"573";573;"Feminino";"Pós-graducação";"Budismo";70.2;1.75;1797.97;2;2
+"574";574;"Feminino";"Doutorado";"Cristianismo";80.2;1.76;1872.87;2;1
+"575";575;"Feminino";"Médio";"Cristianismo";71;1.74;2204.99;2;0
+"576";576;"Feminino";"Doutorado";"Cristianismo";96.5;1.83;2015.12;3;0
+"577";577;"Masculino";"Doutorado";"Islamismo";75.5;1.78;1670.97;0;2
+"578";578;"Masculino";"Superior completo";"Nd";93;1.68;1245.56;3;1
+"579";579;"Feminino";"Superior incompleto";"Budismo";84.1;1.77;1463.63;1;0
+"580";580;"Feminino";"Médio";"Budismo";83.5;1.78;2733.26;3;2
+"581";581;"Masculino";"Superior completo";"Budismo";78.5;1.72;2502.28;3;1
+"582";582;"Masculino";"Pós-graducação";"Islamismo";84.4;1.74;2648.69;3;2
+"583";583;"Feminino";"Superior completo";"Budismo";90.1;1.74;2219.12;3;1
+"584";584;"Masculino";"Mestrado";"Cristianismo";86.2;1.74;2410.86;1;2
+"585";585;"Masculino";"Doutorado";"Hinduísmo";84.1;1.72;1640.26;0;0
+"586";586;"Feminino";"Mestrado";"Nd";77.3;1.71;2059.18;2;1
+"587";587;"Masculino";"Médio";"Cristianismo";86.6;1.68;2806.81;2;2
+"588";588;"Feminino";"Superior incompleto";"Islamismo";69.4;1.74;1066.31;3;2
+"589";589;"Masculino";"Doutorado";"Nd";85.1;1.78;2235.68;1;0
+"590";590;"Feminino";"Pós-graducação";"Budismo";95.9;1.75;1654.9;1;1
+"591";591;"Feminino";"Superior incompleto";"Nd";89.6;1.68;1877.53;4;1
+"592";592;"Feminino";"Médio";"Cristianismo";71.6;1.77;2873.9;3;1
+"593";593;"Masculino";"Pós-graducação";"Islamismo";93;1.83;2386.8;4;0
+"594";594;"Masculino";"Doutorado";"Budismo";78.8;1.82;2535.43;0;0
+"595";595;"Masculino";"Doutorado";"Nd";68.8;1.68;1656.18;3;2
+"596";596;"Feminino";"Superior incompleto";"Budismo";63.4;1.7;1849.42;0;1
+"597";597;"Masculino";"Pós-graducação";"Nd";113.7;1.66;2270.18;2;2
+"598";598;"Feminino";"Superior completo";"Cristianismo";66.6;1.76;1951.95;3;1
+"599";599;"Masculino";"Superior incompleto";"Nd";94.2;1.73;2020.69;3;1
+"600";600;"Masculino";"Médio";"Islamismo";85.3;1.77;1933.06;1;2
+"601";601;"Feminino";"Doutorado";"Islamismo";78.7;1.83;1391.66;2;2
+"602";602;"Masculino";"Médio";"Islamismo";75.1;1.83;1892.75;1;1
+"603";603;"Masculino";"Superior completo";"Islamismo";100;1.79;2389.68;4;0
+"604";604;"Feminino";"Pós-graducação";"Cristianismo";90.6;1.72;2511.41;2;1
+"605";605;"Feminino";"Doutorado";"Islamismo";64.4;1.75;2541.44;3;0
+"606";606;"Feminino";"Médio";"Cristianismo";65.2;1.69;2554.03;0;1
+"607";607;"Masculino";"Mestrado";"Islamismo";84.1;1.73;2255.88;0;1
+"608";608;"Feminino";"Pós-graducação";"Budismo";81;1.72;2245.5;0;1
+"609";609;"Masculino";"Superior completo";"Islamismo";73.5;1.75;1215.01;4;1
+"610";610;"Feminino";"Mestrado";"Hinduísmo";83.1;1.74;1989.73;0;1
+"611";611;"Masculino";"Médio";"Cristianismo";64.4;1.74;2022.48;3;1
+"612";612;"Masculino";"Médio";"Islamismo";83.5;1.76;1764.38;1;1
+"613";613;"Feminino";"Doutorado";"Cristianismo";76.8;1.67;2248.22;0;2
+"614";614;"Feminino";"Médio";"Cristianismo";84.2;1.67;1106.67;2;1
+"615";615;"Masculino";"Doutorado";"Nd";76.3;1.77;2533.77;1;1
+"616";616;"Masculino";"Médio";"Hinduísmo";78.5;1.78;2126.42;3;1
+"617";617;"Masculino";"Mestrado";"Cristianismo";82.5;1.76;2603.34;0;1
+"618";618;"Masculino";"Médio";"Cristianismo";81.3;1.72;1891.91;1;2
+"619";619;"Feminino";"Médio";"Cristianismo";84.4;1.65;2849.53;1;2
+"620";620;"Masculino";"Pós-graducação";"Nd";81.7;1.64;2520.98;4;0
+"621";621;"Feminino";"Superior incompleto";"Cristianismo";80.5;1.66;2080.76;1;1
+"622";622;"Feminino";"Superior completo";"Budismo";68.9;1.8;1663.71;2;2
+"623";623;"Feminino";"Pós-graducação";"Hinduísmo";77.7;1.77;2272.82;4;2
+"624";624;"Masculino";"Médio";"Budismo";90.2;1.78;1639.56;4;1
+"625";625;"Feminino";"Mestrado";"Islamismo";67.5;1.78;1959.54;0;0
+"626";626;"Masculino";"Médio";"Islamismo";77.4;1.84;981.16;0;2
+"627";627;"Masculino";"Médio";"Islamismo";66.4;1.73;2409.61;2;0
+"628";628;"Masculino";"Médio";"Budismo";68.7;1.74;1398.4;3;2
+"629";629;"Feminino";"Superior incompleto";"Cristianismo";63.4;1.79;1694.65;4;2
+"630";630;"Masculino";"Médio";"Budismo";70.7;1.67;2038.68;4;1
+"631";631;"Feminino";"Médio";"Islamismo";77.9;1.65;1804.05;0;0
+"632";632;"Masculino";"Superior completo";"Islamismo";86.1;1.9;1872.73;1;1
+"633";633;"Feminino";"Superior incompleto";"Nd";82.7;1.82;2072.4;0;2
+"634";634;"Feminino";"Pós-graducação";"Hinduísmo";88.7;1.76;1916.53;2;0
+"635";635;"Masculino";"Pós-graducação";"Budismo";79.4;1.7;1824.27;3;2
+"636";636;"Feminino";"Superior incompleto";"Islamismo";81;1.79;1730.56;4;1
+"637";637;"Masculino";"Pós-graducação";"Nd";78.3;1.81;2223.06;0;1
+"638";638;"Feminino";"Superior completo";"Cristianismo";77.8;1.7;1898.91;1;0
+"639";639;"Masculino";"Mestrado";"Islamismo";100.7;1.73;1796.21;2;2
+"640";640;"Feminino";"Doutorado";"Cristianismo";74.7;1.71;1627.79;2;0
+"641";641;"Masculino";"Médio";"Islamismo";90.8;1.71;1587.98;1;0
+"642";642;"Masculino";"Médio";"Hinduísmo";83.8;1.72;2241.32;3;1
+"643";643;"Masculino";"Superior incompleto";"Cristianismo";87;1.73;2061.14;2;1
+"644";644;"Feminino";"Médio";"Nd";90.5;1.75;612.98;4;2
+"645";645;"Feminino";"Pós-graducação";"Hinduísmo";80.3;1.75;1778.35;0;1
+"646";646;"Feminino";"Superior completo";"Nd";85.2;1.69;2099.73;0;2
+"647";647;"Feminino";"Superior incompleto";"Nd";75.3;1.7;1971.68;0;1
+"648";648;"Masculino";"Mestrado";"Nd";73;1.83;2424.84;2;1
+"649";649;"Feminino";"Pós-graducação";"Hinduísmo";83.1;1.74;999.13;1;2
+"650";650;"Masculino";"Superior incompleto";"Nd";86.1;1.78;2962.18;2;0
+"651";651;"Masculino";"Mestrado";"Hinduísmo";69.4;1.71;2037.39;2;0
+"652";652;"Feminino";"Superior completo";"Budismo";64.2;1.71;1011.47;3;2
+"653";653;"Feminino";"Superior incompleto";"Nd";84.3;1.79;1619.08;4;1
+"654";654;"Feminino";"Superior completo";"Islamismo";86;1.69;1146.66;0;2
+"655";655;"Masculino";"Superior completo";"Hinduísmo";75;1.75;1989.07;2;0
+"656";656;"Feminino";"Pós-graducação";"Hinduísmo";67.9;1.75;2192.57;2;0
+"657";657;"Masculino";"Superior completo";"Cristianismo";75.6;1.74;1924.63;0;0
+"658";658;"Masculino";"Pós-graducação";"Budismo";81.9;1.77;1250.23;2;2
+"659";659;"Masculino";"Mestrado";"Nd";67.5;1.77;2265.1;0;1
+"660";660;"Masculino";"Superior incompleto";"Hinduísmo";68.8;1.77;2660.64;1;0
+"661";661;"Feminino";"Pós-graducação";"Islamismo";68.2;1.69;952.74;0;1
+"662";662;"Feminino";"Doutorado";"Cristianismo";72.9;1.68;2413.78;3;0
+"663";663;"Masculino";"Superior completo";"Nd";85.1;1.74;1960.64;0;0
+"664";664;"Masculino";"Mestrado";"Hinduísmo";78.6;1.78;1597.36;3;1
+"665";665;"Feminino";"Superior completo";"Hinduísmo";77.2;1.75;3422.45;0;0
+"666";666;"Feminino";"Doutorado";"Budismo";85.9;1.86;2055.35;2;2
+"667";667;"Feminino";"Superior completo";"Cristianismo";70.9;1.77;2064.81;0;0
+"668";668;"Feminino";"Superior incompleto";"Islamismo";78.2;1.78;2243.18;4;1
+"669";669;"Masculino";"Mestrado";"Hinduísmo";76;1.85;1516.57;4;0
+"670";670;"Masculino";"Superior completo";"Hinduísmo";86.5;1.77;2225.67;2;0
+"671";671;"Masculino";"Doutorado";"Islamismo";60.2;1.85;2029.75;1;2
+"672";672;"Feminino";"Doutorado";"Nd";83;1.79;2598.37;0;1
+"673";673;"Masculino";"Mestrado";"Islamismo";84.4;1.73;1290.67;4;2
+"674";674;"Feminino";"Pós-graducação";"Budismo";71.4;1.79;1846.96;4;2
+"675";675;"Feminino";"Doutorado";"Islamismo";75.8;1.71;2385.09;0;0
+"676";676;"Feminino";"Médio";"Budismo";78.6;1.77;2429.48;4;2
+"677";677;"Feminino";"Superior completo";"Budismo";83.9;1.8;2644.22;4;1
+"678";678;"Feminino";"Mestrado";"Budismo";81.9;1.84;1699.59;4;0
+"679";679;"Feminino";"Mestrado";"Islamismo";105.5;1.7;2523.98;2;1
+"680";680;"Masculino";"Mestrado";"Hinduísmo";76.8;1.67;2139.26;3;1
+"681";681;"Masculino";"Superior completo";"Budismo";86.3;1.72;2008.98;1;0
+"682";682;"Masculino";"Superior completo";"Islamismo";85.5;1.8;3017.26;3;0
+"683";683;"Masculino";"Mestrado";"Nd";92.4;1.77;2533.16;2;1
+"684";684;"Feminino";"Pós-graducação";"Hinduísmo";57.8;1.68;1894.26;2;0
+"685";685;"Masculino";"Doutorado";"Cristianismo";83;1.71;1928.71;1;2
+"686";686;"Feminino";"Doutorado";"Budismo";81.5;1.85;1497.76;0;2
+"687";687;"Masculino";"Doutorado";"Cristianismo";76.2;1.76;2314.68;3;0
+"688";688;"Feminino";"Superior incompleto";"Hinduísmo";92.5;1.76;1257.58;1;1
+"689";689;"Masculino";"Mestrado";"Cristianismo";77.9;1.69;1596.97;2;1
+"690";690;"Feminino";"Médio";"Hinduísmo";91.5;1.75;1056.96;1;2
+"691";691;"Feminino";"Pós-graducação";"Cristianismo";68.6;1.7;1477.58;0;2
+"692";692;"Feminino";"Superior completo";"Cristianismo";102;1.74;984.86;1;1
+"693";693;"Feminino";"Médio";"Nd";85.5;1.73;1984.96;0;1
+"694";694;"Masculino";"Superior incompleto";"Nd";67.7;1.7;1957.53;4;2
+"695";695;"Feminino";"Mestrado";"Budismo";103.5;1.78;2832.59;3;1
+"696";696;"Masculino";"Médio";"Cristianismo";89.5;1.7;1842.38;3;1
+"697";697;"Feminino";"Superior completo";"Hinduísmo";82.7;1.78;2528.64;2;0
+"698";698;"Masculino";"Superior completo";"Islamismo";84.7;1.77;2851.02;1;1
+"699";699;"Feminino";"Médio";"Islamismo";63.8;1.75;1921.59;3;0
+"700";700;"Masculino";"Doutorado";"Budismo";73.4;1.82;2236.85;2;0
+"701";701;"Feminino";"Doutorado";"Cristianismo";68.1;1.68;1389.49;2;2
+"702";702;"Masculino";"Mestrado";"Islamismo";72.8;1.75;3231.46;4;1
+"703";703;"Masculino";"Médio";"Budismo";78.8;1.78;1906.98;2;0
+"704";704;"Masculino";"Mestrado";"Nd";75.7;1.8;2818.74;3;2
+"705";705;"Masculino";"Pós-graducação";"Islamismo";88.5;1.75;1520.82;4;2
+"706";706;"Masculino";"Doutorado";"Nd";69.4;1.75;1491.36;2;1
+"707";707;"Feminino";"Médio";"Hinduísmo";77.6;1.79;570.6;3;1
+"708";708;"Feminino";"Superior incompleto";"Hinduísmo";69.9;1.75;2412.33;1;1
+"709";709;"Masculino";"Mestrado";"Nd";59.1;1.83;1734.73;0;2
+"710";710;"Feminino";"Doutorado";"Cristianismo";71.4;1.74;1804.17;3;2
+"711";711;"Masculino";"Superior completo";"Cristianismo";79.7;1.8;1328.4;3;1
+"712";712;"Masculino";"Superior incompleto";"Hinduísmo";81.8;1.79;1421.42;4;2
+"713";713;"Masculino";"Superior completo";"Nd";84.4;1.67;2518.77;0;1
+"714";714;"Feminino";"Superior incompleto";"Hinduísmo";85.9;1.82;2299.69;2;2
+"715";715;"Masculino";"Médio";"Hinduísmo";85.5;1.69;1860.54;1;0
+"716";716;"Masculino";"Pós-graducação";"Nd";80.7;1.78;2341.85;3;2
+"717";717;"Masculino";"Pós-graducação";"Cristianismo";85.2;1.76;2248.36;2;2
+"718";718;"Feminino";"Superior completo";"Hinduísmo";94.7;1.77;2327.25;3;0
+"719";719;"Feminino";"Superior completo";"Islamismo";83.7;1.78;2435.19;0;1
+"720";720;"Masculino";"Doutorado";"Nd";66.1;1.68;2405;4;2
+"721";721;"Feminino";"Doutorado";"Cristianismo";85.7;1.76;2416.94;3;2
+"722";722;"Feminino";"Doutorado";"Budismo";65.2;1.78;1026.94;3;0
+"723";723;"Masculino";"Doutorado";"Islamismo";98.7;1.68;2454.37;4;2
+"724";724;"Masculino";"Superior incompleto";"Islamismo";83.5;1.75;1992.62;3;0
+"725";725;"Masculino";"Superior completo";"Budismo";88.2;1.72;2543.09;3;1
+"726";726;"Feminino";"Médio";"Cristianismo";88.6;1.79;1848.97;0;2
+"727";727;"Feminino";"Superior completo";"Islamismo";71.4;1.73;2680.33;2;0
+"728";728;"Feminino";"Superior incompleto";"Islamismo";75.5;1.79;2542.8;0;1
+"729";729;"Feminino";"Superior completo";"Budismo";81.2;1.73;872.9;4;0
+"730";730;"Masculino";"Superior completo";"Nd";89.2;1.75;913.49;3;0
+"731";731;"Masculino";"Médio";"Cristianismo";85.6;1.77;1629.92;0;0
+"732";732;"Masculino";"Superior incompleto";"Budismo";73.9;1.72;2487.83;2;0
+"733";733;"Feminino";"Superior completo";"Budismo";71;1.84;1577.11;4;0
+"734";734;"Feminino";"Superior incompleto";"Nd";85.5;1.74;2331.2;3;0
+"735";735;"Feminino";"Mestrado";"Nd";88.3;1.73;1678.04;4;1
+"736";736;"Masculino";"Mestrado";"Cristianismo";79.3;1.89;1977.81;1;2
+"737";737;"Feminino";"Mestrado";"Budismo";71.5;1.78;1881.16;3;1
+"738";738;"Feminino";"Mestrado";"Hinduísmo";69;1.8;1519.62;3;1
+"739";739;"Feminino";"Superior incompleto";"Budismo";81.7;1.76;2389.22;1;2
+"740";740;"Masculino";"Mestrado";"Cristianismo";62.8;1.7;1548.13;0;0
+"741";741;"Masculino";"Médio";"Budismo";80.4;1.69;1441.18;3;0
+"742";742;"Feminino";"Superior incompleto";"Islamismo";87.1;1.72;3020.9;4;2
+"743";743;"Feminino";"Doutorado";"Hinduísmo";73.8;1.74;1647.73;4;0
+"744";744;"Masculino";"Mestrado";"Nd";75.9;1.71;2056.92;2;1
+"745";745;"Feminino";"Médio";"Cristianismo";86.7;1.71;2816.88;1;1
+"746";746;"Feminino";"Superior incompleto";"Cristianismo";61.1;1.79;2108;2;2
+"747";747;"Masculino";"Superior incompleto";"Nd";94.3;1.71;2177.28;2;2
+"748";748;"Masculino";"Doutorado";"Budismo";93.9;1.72;1133.6;3;2
+"749";749;"Feminino";"Médio";"Hinduísmo";97.6;1.79;1944.14;1;2
+"750";750;"Masculino";"Pós-graducação";"Budismo";87.4;1.81;2946.13;2;0
+"751";751;"Masculino";"Pós-graducação";"Islamismo";90.1;1.73;2060.35;4;0
+"752";752;"Feminino";"Superior incompleto";"Islamismo";71.7;1.71;1761.95;2;1
+"753";753;"Feminino";"Superior completo";"Islamismo";115;1.79;1908.06;0;0
+"754";754;"Feminino";"Mestrado";"Islamismo";81.2;1.81;3045.21;3;2
+"755";755;"Feminino";"Superior completo";"Hinduísmo";88;1.85;2338.03;2;1
+"756";756;"Feminino";"Mestrado";"Nd";84.1;1.76;2643.01;3;2
+"757";757;"Feminino";"Pós-graducação";"Islamismo";93.7;1.79;1304.14;3;0
+"758";758;"Feminino";"Mestrado";"Islamismo";90.7;1.71;2305.8;0;1
+"759";759;"Masculino";"Médio";"Hinduísmo";71.9;1.7;2452.94;3;1
+"760";760;"Feminino";"Mestrado";"Nd";84.8;1.69;1315.9;1;1
+"761";761;"Masculino";"Médio";"Nd";75.5;1.68;2372.49;1;0
+"762";762;"Feminino";"Doutorado";"Islamismo";76.1;1.75;3216.64;4;1
+"763";763;"Feminino";"Doutorado";"Budismo";69;1.74;2245.54;0;0
+"764";764;"Masculino";"Mestrado";"Nd";92.7;1.8;2386.03;4;2
+"765";765;"Feminino";"Pós-graducação";"Cristianismo";82.7;1.73;1568.54;0;2
+"766";766;"Feminino";"Superior completo";"Islamismo";88.8;1.74;2774.8;1;0
+"767";767;"Feminino";"Mestrado";"Hinduísmo";96;1.57;2399.85;2;1
+"768";768;"Masculino";"Médio";"Islamismo";82.9;1.73;1771.24;0;0
+"769";769;"Masculino";"Mestrado";"Islamismo";64.6;1.71;1681.59;4;0
+"770";770;"Masculino";"Médio";"Budismo";89.1;1.73;1664.76;4;1
+"771";771;"Feminino";"Superior incompleto";"Nd";74.5;1.77;2568.5;4;0
+"772";772;"Feminino";"Superior completo";"Islamismo";81.1;1.67;2418.26;1;0
+"773";773;"Masculino";"Superior incompleto";"Budismo";79.3;1.73;2537.09;4;0
+"774";774;"Feminino";"Superior completo";"Budismo";79.3;1.69;1908.59;4;0
+"775";775;"Feminino";"Superior completo";"Hinduísmo";90.8;1.81;2228.89;1;0
+"776";776;"Feminino";"Doutorado";"Budismo";82.6;1.7;2160.13;1;0
+"777";777;"Masculino";"Pós-graducação";"Cristianismo";79.1;1.72;1849;4;1
+"778";778;"Masculino";"Superior incompleto";"Budismo";92.8;1.81;1495.05;0;0
+"779";779;"Masculino";"Pós-graducação";"Budismo";62;1.74;2058.57;2;2
+"780";780;"Masculino";"Doutorado";"Hinduísmo";103.7;1.68;2727.65;4;1
+"781";781;"Masculino";"Pós-graducação";"Cristianismo";80.6;1.77;2283.28;4;1
+"782";782;"Feminino";"Doutorado";"Nd";76.4;1.78;2113.69;1;0
+"783";783;"Feminino";"Doutorado";"Budismo";78.6;1.75;2093.76;4;2
+"784";784;"Masculino";"Mestrado";"Budismo";61.3;1.73;1436.16;3;0
+"785";785;"Masculino";"Superior completo";"Hinduísmo";61.9;1.84;2707.23;4;1
+"786";786;"Masculino";"Superior completo";"Nd";86.4;1.59;1798.61;4;0
+"787";787;"Masculino";"Médio";"Nd";95.8;1.73;1746.78;4;0
+"788";788;"Feminino";"Pós-graducação";"Islamismo";82.1;1.74;1035.13;4;0
+"789";789;"Feminino";"Mestrado";"Cristianismo";84;1.77;2087.41;4;0
+"790";790;"Feminino";"Superior completo";"Cristianismo";74.8;1.69;1603.52;2;1
+"791";791;"Feminino";"Superior completo";"Cristianismo";84.1;1.72;2128.49;1;2
+"792";792;"Feminino";"Superior completo";"Islamismo";75.8;1.71;1712.73;3;1
+"793";793;"Feminino";"Mestrado";"Nd";76.1;1.74;2677.95;2;2
+"794";794;"Masculino";"Pós-graducação";"Nd";97.8;1.83;2227.95;2;2
+"795";795;"Masculino";"Doutorado";"Islamismo";70.7;1.76;2348.22;4;2
+"796";796;"Feminino";"Mestrado";"Budismo";84.4;1.78;2320.17;1;0
+"797";797;"Masculino";"Médio";"Nd";89.8;1.76;871.55;1;2
+"798";798;"Feminino";"Doutorado";"Nd";82.5;1.76;2072.49;0;0
+"799";799;"Feminino";"Pós-graducação";"Budismo";91.1;1.73;2037.59;1;1
+"800";800;"Masculino";"Mestrado";"Nd";74.3;1.8;2913.31;1;2
