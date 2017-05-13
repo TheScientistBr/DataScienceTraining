@@ -36,7 +36,7 @@ $$
 
 3. Pode ser usado para criar um intervalo de confiança para $\theta$ via $\hat \theta \pm Q_ {1- \alpha / 2} \hat \sigma _ {\hat \theta}$ Onde $Q_ {1- \alpha / 2}$ é o quantil relevante de uma distribuição normal ou T.
 
-* No caso de regressão com hipóteses de amostragem de iid e erros normais, nossas inferências seguirão muito similarmente ao que você viu em sua classe de inferência.
+* No caso de regressão com hipóteses de amostragem de iid e erros normais, nossas inferências seguirão muito similarmente ao que você viu em sua classe de inferência.  
 * Não vamos cobrir asymptotics para análise de regressão, mas basta dizer que sob suposições
 Sobre as formas em que os valores $X$ são coletados, o modelo de amostragem iid e o modelo médio, os resultados normais manter para criar intervalos e intervalos de confiança
 
@@ -66,8 +66,8 @@ $$
 $$
 \frac{\hat \beta_j - \beta_j}{\hat \sigma_{\hat \beta_j}}
 $$
-Segue uma distribuição $t$ com $n-2$ graus de liberdade e uma distribuição normal para grandes $n$.
-* Isso pode ser usado para criar intervalos de confiança e testes de hipóteses.
+Segue uma distribuição $t$ com $n-2$ graus de liberdade e uma distribuição normal para grandes $n$.  
+- Isso pode ser usado para criar intervalos de confiança e testes de hipóteses.
 
 ---
 

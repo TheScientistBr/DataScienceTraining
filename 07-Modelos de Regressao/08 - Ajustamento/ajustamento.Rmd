@@ -13,35 +13,46 @@ widgets: mathjax
 Código para a primeira parcela, restante omitido 
 
 ```{r}
-n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), runif(n/2)); 
-beta0 <- 0; beta1 <- 2; tau <- 1; sigma <- .2
+n <- 100
+t <- rep(c(0, 1), c(n/2, n/2))
+x <- c(runif(n/2), runif(n/2)) 
+beta0 <- 0
+beta1 <- 2
+tau <- 1
+sigma <- .2
 y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
 plot(x, y, type = "n", frame = FALSE)
 abline(lm(y ~ x), lwd = 2)
 abline(h = mean(y[1 : (n/2)]), lwd = 3)
 abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
 fit <- lm(y ~ x + t)
-abline(coef(fit)[1], coef(fit)[2], lwd = 3)
-abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3, col = "blue")
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3, col = "red")
 points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
 points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
 ```
 
 
 ---
+
 ## Simulação 1
 
-```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
-n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), runif(n/2)); 
-beta0 <- 0; beta1 <- 2; tau <- 1; sigma <- .2
+```{r, fig.height=5, fig.width=5,}
+n <- 100; 
+t <- rep(c(0, 1), c(n/2, n/2)); 
+x <- c(runif(n/2), runif(n/2)); 
+beta0 <- 0; 
+beta1 <- 2; 
+tau <- 1; 
+sigma <- .2
 y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
 plot(x, y, type = "n", frame = FALSE)
 abline(lm(y ~ x), lwd = 2)
 abline(h = mean(y[1 : (n/2)]), lwd = 3)
 abline(h = mean(y[(n/2 + 1) : n]), lwd = 3)
 fit <- lm(y ~ x + t)
-abline(coef(fit)[1], coef(fit)[2], lwd = 3)
-abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3)
+abline(coef(fit)[1], coef(fit)[2], lwd = 3, col = "blue")
+abline(coef(fit)[1] + coef(fit)[3], coef(fit)[2], lwd = 3, col = "red")
 points(x[1 : (n/2)], y[1 : (n/2)], pch = 21, col = "black", bg = "lightblue", cex = 2)
 points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon", cex = 2)
 ```
@@ -55,13 +66,13 @@ points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon
 * A variável $X$ está relacionada a $Y$, mas a intercepção depende no status do grupo.
 * A variável de grupo está relacionada com $Y$.
 * A relação entre o status do grupo e $Y$ é constante dependendo de $X$.
-* A relação entre o grupo e Y desconsiderando X é aproximadamente o mesmo que segurando $X$ constante
+* A relação entre o grupo e $Y$ desconsiderando $X$ é aproximadamente o mesmo que segurando $X$ constante
 
 ---
 
 ## Simulação 2
 
-```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+```{r, fig.height=5, fig.width=5}
 n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), 1.5 + runif(n/2)); 
 beta0 <- 0; beta1 <- 2; tau <- 0; sigma <- .2
 y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
@@ -78,6 +89,7 @@ points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon
 
 
 ---
+
 ## Discussão
 
 ### Algumas observações nesta simulação
@@ -91,9 +103,10 @@ points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon
 * Esta conclusão é inteiramente baseada no modelo. 
 
 ---
+
 ## Simulação 3
 
-```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+```{r, fig.height=5, fig.width=5}
 n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2), .9 + runif(n/2)); 
 beta0 <- 0; beta1 <- 2; tau <- -1; sigma <- .2
 y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
@@ -125,7 +138,7 @@ points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon
 
 ## Simulação 4
 
-```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+```{r, fig.height=5, fig.width=5}
 n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(.5 + runif(n/2), runif(n/2)); 
 beta0 <- 0; beta1 <- 2; tau <- 1; sigma <- .2
 y <- beta0 + x * beta1 + t * tau + rnorm(n, sd = sigma)
@@ -155,7 +168,7 @@ Mantendo $X$ fixo.
 
 ## Simulação 5
 
-```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+```{r, fig.height=5, fig.width=5}
 n <- 100; t <- rep(c(0, 1), c(n/2, n/2)); x <- c(runif(n/2, -1, 1), runif(n/2, -1, 1)); 
 beta0 <- 0; beta1 <- 2; tau <- 0; tau1 <- -4; sigma <- .2
 y <- beta0 + x * beta1 + t * tau + t * x * tau1 + rnorm(n, sd = sigma)
@@ -184,7 +197,7 @@ points(x[(n/2 + 1) : n], y[(n/2 + 1) : n], pch = 21, col = "black", bg = "salmon
 
 ### Simulação 6
 
-```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+```{r, fig.height=5, fig.width=5}
 p <- 1
 n <- 100; x2 <- runif(n); x1 <- p * runif(n) - (1 - p) * x2 
 beta0 <- 0; beta1 <- 1; tau <- 4 ; sigma <- .01
@@ -208,7 +221,7 @@ plot3d(x1, x2, y)
 
 ### Relação residual
 
-```{r, fig.height=5, fig.width=5, echo = FALSE, results='hide'}
+```{r, fig.height=5, fig.width=5}
 plot(resid(lm(x1 ~ x2)), resid(lm(y ~ x2)), frame = FALSE, col = "black", bg = "lightblue", pch = 21, cex = 2)
 abline(lm(I(resid(lm(x1 ~ x2))) ~ I(resid(lm(y ~ x2)))), lwd = 2)
 ```

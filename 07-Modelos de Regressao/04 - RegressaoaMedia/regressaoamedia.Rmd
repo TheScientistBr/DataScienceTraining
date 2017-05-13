@@ -20,7 +20,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## Regressão para a média
 
-* Estes fenómenos são todos exemplos da assim chamada regressão à média
+* Estes fenómenos são todos exemplos da chamada regressão à média
 * Inventado por Francis Galton no artigo "Regressão para a mediocridade em estatura hereditária" O Jornal do Instituto Antropológico da Grã-Bretanha e Irlanda, Vol. 15, (1886).
 * Pense nisso desta forma, imagine se você simulou pares de normais aleatórios
 * Os primeiros seriam os maiores por acaso, e a probabilidade de que haja valor menor para a segunda simulação é alta.
@@ -69,6 +69,7 @@ abline(h = 0); abline(v = 0,col = "magenta") #linhas de referência para nenhum 
 ---
 
 ## Discussão
+
 * Se você tivesse que prever a altura normalizada de um filho, seria $Cor (Y, X) * X_i$
 * Se você tivesse que prever a altura normalizada de um pai, seria $Cor (Y, X) * Y_i$
 * A multiplicação por esta correlação encolhe para 0 (regressão em relação à média)

@@ -56,6 +56,7 @@ Francis Galton foi um antropólogo, meteorologista, matemático e estatístico i
 * Overplotting é uma questão de discretização.
 
 ---
+
 ## Code
 
 ```{r galton,fig.height=3.5,fig.width=8, message=FALSE}
@@ -77,6 +78,7 @@ hist(galton$parent,col="blue",breaks=100)
 
 
 ---
+
 ## Experimento
 
 Use manipulate no RStudio para ver qual valor de $\ mu$ minimiza a soma dos desvios quadrados.
@@ -134,9 +136,10 @@ plot(galton$parent,galton$child,pch=19,col="blue")
 ```
 
 ---
+
 Melhorando a visualização, o tamanho do ponto representa o número de pontos naquela combinação (X, Y) (veja o arquivo Rmd para o código).
 
-```{r freqGalton, dependson="galton",fig.height=6,fig.width=6,echo=FALSE}
+```{r freqGalton, dependson="galton",fig.height=6,fig.width=6}
 freqData <- as.data.frame(table(galton$child, galton$parent))
 names(freqData) <- c("child", "parent", "freq")
 plot(as.numeric(as.vector(freqData$parent)), 
@@ -154,9 +157,10 @@ plot(as.numeric(as.vector(freqData$parent)),
 * Considere como sendo a inclinação $\beta$ que minimiza 
 
 $$\sum_ {i = 1} ^ n (Y_i - X_i \beta) ^ 2$$
+
 * Isto é exatamente usando a origem como um ponto de pivô escolhendo a
-linha que minimiza a soma das distâncias verticais quadradas dos pontos à linha
-* Use a função manipulate do R studio para experimentar o processo
+linha que minimiza a soma das distâncias verticais quadradas dos pontos à linha  
+* Use a função manipulate do R studio para experimentar o processo  
 * Subtraia os meios para que a origem seja a média do pai e alturas das crianças
 
 ---
@@ -193,6 +197,7 @@ lm(I(child - mean(child))~ I(parent - mean(parent)) - 1, data = galton)
 ```
 
 ---
+
 ## Visualizando a melhor linha de ajuste
 ### O tamanho dos pontos são frequências na combinação X, Y
 

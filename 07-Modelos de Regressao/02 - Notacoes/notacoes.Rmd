@@ -19,7 +19,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## Notação para dados
 
-* Nós escrevemos $ X_1, X_2, \ ldots, X_n $ para descrever $ n $ dados pontos.
+* Nós escrevemos $X_1, X_2, \ldots, X_n$ para descrever $n$ dados pontos.
 * Como exemplo, considere o conjunto de dados $\{1, 2, 5 \}$ então $X_1 = 1$, $X_2 = 2$, $X_3 = 5$ e $n = 3$.
 * Costumamos usar uma letra diferente de $X$, como $Y1, \ldots, Y_n$.
 * Normalmente usaremos letras gregas para coisas que não sabemos. Tal como, $\mu$ é uma média que gostaríamos de estimar.
@@ -29,6 +29,7 @@ mode        : selfcontained # {standalone, draft}
 * $X$ é um número que nós ligamos.
 
 ---
+
 ## A média empírica
 
 * Definir a média empírica como
@@ -42,9 +43,9 @@ $$
 \tilde X_i = X_i - \bar X.
 $$
 
-A média do $\tilde X_i$ é 0.
-* Este processo é chamado de "centralização" as variáveis aleatórias.
-* A média é uma medida de tendência central dos dados.
+A média do $\tilde X_i$ é 0.  
+* Este processo é chamado de "centralização" as variáveis aleatórias.  
+* A média é uma medida de tendência central dos dados.  
 * Lembre-se da palestra anterior de que a média é solução de mínimos quadrados para minimizar
 
 $$
@@ -62,12 +63,10 @@ S^2 = \frac {1} {n-1} \sum_ {i = 1} ^ n (X_i - \bar X) ^ 2
 = \frac {1} {n-1} \left (\sum_ {i = 1} ^ n X_i ^ 2 - n \bar X ^ 2 \right)
 $$
 
-* O desvio padrão empírico é definido como
-$S = \sqrt {S ^ 2}$. Observe que o desvio padrão tem as mesmas unidades que os dados.
-* Os dados definidos por $X_i / s$ têm desvio padrão empírico 1. Isto é chamado de "escalar" os dados.
-* O desvio padrão empírico é uma medida de propagação.
-* Às vezes as pessoas dividem por $n$ em vez de $n-1$ (o último
-Produz uma estimativa imparcial).
+* O desvio padrão empírico é definido como $S = \sqrt {S ^ 2}$. Observe que o desvio padrão tem as mesmas unidades que os dados.  
+* Os dados definidos por $X_i / s$ têm desvio padrão empírico 1. Isto é chamado de "escalar" os dados.  
+* O desvio padrão empírico é uma medida de propagação.  
+* Às vezes as pessoas dividem por $n$ em vez de $n-1$ (o último produz uma estimativa imparcial).
 
 ---
 
@@ -79,13 +78,13 @@ $$
 Z_i = \frac {X_i - \bar X} {s}
 $$
 
-Têm média empírica zero e desvio padrão empírico 1.
-* O processo de centralização, em seguida, escalando os dados é chamado de "normalização" dos dados.
-* Os dados normalizados são centralizados em 0 e têm unidades iguais aos desvios padrão dos dados originais.
-* Exemplo, um valor de 2 dados normalizados forma significa que dados ponto
-Foi de dois desvios-padrão maiores que a média.
+* Têm média empírica zero e desvio padrão empírico 1.  
+* O processo de centralização, em seguida, escalando os dados é chamado de "normalização" dos dados.  
+* Os dados normalizados são centralizados em 0 e têm unidades iguais aos desvios padrão dos dados originais.  
+* Exemplo, um valor de 2 dados normalizados forma significa que dados ponto foi de dois desvios-padrão maiores que a média.
 
 ---
+
 ## A covariância empírica
 * Considere agora quando temos pares de dados, $(X_i, Y_i)$.
 * Sua covariância empírica é
@@ -108,6 +107,7 @@ Onde $S_x$ e $S_y$ são as estimativas dos desvios-padrão
 Para as observações $X$ e as observações $Y$, respectivamente.
 
 ---
+
 ## Alguns fatos sobre correlação
 
 * $Cor(X, Y) = Cor (Y, X)$

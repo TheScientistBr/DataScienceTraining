@@ -32,6 +32,7 @@ plot(as.numeric(as.vector(freqData$parent)),
 ```
 
 ---
+
 ## Ajustando a melhor linha
 * Seja $Y_i$ a altura da criança $i^{th}$ e $X_i$ a
 $I^{th}$ (média sobre o par de) alturas dos pais.
@@ -69,12 +70,13 @@ $$ \sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = 0$$
 onde $\mu_i = \beta_0 + \beta_1 X_i$ and $\hat \mu_i = \hat \beta_0 + \hat \beta_1 X_i$ Então a linha
 $$Y = \hat \beta_0 + \hat \beta_1 X$$
 É a linha de mínimos quadrados.
-* Considere forçar $\beta_1 = 0$ and thus $\hat \beta_1=0$; 
+* Considere forçar $\beta_1 = 0$ e assim $\hat \beta_1=0$; 
 Isto é, considerando apenas linhas horizontais
 * A solução funciona para
 $$\hat \beta_0 = \bar Y.$$
 
 ---
+
 ## Vamos mostrar
 $$\begin{align} \
 \sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) 
@@ -88,11 +90,20 @@ Assim, este será igual a 0 se $\sum_{i=1}^n (Y_i  - \hat \beta_0)
 Portanto $\hat \beta_0 = \bar Y.$
 
 ---
+
 ## Regressão através da origem
+
 * Lembre-se que se:
-$$ \sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = 0$$
+
+$$
+\sum_{i=1}^n (Y_i - \hat \mu_i) (\hat \mu_i - \mu_i) = 0
+$$
+
 Onde $\mu_i = \beta_0 + \beta_1 X_i$ and $\hat \mu_i = \hat \beta_0 + \hat \beta_1 X_i$ então a linha 
-$$Y = \hat \beta_0 + \hat \beta_1 X$$
+$$
+Y = \hat \beta_0 + \hat \beta_1 X
+$$
+
 É a linha de mínimos quadrados.
 * Considere forçar $\beta_0 = 0$ and thus $\hat \beta_0=0$; 
 Isto é, considerando apenas linhas através da origem
@@ -115,6 +126,7 @@ Observe que
 $$0=\sum_{i=1}^n (Y_i - \hat\beta_0 - \hat \beta_1 X_i) = n \bar Y - n \hat \beta_0 - n \hat \beta_1 \bar X ~~\mbox{implies that}~~\hat \beta_0 = \bar Y - \hat \beta_1 \bar X $$
 
 Então
+
 $$\sum_{i=1}^n (Y_i  - \hat\beta_0 - \hat \beta_1 X_i) X_i =  \sum_{i=1}^n (Y_i  - \bar Y + \hat \beta_1 \bar X - \hat \beta_1 X_i)X_i$$
 
 ---
@@ -146,14 +158,15 @@ $$
 $$
 
 ---
+
 ## Consequências
-* O modelo de mínimos quadrados se ajusta à linha $Y = \beta_0 + \beta_1 X$ através dos pares de dados $(X_i, Y_i)$ com $Y_i$ como o resultado obtém a linha $Y = \hat \beta_0 + \hat \Beta_1 X$ onde $\Hat \beta_1 = Cor(Y, X) \frac {Sd (Y)} {Sd (X)} ~~~ \hat \beta_0 = \barra Y - \hat \beta_1 \bar X$$
-* $\Hat \beta_1$ tem as unidades de $Y / X$, $\hat \beta_0$ tem as unidades de $Y$.
-* A linha passa pelo ponto $(\bar X, \bar Y )$
-* A inclinação da linha de regressão com $X$ como resultado e $Y$ como preditor é $Cor(Y, X)Sd(X) / Sd (Y)$.
-* A inclinação é o mesmo que você obteria se você centrou os dados,
+- O modelo de mínimos quadrados se ajusta à linha $Y = \beta_0 + \beta_1 X$ através dos pares de dados $(X_i, Y_i)$ com $Y_i$ como o resultado obtém a linha $Y = \hat \beta_0 + \hat \beta_1 X$ onde $\hat \beta_1 = Cor(Y, X) \frac {Sd (Y)} {Sd (X)} ~~~ \hat \beta_0 = \bar Y - \hat \beta_1 \bar X$$
+- $\hat \beta_1$ tem as unidades de $Y / X$, $\hat \beta_0$ tem as unidades de $Y$.
+- A linha passa pelo ponto $(\bar X, \bar Y )$
+- A inclinação da linha de regressão com $X$ como resultado e $Y$ como preditor é $Cor(Y, X)Sd(X) / Sd (Y)$.
+- A inclinação é o mesmo que você obteria se você centrou os dados,
 $(X_i - \bar X, Y_i - \bar Y)$, e fez regressão através da origem.
-* Se você normalizou os dados, $\ {\frac {X_i - \bar X} {Sd (X)}, \frac {Y_i - \bar Y} {Sd (Y)} \}$, a inclinação é $Cor (Y, X)$.
+- Se você normalizou os dados, a inclinação é $Cor (Y, X)$.
 
 ---
 
@@ -169,6 +182,7 @@ rbind(c(beta0, beta1), coef(lm(y ~ x)))
 ```
 
 ---
+
 ### Inverter a relação resultado / preditor
 
 ```{r, fig.height=4,fig.width=4,echo=TRUE}
@@ -178,6 +192,7 @@ rbind(c(beta0, beta1), coef(lm(x ~ y)))
 ```
 
 ---
+
 ### A regressão através da origem produz um declive equivalente se você centrar os dados primeiro
 
 
@@ -189,6 +204,7 @@ c(beta1, coef(lm(y ~ x))[2])
 ```
 
 ---
+
 ### A regressão através da origem produz um declive equivalente se você centrar os dados primeiro
 
 ```{r, echo=TRUE}
@@ -199,11 +215,13 @@ c(cor(y, x), cor(yn, xn), coef(lm(yn ~ xn))[2])
 
 
 ---
+
 ## Plotando  o ajuste
-* Tamanho de pontos são freqüências em que X, Y combinados.
-* Para a criança o resultado é vermelho
-* Para o azul, o pai é o resultado (contabilizando o fato de que a resposta é plotada no eixo horizontal).
-* A linha preta assume $Cor (Y, X) = 1$ (a inclinação é $Sd (Y) / Sd (X)$).
+
+* Tamanho de pontos são freqüências em que X, Y combinados.  
+* Para a criança o resultado é vermelho  
+* Para o azul, o pai é o resultado (contabilizando o fato de que a resposta é plotada no eixo horizontal).  
+* A linha preta assume $Cor (Y, X) = 1$ (a inclinação é $Sd (Y) / Sd (X)$).  
 * Ponto preto grande é $(\bar X, \bar Y)$.
 
 ---
@@ -222,6 +240,7 @@ points(mean(x), mean(y), cex = 2, pch = 19)
 ```
 
 ---
+
 ```{r, fig.height=6,fig.width=6,echo=FALSE}
 freqData <- as.data.frame(table(galton$child, galton$parent))
 names(freqData) <- c("child", "parent", "freq")

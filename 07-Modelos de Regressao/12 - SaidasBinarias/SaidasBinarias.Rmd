@@ -1,0 +1,195 @@
+---
+title       : "Modelos de Regressão"
+subtitle    : "Saídas Binárias"
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : [mathjax]            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+---
+## Ideias-chave
+
+* Frequentemente nos preocupamos com resultados que têm dois valores
+  * Vivo / morto
+  * Vitória / perda
+  * Não houve sucesso
+  * Etc
+* Chamado binário, Bernoulli ou resultados 0/1
+* Coleção de resultados binários intercambiáveis para os mesmos dados de covariáveis são chamados resultados binomiais.
+
+---
+
+## Exemplo Baltimore Ravens vitória / perda
+
+### Ravens Data
+
+
+```{r loadRavens,cache=TRUE}
+load("./data/ravensData.rda")
+head(ravensData)
+```
+
+---
+
+## Regressão Linear
+
+$$ RW_i = b_0 + b_1 RS_i + e_i $$
+
+$RW_i$ - 1 if a Ravens win, 0 if not
+
+$RS_i$ - Number of points Ravens scored
+
+$b_0$ - Probabilidade de um corvo vencer se marcar 0 ponto
+
+$b_1$ - Aumento na probabilidade de um corvo ganhar para cada ponto adicional
+
+$e_i$ - Variação residual 
+
+---
+
+## Regressão Linear no R
+
+```{r linearReg, dependson = "loadRavens", cache=TRUE}
+lmRavens <- lm(ravensData$ravenWinNum ~ ravensData$ravenScore)
+summary(lmRavens)$coef
+```
+---
+
+## Probabilidades
+
+__Resultado binário 0/1__
+
+$$RW_i$$  
+
+__Probabilidade (0,1)__
+
+$$\rm{Pr}(RW_i | RS_i, b_0, b_1 )$$
+
+
+__Probabilidades $(0,\infty)$__
+$$\frac{\rm{Pr}(RW_i | RS_i, b_0, b_1 )}{1-\rm{Pr}(RW_i | RS_i, b_0, b_1)}$$ 
+
+__Resultado bonário $(-\infty,\infty)$__
+
+$$\log\left(\frac{\rm{Pr}(RW_i | RS_i, b_0, b_1 )}{1-\rm{Pr}(RW_i | RS_i, b_0, b_1)}\right)$$ 
+
+
+---
+
+## Regressão linear versus regressão logística
+
+__Linear__
+
+$$ RW_i = b_0 + b_1 RS_i + e_i $$
+
+ou
+
+$$ E[RW_i | RS_i, b_0, b_1] = b_0 + b_1 RS_i$$
+
+__Logistica__
+
+$$ \rm{Pr}(RW_i | RS_i, b_0, b_1) = \frac{\exp(b_0 + b_1 RS_i)}{1 + \exp(b_0 + b_1 RS_i)}$$
+
+ou
+
+$$ \log\left(\frac{\rm{Pr}(RW_i | RS_i, b_0, b_1 )}{1-\rm{Pr}(RW_i | RS_i, b_0, b_1)}\right) = b_0 + b_1 RS_i $$
+
+---
+
+## Interpretação da Regressão Logística
+
+$$ \log\left(\frac{\rm{Pr}(RW_i | RS_i, b_0, b_1 )}{1-\rm{Pr}(RW_i | RS_i, b_0, b_1)}\right) = b_0 + b_1 RS_i $$
+
+
+$b_0$ - Registre probabilidades de um corvo vencer se eles marcarem zero pontos
+
+$b_1$ - probabilidade de vitória para cada ponto marcado (em comparação com zero pontos)
+
+$\exp(b_1)$ - Possiblidade de proporção de probabilidade de ganho para cada ponto marcado (em comparação com zero pontos)
+
+---
+
+## Odds
+- Imagine que você está jogando um jogo onde você virar uma moeda com probabilidade de sucesso $ p $.
+- Se ele sobe cabeça, você ganha $X$. Se ele vem até caudas, você perde $Y$.
+- O que devemos definir $X$ e $Y$ para o jogo ser justo?
+
+    $$E[earnings]= X p - Y (1 - p) = 0$$
+
+- Implica
+
+$$\frac{Y}{X} = \frac{p}{1 - p}$$    
+
+- As probabilidades podem ser ditas como "quanto você deve estar disposto a pagar por uma probabilidade $p$ de ganhar um dólar?"
+  - (Se $p > 0,5$ você tem que pagar mais se perder do que obtém se ganhar.)
+  - (Se $p < 0,5$ você tem que pagar menos se você perder do que você ganha se você ganhar.)
+
+---
+
+## Visualizando curvas de regressão logística ajustadas
+
+```
+x <- seq(-10, 10, length = 1000)
+manipulate(
+    plot(x, exp(beta0 + beta1 * x) / (1 + exp(beta0 + beta1 * x)), 
+         type = "l", lwd = 3, frame = FALSE),
+    beta1 = slider(-2, 2, step = .1, initial = 2),
+    beta0 = slider(-2, 2, step = .1, initial = 0)
+    )
+```
+
+---
+
+## Regressão logística de Ravens
+
+```{r logReg, dependson = "loadRavens"}
+logRegRavens <- glm(ravensData$ravenWinNum ~ ravensData$ravenScore,family="binomial")
+summary(logRegRavens)
+```
+
+
+---
+
+## Valores ajustados dos corvos
+
+```{r dependson = "logReg",fig.height=4,fig.width=4}
+plot(ravensData$ravenScore,logRegRavens$fitted,pch=19,col="blue",xlab="Score",ylab="Prob Ravens Win")
+```
+
+
+---
+
+## Proporção e intervalos de confiança
+
+```{r dependson = "logReg",fig.height=4,fig.width=4}
+exp(logRegRavens$coeff)
+exp(confint(logRegRavens))
+```
+
+
+---
+
+## ANOVA para regressão logística
+
+```{r dependson = "logReg",fig.height=4,fig.width=4}
+anova(logRegRavens,test="Chisq")
+```
+
+
+
+---
+
+        ## Interpretando os indices de probabilidade
+
+* Não probabilidades
+* Indice de probabilidade de 1 = nenhuma diferença nas probabilidades
+* Log odds ratio de 0 = nenhuma diferença nas probabilidades
+* Odds ratio <0,5 ou> 2 geralmente um "efeito moderado"
+* Risco relativo 
+
+$$
+\frac {\rm {Pr} (RW_i | RS_i = 10)} {\rm {Pr} (RW_i | RS_i = 0)}
+$$ 
+
+freqüentemente mais fácil de interpretar, mais difícil de estimar
+* Para pequenas probabilidades $RR \approx$ ou __que não são o mesmo__!  

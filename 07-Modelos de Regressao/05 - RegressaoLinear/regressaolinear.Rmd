@@ -57,9 +57,26 @@ A função para regressão é “lm” e não requer pacote estatístico (variav
 
 
 ```{r}
-resmodelo<-lm(x~y)
+resmodelo<-lm(y~x)
 resmodelo
 ```
+
+**Uma Palavra sobre o Argumento 'formula'**
+
+O argumento fórmula nos modelos lineares é bastante diverso das fórmulas matemáticas usuais. Nesse argumento, sinais de mais e de menos, símbolos como circunflexo (^) e asterisco (*) têm significado bastante diferente dos significados usuais matemáticos.
+
+Apresentaremos agora alguns aspectos básicos do argumento:
+
+**y ~ x** indica: modele y como função estatística de x;
+**y ~ x1 + x2** indica: modele $y$ como função estatística das variáveis $x_1$ e $x_2$ (efeito aditivo dos modelos lineares);
+Se quisermos utilizar os símbolos matemáticos no sentido matemático usual dentro de uma fórmula estatística, temos que utilizar a função 'I()':
+
+**y ~ I( x1^2 * x2^3 )** indica: modele y como função estatística da variável (x1^2 * x2^3);
+**y ~ I( x1 / x2 )** indica: modele y como função estatística da variável (x1/x2);
+No caso de utilizarmos funções matemáticas específicas a função 'I()' torna-se desnecessária:
+
+**log(y) ~ log(x)** indica: modele o log(y) com função estatística da variável log(x));
+**log(y) ~ log(x1^2 * x2)** indica: modele o log(y) com função estatística da variável $\log(x_{1^2} * x_2))$;
 
 Precisamos fazer o Teste para NORMALIDADE (valores de p > 0,05 indicam dados normais)
 

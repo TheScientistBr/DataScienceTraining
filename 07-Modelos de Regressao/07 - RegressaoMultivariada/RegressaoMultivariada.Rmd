@@ -86,7 +86,8 @@ $$
 Y_i=\beta_0+\beta_1x_{i1} + ϵiY_i = \beta_0 + \beta_1 x_{i1} + ϵ_i 
 $$
 
-onde $ϵ_i∼N(0,σ)ϵi∼N(0,σ$) com$ cov(ϵi,ϵj)=0,∀i≠jcov(ϵi,ϵj)=0,∀i≠j$ e outras premissas usuais (veja na definição geral)
+onde $E_i∼N(0,σ)$ como $cov(Ei,Ej)=0,∀i≠jcov(E_i,E_j)=0,∀i≠j$ e outras premissas usuais (veja na definição geral)
+
 
 Nesse modelo a variável resposta $Y_i$ na notação genérica é representada por $t_i$ (tempo nos 100 m na observação $i$) e a variável explicativa $x_{i1}$ é representada por $ano_i$ (ano dos jogos na observação $i$) no data frame olimpm.
 
@@ -115,7 +116,7 @@ A figura indica os **resultados mais importantes** em <red>vermelho</red>. A for
 
 Estimativas para $b_0$ e $b_1$: são indicadas por $\hat b_0$ e $\hat b_1$ que tem valores, respectivamente, de $32,538966$ e $-0,011335$. Observe que no início da linha com as estimativas (nos resultados do R) é apresentado nome da variável ao qual o parâmetro está relacionado, ou “Intercept”, para indicar a estimativa para $b_0$ o termo constante da regressão.
 
-Estimativa para $\phi$: é indicada por $\hat\phi$ com valor $0,144$.
+Estimativa para $\sigma$: é indicada por $\hat\sigma$ com valor $0,144$.
 
 $R^2$: medida (imperfeita) de qualidade de ajuste da regressão (0 é o pior ajuste, 1 é o melhor). Na regressão linear simples, coincide com o quadrado do coeficiente de correlação entre $Y$ e $X$, ou seja, as variáveis $t$ e anoano no data frame olimpm. Um dos problemas dele é que sempre aumenta se aumentarmos adicionarmos novas variáveis à regressão. O valor obtido $0,881$, para $R^2$, mostra um ajuste razoavelmente bom, algo que é comprovado pela análise visual.
 
@@ -155,18 +156,18 @@ intervalos de confiança para os parâmetros: podemos obter o intervalo de confi
 confint(modelo1,level=0.95) 
 ```
 
-Os valores obtidos indicam que há 95% de probabilidade dos “verdadeiros” parâmetros estarem contidos nesse intervalo. No caso de b1b1 por exemplo, há $95\%$ de probabilidade do verdadeiro valor estar dentro no intervalo $[−0,01228,−0,01039]$ o que dá uma boa idéia da incerteza associada à estimativa. A interpretação é muito similar à que fizemos anteriormente para o intervalo de confiança da média teórica ou esperança.
+Os valores obtidos indicam que há 95% de probabilidade dos “verdadeiros” parâmetros estarem contidos nesse intervalo. No caso de $b_1$ por exemplo, há $95\%$ de probabilidade do verdadeiro valor estar dentro no intervalo $[−0,01228,−0,01039]$ o que dá uma boa idéia da incerteza associada à estimativa. A interpretação é muito similar à que fizemos anteriormente para o intervalo de confiança da média teórica ou esperança.
 
 Com esses resultados, temos todos os elementos para responder à primeira pergunta colocada no início do tópico:
 
-Pergunta 1: Há alguma evidência forte de que os tempos na prova de $100m$ estão caindo ao longo do tempo? Ainda que isso possa parecer óbvio, há algum argumento forte para defender esse ponto de vista? Quanto em média, por ano, o tempo da prova dos 100 m está caindo nos últimos anos?
+**Pergunta 1**: Há alguma evidência forte de que os tempos na prova de $100m$ estão caindo ao longo do tempo? Ainda que isso possa parecer óbvio, há algum argumento forte para defender esse ponto de vista? Quanto em média, por ano, o tempo da prova dos 100 m está caindo nos últimos anos?
 
 Resposta: Tanto a evidência relativa ao valor-p da hipótese $H_0:b_1=0$, próximo de zero, sugerindo rejeição de H0H0, quanto o intervalo de confiança a $95\%$ sugerem os tempos estão caindo de forma estatisticamente significativa. O valor estimado para $b_1$ está entre $[−0,01228,−0,01039]$. Esse resultado estimado sugere que o tempo nos $100m$ tendeu a cair, em média por ano, no período, algo dentro do intervalo $[0,01039,0,01228]$ segundos com $95\%$ de probabilidade.
 
 
 ## Modelo estatístico 2: regressão linear múltipla
 
-Para responder à pergunta 2 colocada no início do tópico, envolvendo um possível efeito da elevação ou altitude nos tempos da prova final de $100 m da olimpíada, precisamos utilizar um modelo um pouco mais complexo, envolvendo uma regressão linear múltipla com 2 variáveis explicativas:
+Para responder à pergunta 2 colocada no início do tópico, envolvendo um possível efeito da elevação ou altitude nos tempos da prova final de $100m$ da olimpíada, precisamos utilizar um modelo um pouco mais complexo, envolvendo uma regressão linear múltipla com 2 variáveis explicativas:
 
 Modelo 2: regressão linear múltipla
 $$

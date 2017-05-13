@@ -109,6 +109,13 @@ ajuste_glm_probit <- glm(am ~ wt, data = mtcars, family = binomial(link = "probi
 summary(ajuste_glm_probit)
 ```
 
+**probit**  
+Em análise de dados de sensibilidade, particularmente em ensaios de dose-resposta, o método mais utilizado é o probit, para os casos em que a susceptibilidade de cada indivíduo é considerada como uma variável aleatória com distribuição normal ou logit nos casos do uso da função logística.
+
+**Log-log complementar (cloglog)**  
+O modelo de cloglog corresponde a aplicações onde observamos eventos zero (por exemplo, defeitos) ou um ou mais, onde se supõe que o número de eventos segue a distribuição de Poisson
+
+
 **Gráfico das curvas ajustadas:**
 
 ```{r}
