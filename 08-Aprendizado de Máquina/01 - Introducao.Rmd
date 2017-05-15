@@ -1,0 +1,46 @@
+---
+Title: "Aprendizado de Máquina"
+subtitle: "Introdução"
+author: "Delermando Branquinho Filho"
+date: "15 de maio de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introdução
+
+Em termos gerais, existem 3 tipos de Algoritmos de Aprendizagem Automática.
+
+1. **Aprendizagem Supervisionada**
+
+Como funciona: Este algoritmo consiste de uma variável alvo / resultado (ou variável dependente) que deve ser predita a partir de um dado conjunto de preditores (variáveis independentes). Usando este conjunto de variáveis, geramos uma função que mapeia as entradas para as saídas desejadas. O processo de treinamento continua até que o modelo atinja um nível de precisão desejado nos dados de treinamento. Exemplos de Aprendizagem Supervisionada: Regressão, Árvore de Decisão, Floresta Aleatória, KNN, Regressão Logística etc.
+
+2. **Aprendizagem não supervisionada**
+
+Como funciona: Neste algoritmo, não temos qualquer meta ou variável de resultado para prever / estimar. É utilizado para agrupar populações em diferentes grupos, o que é amplamente utilizado para segmentar clientes em diferentes grupos para intervenção específica. Exemplos de Aprendizagem Não Supervisionada: Algoritmo Apriori, K-means.
+
+3. **Aprendizagem por Reforço**:
+
+Como funciona: Usando este algoritmo, a máquina é treinada para tomar decisões específicas. Funciona desta maneira: a máquina é exposta a um ambiente onde se treina continuamente usando tentativa e erro. Esta máquina aprende com a experiência passada e tenta capturar o melhor conhecimento possível para tomar decisões de negócios precisas. Exemplo de aprendizado de reforço: Processo de decisão de Markov
+
+Lista de **algoritmos** de aprendizagem comuns da máquina
+
+Aqui está a lista de algoritmos de aprendizagem de máquina comumente usados. Esses algoritmos podem ser aplicados a praticamente qualquer problema de dados:
+
+- Regressão linear
+- Regressão Logística
+- Árvore de decisão (Dnedogramas)
+- SVM
+- Bayes
+- KNN
+- K-Means
+- Random Forest
+- Algoritmos de Redução de Dimensionalidade
+- Gradient Boost & Adaboost   
+
+
+
+

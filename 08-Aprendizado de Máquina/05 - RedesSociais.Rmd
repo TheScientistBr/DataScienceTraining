@@ -1,0 +1,177 @@
+---
+title: "Aprendizado de Máquina"
+subtitle: "Análise de Redes Sociais"
+author: "Delermando Branquinho Filho"
+date: "10 de novembro de 2016"
+output: html    _document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introdução
+
+Neste desafio, suponha que estamos observando uma rede social para realizar uma Análise de  clientes em potencial. Queremos extrair sua rede social, uma métrica chamada "proximidade centralidade".
+
+Métricas de centralidade tentam aproximar uma medida de influência de um indivíduo dentro de uma rede social. A distância entre qualquer dois vértices é o seu caminho mais curto. 
+
+O *farness*
+De um dado vértice $v$ é a soma de todas as distâncias de cada vértice para $v$. Finalmente, a 
+*proximidade* de um vértice $v$ é o inverso do *farness*.
+
+A primeira parte do desafio é classificar os vértices em um dado gráfico por sua *proximidade*. O gráfico é fornecido no arquivo; Cada linha do arquivo consiste em dois nomes de vértices separados por um único espaço, representando uma aresta entre esses dois nós.
+
+### Carregando Bibliotecas
+
+```{r, message=F, warning=F}
+library(GGally)
+library(network)
+library(sna)
+library(ggplot2)
+```
+
+*Sementes de ajuste para pesquisa reproduzível*.
+
+```{r}
+set.seed(3)
+```
+
+### Loadding Dataset
+
+```{r}
+myData <- as.matrix(read.table("data/edges.dat", quote="\"", 
+                    comment.char="", stringsAsFactors=FALSE))
+```
+
+### Criando Dados de Rede
+
+Os nós são numerados por um ao número de nós.
+
+```{r}
+net = rgraph(myData, mode = "graph")
+net = network(net, directed = FALSE)
+network.vertex.names(net) = 1:dim(myData)[1]
+```
+
+### Plotando
+
+```{r, message=F, warning=F}
+c.d   <- degree(net)
+col<- as.integer(5*(c.d-min(c.d))/diff(range(c.d))+1)
+palette <- c("black","purple","blue","green","orange","red")
+g<-ggnet2(net, label = TRUE, label.color = "white",color = palette[col])
+plot(g,vertex.color=palette[col],main="Degree Centrality",
+     layout=layout.fruchterman.reingold)
+
+```
+
+## Segunda visão do mesmo problema
+
+A segunda parte do desafio é criar pontos de extremidade para registrar bordas e exibir a centralidade do gráfico.
+
+### Grau
+
+O grau do nó é o número de relações (bordas) dos nós. 
+
+```{r}
+degree(net)
+```
+
+A centralidade entre as coisas é uma propriedade estatística ainda mais importante de uma rede. Isto é aplicado em um monte de problemas do mundo real, como encontrar pessoas influentes em uma rede social, encontrar centros cruciais numa rede informática, encontrar pontos de passagem de fronteiras com maior tráfego ou fluxo comercial.
+
+```{r}
+degree(net,cmode="indegree")
+```
+
+
+A proximidade (longevidade) indica o tempo que demorará a informação de um determinado nó para
+alcance dos outros nós na rede. Quanto menor o valor, mais central o papel do nó na rede
+
+```{r}
+degree(net,cmode="outdegree")
+```
+
+*Densidade*
+
+A densidade de um gráfico é o número de arestas existentes dividido pelo número de nós possíveis (supondo que não há duplicatas ou loops)
+
+```{r}
+gden(net,mode="graph")
+```
+
+Connectedness leva um ou mais gráficos e retorna as pontuações de conexão Krackhardt
+
+```{r}
+connectedness(net)
+```
+
+### Centralidade
+A centralização retorna a centralização GLI (índice de nível de gráfico) para um determinado gráfico em dat, dada uma medida de centralidade (nó) FUN. A centralização segue a definição generalizada de centralização de rede de Freeman (1979) e pode ser usada com qualquer medida de centralidade devidamente definida
+
+```{r}
+centralization(net,degree,mode="graph")
+```
+
+
+### Atenuação Centralidade
+Uma medida do grau em que um determinado nó se encontra nos caminhos mais curtos (geodésicos) entre outros nós no gráfico O ponto de centróide do mapa é:
+
+```{r}
+betweenness(net)
+centralization(net,betweenness,mode="graph")
+```
+
+### Centralidade de proximidade
+Centralidade de proximidade (CLC) é uma categoria de medidas que classificam a centralidade de um nó por sua proximidade (distância) a outros nós. A proximidade A centralidade diminui se o número de nós alcançáveis a partir do nó em questão diminui ou as distâncias entre os nós aumentam.
+
+```{r}
+closeness(net)
+centralization(net,closeness,mode="graph")
+```
+
+*Egocentricidade*
+A rede egocêntrica (ou rede do ego) do vértice v no gráfico G é definida como o subgrafo de G induzido por v e seus vizinhos
+
+```{r}
+newEgo <- ego.extract(net,6)
+head(closeness(newEgo))
+```
+
+
+```{r, message=F, warning=F}
+library(magrittr)
+library(visNetwork)
+library(GGally)
+library(network)
+library(sna)
+library(ggplot2)
+library(igraph)
+
+set.seed(3)
+mydata <- as.matrix(read.table("data/edges.dat", quote="\"", 
+                               comment.char="", stringsAsFactors=FALSE))
+net = rgraph(mydata, mode = "graph")
+net = network(net, directed = TRUE)
+network.vertex.names(net) = 1:dim(mydata)[1]
+
+graph <- graph.data.frame(mydata, directed=T)
+graph <- simplify(graph)
+
+V(graph)$indegree <- centr_degree(graph, mode = "in")$res
+
+nodes <- get.data.frame(graph, what="vertices")
+nodes <- data.frame(id = nodes$name, title = nodes$name, group = nodes$indegree, indegree = nodes$indegree)
+
+nodes <- nodes[order(nodes$id, decreasing = F),]
+
+edges <- get.data.frame(graph, what="edges")[1:2]
+
+visNetwork(nodes, edges, height = "500px", width = "100%")
+
+```
+
+
+### REFERENCIAS
+Alex, B. 1950. Communication patterns in task-oriented groups. J. Acoust. Soc. Am. 22 (6): 725-730.
+Sabidussi, G. 1966. The centrality index of a graph. Psychometrika. 31: 581-603.
