@@ -1,0 +1,196 @@
+---
+title: "Aprendizado de Máquina"
+subtitle: "Gradient Boosting & AdaBoost"
+author: "Delermando Branquinho Filho"
+date: "17 de maio de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Gradient Boosting & AdaBoost
+
+GBM & AdaBoost são algoritmos usados quando lidamos com abundância de dados para fazer uma previsão com alta  de previsão. Boosting é um algoritmo de aprendizagem conjunto que combina a previsão com base em vários estimadores a fim de melhorar a robustez sobre um único estimador. Combina vários preditores fracos ou médios para um preditor forte de construção. Estes algoritmos de reforço sempre funcionam bem em competições de ciência de dados como Kaggle, AV Hackathon, CrowdAnalytix.
+
+### Código generalizado
+
+```r
+library(caret)
+x <- cbind(x_train,y_train)
+# Fitting model
+fitControl <- trainControl( method = "repeatedcv", number = 4, repeats = 4)
+fit <- train(y ~ ., data = x, method = "gbm", trControl = fitControl,verbose = FALSE)
+predicted= predict(fit,x_test,type= "prob")[,2] 
+```
+
+Uma das técnicas que causou mais empolgação na comunidade de aprendizado de máquina é o boosting, que, em essência, é um processo de refinação iterativa. Por reponderação, das funções de regressão e de classificação estimadas (embora tenha sido principalmente aplicado a estas últimas), a fim de melhorar a capacidade de previsão.
+
+Muito tem sido feito da observação do falecido estatístico Leo Breiman de que o estímulo é "o melhor classificador disponível no mundo", seu termo "off-the-shelf" significando que o método dado pode ser usado por usuários não-especialistas relataram de fato bons resultados do método.
+
+
+## Conjunto de dados de teste
+
+Todos os exemplos de previsões de conjunto neste estudo de caso usarão o conjunto de dados da ionosfera.
+
+Este é um conjunto de dados disponível no [UCI Machine Learning Repository](http://machinelearningmastery.com/practice-machine-learning-with-small-in-memory-datasets-from-the-uci-machine-learning-repository/). Este conjunto de dados descreve retornos de antena de alta freqüência de partículas de alta energia na atmosfera e se o retorno mostra estrutura ou não. O problema é uma classificação binária que contém 351 instâncias e 35 atributos numéricos.
+
+Vamos carregar as bibliotecas eo conjunto de dados.
+
+```{r Loading, message=FALSE}
+# Load libraries
+library(mlbench)
+library(caret)
+library(caretEnsemble)
+
+# Load the dataset
+data(Ionosphere)
+dataset <- Ionosphere
+dataset <- dataset[,-2]
+dataset$V1 <- as.numeric(as.character(dataset$V1))
+```
+
+
+Observe que o primeiro atributo foi um fator $0.1$ e foi transformado para ser numérico para a consistência com todos os outros atributos numéricos. Observe também que o segundo atributo é uma constante e foi removida.
+
+Aqui está uma amostra nas primeiras linhas do conjunto de dados da ionosfera.
+
+
+```{r ShowDataset}
+head(dataset)
+```
+
+## Algoritmos impulsionadores (Boosting)
+
+Podemos olhar para dois dos algoritmos de aprendizagem de Boosting mais populares:
+
+- C5.0
+- Boosting do gradiente estocástico
+
+Abaixo está um exemplo dos algoritmos C5.0 e Stochastic Gradient Boosting (usando a implementação de Modelação de Impulso de Gradiente) em R. Ambos os algoritmos incluem parâmetros que não estão ajustados neste exemplo.
+
+```{r Boosting, message=FALSE}
+control <- trainControl(method="repeatedcv", number=10, repeats=3)
+metric <- "Accuracy"
+
+# C5.0
+set.seed(7)
+fit.c50 <- train(Class~., data=dataset, method="C5.0", metric=metric, trControl=control)
+
+# Stochastic Gradient Boosting
+set.seed(7)
+fit.gbm <- train(Class~., data=dataset, method="gbm", metric=metric, trControl=control, verbose=FALSE)
+
+# summarize resultados
+boosting_results <- resamples(list(c5.0=fit.c50, gbm=fit.gbm))
+summary(boosting_results)
+dotplot(boosting_results)
+```
+
+Podemos ver que o algoritmo C5.0 produz um modelo mais preciso com uma precisão de $94,58\%$.
+
+
+## Algoritmos de Bagging (ensacamento)
+
+Vejamos dois dos algoritmos de aprendizagem de Bagging mais populares:
+
+- Bagged CART
+- Random Forest
+
+Abaixo está um exemplo dos algoritmos Bagged CART e Random Forest em R. Ambos os algoritmos incluem parâmetros que não estão sintonizados neste exemplo. 
+
+```{r Bagging, message=FALSE}
+control <- trainControl(method="repeatedcv", number=10, repeats=3)
+metric <- "Accuracy"
+
+# Bagged CART
+set.seed(7)
+fit.treebag <- train(Class~., data=dataset, method="treebag", metric=metric, trControl=control)
+
+# Random Forest
+set.seed(7)
+fit.rf <- train(Class~., data=dataset, method="rf", metric=metric, trControl=control)
+
+# summarize resultados
+bagging_results <- resamples(list(treebag=fit.treebag, rf=fit.rf))
+dotplot(bagging_results)
+```
+
+Podemos ver que a *Random Forest* (floresta aleatória) produz um modelo mais preciso em media de $93.15\%$.
+
+```{r}
+summary(bagging_results)
+```
+
+## Algoritmos de Empilhamento (Stacking)
+
+Você pode combinar as previsões de vários modelos de intercalação usando o pacote $caretEnsemble$.
+
+Dada uma lista de modelos de circunferência, a função $caretStack()$ pode ser usada para especificar um modelo de ordem superior para aprender a combinar melhor as previsões de sub-modelos em conjunto.
+
+Vamos primeiro olhar para a criação de 5 sub-modelos para o conjunto de dados ionosfera, especificamente:
+
+- Análise de Discriminação Linear (LDA)
+- Árvores de Classificação e Regressão (CART)
+- Regressão Logística (via Modelo Linear Generalizado ou GLM)
+- K-vizinhos mais próximos (kNN)
+- Suporte a máquina de vetor com uma função de núcleo de base radial (SVM)
+
+Abaixo está um exemplo que cria esses 5 sub-modelos. Observe a nova função útil $caretList()$ fornecida pelo pacote $caretEnsemble$ para criar uma lista de modelos de caret padrão.
+
+```{r message=FALSE,warning=FALSE}
+control <- trainControl(method="repeatedcv", number=10, repeats=3, savePredictions=TRUE, classProbs=TRUE)
+algorithmList <- c('lda', 'rpart', 'glm', 'knn', 'svmRadial')
+set.seed(7)
+models <- caretList(Class~., data=dataset, trControl=control, methodList=algorithmList)
+results <- resamples(models)
+dotplot(results)
+```
+
+
+Podemos ver que o *SVM* cria o modelo mais preciso com uma precisão de $94,85    \%$.
+
+```{r}
+summary(results)
+```
+
+Quando combinamos as previsões de diferentes modelos usando o Stacking, é desejável que as previsões feitas pelos sub-modelos tenham baixa correlação. Isso sugere que os modelos são habilidosos, mas de maneiras diferentes, permitindo que um novo classificador para descobrir como obter o melhor de cada modelo para uma melhor pontuação.
+
+**Correlação entre os resultados**
+
+```{r}
+modelCor(results)
+```
+
+Se as previsões para os sub-modelos foram altamente corrigidas ($> 0.75$), então eles estariam fazendo as mesmas previsões ou muito semelhantes a maior parte do tempo reduzindo o benefício de combinar as previsões.
+
+```{r}
+splom(results)
+```
+
+Vamos combinar as previsões dos classificadores usando um modelo linear simples.
+
+```{r}
+# stack using glm
+stackControl <- trainControl(method="repeatedcv", number=10, repeats=3, savePredictions=TRUE, classProbs=TRUE)
+set.seed(7)
+stack.glm <- caretStack(models, method="glm", metric="Accuracy", trControl=stackControl)
+print(stack.glm)
+```
+
+Podemos ver que temos levantado a precisão de $94,99\%$, que é uma pequena melhoria em relação ao uso de $SVM$ sozinho. Isso também é uma melhoria em relação ao uso de Random Forest sozinho no conjunto de dados, como observado acima.
+
+Podemos também usar algoritmos mais sofisticados para combinar previsões em um esforço para verificar qual o melhor método. Neste caso, podemos usar o algoritmo de Random Forest para combinar as previsões.
+
+```{r}
+# stack usando random forest
+set.seed(7)
+stack.rf <- caretStack(models, method="rf", metric="Accuracy", trControl=stackControl)
+print(stack.rf)
+```
+
+
+
+[The Scientist](http://www.thescientist.com.br)
+

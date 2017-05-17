@@ -1,0 +1,222 @@
+---
+title: "Aprendizado de Máquina"
+subtitle: "KNN"
+author: "Delermando Branquinho Filho"
+date: "17 de maio de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introdução
+Ele pode ser usado para problemas de classificação e regressão. No entanto, é mais amplamente utilizado em problemas de classificação na indústria. K vizinhos mais próximos é um algoritmo simples que armazena todos os casos disponíveis e classifica novos casos por um voto de maioria de seus k vizinhos. O caso que está sendo atribuído à classe é mais comum entre seus vizinhos K mais próximos medidos por uma função de distância.
+
+Estas funções de distância podem ser *Euclidiano, Manhattan, Minkowski e Hamming*. As primeiras três funções são usadas para a função contínua e a quarta (Hamming) para variáveis categóricas. Se K = 1, então o caso é simplesmente atribuído à classe de seu vizinho mais próximo. Às vezes, escolher K acaba por ser um desafio enquanto se executa a modelagem do KNN.
+
+## Distância euclidiana
+
+A medida de distância mais comumente utilizada é a distância euclidiana. A distância euclidiana também é conhecida como simplesmente distância. O uso da medida de distância euclidiana é altamente recomendado quando os dados são densos ou contínuos. A distância euclidiana é a melhor medida de proximidade.
+
+O classificador KNN também é considerado como um algoritmo de aprendizagem / não-generalizado baseado em instância. Ele armazena registros de dados de treinamento em um espaço multidimensional. Para cada nova amostra e valor particular de K, ele recalcula distâncias euclidianas e prevê a classe alvo. Portanto, não cria um modelo interno generalizado.
+
+## Instalação do pacote Caret
+
+A máquina de programação que aprende está no pacote do caret (Classification And REgression Training) contendo inúmeras funções para a construção de modelos preditivos. Possui ferramentas para divisão de dados, pré-processamento, seleção de recursos, ajuste e algoritmos de aprendizagem supervisionados - não supervisionados, etc. É semelhante à biblioteca sklearn em python.
+
+Para usá-lo, primeiro precisamos instalá-lo. Abra o console R e instale-o digitando:
+
+```r
+install.packages ("caret")
+```
+O pacote caret nos fornece acesso direto a várias funções para treinar nosso modelo com vários algoritmos de aprendizagem de máquina como Knn, SVM, árvore de decisão, regressão linear, etc.
+
+### Implementação de Knn com pacote caret
+
+Descrição do conjunto de dados de reconhecimento de vinho
+
+Para esta experiência, os vinhos foram cultivados na mesma região em Itália, mas derivado de três cultivares diferentes. A análise determinou as quantidades de 13 constituintes encontrados em cada um dos três tipos de vinhos. Temos um conjunto de dados com 13 atributos com valores contínuos e um atributo com rótulos de classe de origem do vinho.
+
+Usando o dataset de vinho nossa tarefa é construir um modelo para reconhecer a origem do vinho. Os proprietários originais deste conjunto de dados são Forina, M. et al. , PARVUS, Instituto de Análise e Tecnologias Farmacêuticas e Alimentares, Via Brigata Salerno, 16147 Génova, Itália. Este conjunto de dados de vinhos está alojado como dados abertos no  [repositório de aprendizagem de máquina UCI](https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data)
+
+
+**Os 13 Atributos** do conjunto de dados são:
+
+- Álcool
+- Ácido málico
+- Cinza
+- Alcalinidade da cinza
+- Magnésio
+- Fenóis totais
+- Flavonóides
+- Nonflavonoides fenóis
+- Proantocianinas
+- Intensidade da cor
+- Matiz
+- OD280 / OD315 de vinhos diluídos
+- Prolina
+
+O atributo com o rótulo de classe está no índice 1. Ele consiste de 3 valores 1, 2 e 3. Estes rótulos de classe vão ser previstos pelo nosso modelo KNN.
+
+Declaração de Problema de Reconhecimento de Vinho:
+
+Modelar um classificador para classificar a origem do vinho. O classificador deve prever se o vinho é de origem "1" ou "2" ou "3".
+
+**Implementação do classificador Knn em R com pacote Caret**
+
+Para a implementação de Knn em r, só precisamos importar o pacote caret. Como mencionamos acima, ele ajuda a executar várias tarefas para realizar o nosso trabalho de aprendizagem da máquina.
+
+```{r message=FALSE}
+library(caret)
+```
+
+### Importação de dados:
+
+Estamos usando o wine dataset do repositório UCI. Para importar os dados e manipulá-lo, vamos usar frames de dados. Primeiro de tudo, precisamos baixar o conjunto de dados.
+
+```{r message=FALSE}
+if(!dir.exists("data"))
+        dir.create("data")
+if(!file.exists("data/wine.csv")) {
+        dataurl <- "https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data"
+        download.file(url = dataurl, destfile = "data/wine.csv")
+}
+wine_df <- read.csv("data/wine.csv", header = FALSE)
+```
+
+No vetor dataurl, estamos colocando URL de nossos dados de vinho. Usando o método *download.file()*, podemos baixar o arquivo de dados do URL. Para fazer o download, o URL dos dados eo nome do arquivo de destino devem ser mencionados como os parâmetros do método download.file(). Aqui, nosso parâmetro destfile é definido com o valor "data/wine.csv", observe que caso o diretório não exista, ele é criado.
+
+Para importar dados para um Data Frame R, podemos usar o método *read.csv()* com parâmetros como um nome de arquivo e se nosso conjunto de dados consiste na primeira linha com um cabeçalho ou não. Se uma linha de cabeçalho existe, em seguida, o cabeçalho deve ser definido TRUE else cabeçalho deve ser definido como FALSE.
+
+
+Para verificar a estrutura da estrutura de dados, podemos chamar a função str sobre wine_df:
+
+```{r}
+str(wine_df)
+```
+
+Mostra que os nossos dados consistem em 178 observações e 14 colunas. Os intervalos de valores de todos os atributos de V2-V14 estão variando, por isso teremos de padronizar os dados antes de treinar nosso classificador.
+
+**Corte de Dados** ou *Data Slicing*
+
+Corte de dados é um passo para dividir dados em conjunto de **treinamento** e **teste**. O conjunto de dados de treinamento pode ser usado especificamente para o nosso modelo de construção. O conjunto de dados de teste não deve ser misturado durante a construção do modelo. Mesmo durante a padronização, não devemos padronizar nosso conjunto de testes.
+
+
+```{r}
+set.seed(3033)
+intrain <- createDataPartition(y = wine_df$V1, p= 0.7, list = FALSE)
+training <- wine_df[intrain,]
+testing <- wine_df[-intrain,]
+```
+
+O método set.seed() é usado para tornar nosso trabalho replicável. 
+
+O pacote caret fornece um método *createDataPartition()* para particionar nossos dados em conjunto de treino e teste. Estamos passando 3 parâmetros. O parâmetro $y$ toma o valor da variável de acordo com quais dados precisam ser particionados. No nosso caso, a variável alvo está em $V1$, então estamos passando *wine_df\$V1* (coluna $V1$ do quadro de dados do vinho).
+
+O parâmetro $p$ mantém um valor decimal no intervalo de $0-1$. É para mostrar essa porcentagem da divisão. Estamos usando $p = 0,7$. Isso significa que a divisão de dados deve ser feita em proporção de $70:30$. O parâmetro $list$ é para retornar uma lista ou matriz. Estamos passando $FALSO$ por não retornar uma lista. O método *createDataPartition()* está retornando uma matriz $intrain$ com índices de registros.
+
+Ao passar os valores de $intrain$, estamos dividindo dados de treinamento e dados de teste.
+O treinamento em *training <- wine_df[intrain,]* é para colocar os dados do Data Frame para dados de treinamento. Os dados remanescentes são salvos no Data Frame de teste, *(testing <- wine_df[-intrain,].*.
+
+Para verificar as dimensões da estrutura de dados de treinamento e da estrutura de dados de teste, podemos usar:
+
+```{r}
+dim(training); 
+dim(testing);
+```
+
+## Pré-processamento e Treinamento
+
+O pré-processamento tem tudo a ver com a correção dos problemas nos dados antes de construir um modelo de aprendizagem da máquina usando esses dados. Os problemas podem ser de muitos tipos, como valores em falta, atributos com uma gama diferente de problemas, etc.
+
+Para verificar se os nossos dados contêm valores em falta ou não, podemos usar o método anyNA(). Aqui, NA significa Não Disponível.
+
+```{r}
+anyNA(wine_df)
+```
+
+
+Uma vez que está retornando FALSO, significa que não temos valores em falta.
+Wine Dataset 
+
+Para verificar os detalhes resumidos de nossos dados, podemos usar o método *summary()*. Ele nos dará uma idéia básica sobre a gama de atributos dos nossos dados.
+
+```{r}
+summary(wine_df)
+```
+
+As estatísticas de resumo acima, mostra-nos que todos os atributos têm um intervalo diferente. Então, precisamos padronizar nossos dados. Podemos padronizar os dados usando o método *preProcess()* do caret.
+
+A nossa variável alvo consiste em 3 valores 1, 2, 3. Estes devem ser considerados como variáveis categóricas. Para convertê-las em variáveis categóricas, podemos convertê-las em fatores.
+
+```{r}
+training[["V1"]] = factor(training[["V1"]])
+```
+
+A linha de código acima irá converter a coluna $V1$ do Datya Frame de treinamento para a variável do tipo fator.
+
+Agora, é hora de treinar nosso modelo.
+
+## Treinando o modelo Knn
+
+O pacote Caret fornece o método *train*() para treinar nossos dados para vários algoritmos. Só precisamos passar valores de parâmetros diferentes para diferentes algoritmos. Antes do método *train()*, usaremos primeiro o método *trainControl()*. Ele controla as nuances computacionais do método *train()*.
+
+
+```{r}
+trctrl <- trainControl(method = "repeatedcv", number = 10, repeats = 3)
+set.seed(3333)
+knn_fit <- train(V1 ~., data = training, method = "knn",
+ trControl=trctrl,
+ preProcess = c("center", "scale"),
+ tuneLength = 10)
+```
+
+
+Estamos definindo 3 parâmetros do método *trainControl()*. O parâmetro $method$ contém os detalhes sobre o método de reamostragem. Podemos definir $method$ com muitos valores como *boot, boot632, cv, repeatcv, LOOCV, LGOCV* etc. Para este teste, vamos tentar usar *repeatcv* ou seja, vamops repetir o processo usando *cross-validation*.
+
+O parâmetro $number$ contém o número de iterações de reamostragem. O parâmetro $repeats$ contém os conjuntos completos de dobras (folds) para calcular o nosso cross-validation ou validação cruzada. Estamos usando $set number = 10$ e $repeats = 3$. O método *trainControl()*  retorna uma lista. Vamos passar isso no nosso método *train()*.
+
+Para treinar classificador KNN, o método *train()* deve ser passado com o parâmetro $method$ como *KNN*. Estamos passando nossa variável alvo $V1$. O $V1 ~.$ denota uma fórmula para usar todos os atributos em nosso classificador e $V1$ como a variável de destino. O parâmetro $trControl$ deve ser passado com resultados do nosso método $trainControl()$. O parâmetro $preProcess$ é para o pré-processamento de nossos dados de treinamento.
+
+Conforme discutido anteriormente para nossos dados, o **pré-processamento é uma tarefa obrigatória**. Estamos passando 2 valores em nosso $preProcess$ parâmetro $center$ e $scale$. Estes dois ajudam a centrar e dimensionar os dados. Após pré-processamento, estes convertem os dados de treinamento com o valor médio como aproximadamente $0$ eo desvio padrão como $1$. O parâmetro $tuneLength$ contém um valor inteiro. Isto é para ajustar nosso algoritmo.
+
+## Treinado resultado do modelo Knn
+
+Você pode verificar o resultado do nosso método $train()$. Estamos salvando seus resultados em uma variável *knn_fit*.
+
+```{r}
+knn_fit
+# O maior valor
+knn_fit$results[which(knn_fit$results$Kappa == max(knn_fit$results$Kappa)),]
+```
+
+Sua exibição de precisão do resultado e métricas de Kappa para diferentes valores de $k$. A partir dos resultados, ele seleciona automaticamente o melhor valor $k$. Aqui, nosso modelo de treinamento está escolhendo $k = 21$ como seu valor final.
+
+Podemos ver variação no valor de Precisão w.r.t K, traçando-as em um gráfico.
+
+```{r}
+plot(knn_fit$results$Kappa,type = "l",main = "Acurácia vs Valor de K",ylab = "Acurácia (cros-validation)",xlab = "#Vizinhos")
+```
+
+Agora, nosso modelo é treinado com valor de $K$ como $21$. Estamos prontos para prever as classes para o nosso conjunto de teste. Podemos usar o método $predict()$.
+
+```{r}
+test_pred <- predict(knn_fit, newdata = testing)
+test_pred
+```
+
+
+O pacote $caret$ fornece o método $predict()$ para prever os resultados. Estamos passando $2$ argumentos. O primeiro parâmetro é o nosso modelo treinado e o segundo parâmetro $newdata$ contém nossa estrutura de dados de teste. O método $predict()$ retorna uma lista, estamos salvando-a em uma variável $test_pred$.
+
+Como nosso modelo está funcionando com precisão?
+
+Usando matriz de confusão, podemos imprimir estatísticas de nossos resultados. Ele mostra que a precisão do modelo para o conjunto de teste é de $96,23\%$.
+
+```{r}
+confusionMatrix(test_pred, testing$V1)
+```
+
+
+[The Scientist](http://www.thescientist.com.br)
+

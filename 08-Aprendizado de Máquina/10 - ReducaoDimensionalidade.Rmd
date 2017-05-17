@@ -1,0 +1,119 @@
+---
+title: "Aprendizado de Máquina"
+subtitle: "Redução de DImensionalidade"
+author: "Delermando Branquinho Filho"
+date: "17 de maio de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Algoritmos de Redução de Dimensionalidade
+
+Nos últimos 4-5 anos, tem havido um aumento exponencial na captura de dados em todas as fases possíveis. Empresas / Agências Governamentais / Organizações de pesquisa não estão apenas chegando com novas fontes, mas também estão captando dados em grande detalhe.
+
+Por exemplo: empresas de comércio eletrônico estão captando mais detalhes sobre o cliente como sua demografia, história de rastreamento da web, o que eles gostam ou não gostam, história de compra, feedback e muitos outros para dar-lhes atenção personalizada mais do que seu lojista mais próximo mercearia.
+
+Como um cientista de dados, os dados que são oferecidos também consistem em muitas características, isso soa bem para a construção de bom modelo robusto, mas há um desafio. Como você identificou variáveis altamente significativas para $1000$ ou $2000$? Em tais casos, o algoritmo de redução de dimensionalidade nos ajuda junto com vários outros algoritmos como *Árvore de Decisão, Random Forest, PCA*, Identificar com base na matriz de correlação, relação de missing value (valor perdido) e outros.
+
+```r
+library(stats)
+pca <- princomp(train, cor = TRUE)
+train_reduced  <- predict(pca,train)
+test_reduced  <- predict(pca,test)
+```
+
+**Considere o cenário abaixo:**
+
+Os dados, com os quais queremos trabalhar, estão na forma de uma matriz A de dimensão $m \times n$, mostrada abaixo, onde $A_{i,j}$ representa o valor da $i_{ésima}$ observação da $j_{ésima}$ variável.
+```{r echo=FALSE}
+mat <- matrix(nrow = 4,ncol = 4)
+mat[1,1] <- "A11"
+mat[1,2] <- "A12"
+mat[1,3] <- "..."
+mat[1,4] <- "A1n"
+mat[2,1] <- "A21"
+mat[2,2] <- "A22"
+mat[2,3] <- "   "
+mat[2,4] <- "A2n"
+mat[3,1] <- "   "
+mat[3,2] <- "   "
+mat[3,3] <- "   "
+mat[3,4] <- "..."
+mat[4,1] <- "Am1"
+mat[4,2] <- "Am2"
+mat[4,3] <- "..."
+mat[4,4] <- "Amn"
+
+
+
+```
+
+
+```{r}
+mat
+```
+
+
+Deste modo, os $N$ membros da matriz podem ser identificados com as $M$ linhas, correspondendo cada uma às vectores $N-dimensionais$. Se $N$ é muito grande, muitas vezes é desejável reduzir o número de variáveis para um menor número de variáveis, digamos $k$ variáveis como na imagem abaixo, enquanto perdendo o mínimo de informação possível.
+
+Para demostrar como funciona, vamos usar os dados crimtab disponíveis em R. Dados de 3000 criminosos do sexo masculino com mais de 20 anos de idade passando por suas sentenças nas prisões da Inglaterra e País de Gales. Os nomes de 42 linhas ("9.4", 9.5 "...) correspondem a pontos médios de intervalos de comprimentos de dedos enquanto que os 22 nomes de colunas (" 142.24 "," 144.78 "...) correspondem a alturas (de corpo) de 3000 criminosos.
+
+```{r}
+head(crimtab)
+dim(crimtab)
+str(crimtab)
+sum(crimtab)
+colnames(crimtab)
+
+```
+
+Vamos usar $apply()$ para o dataset crimtab para calcular a variância e ver como cada variável está variando.
+
+```{r}
+apply(crimtab,2,var)
+```
+
+
+Observamos que a coluna $165.1$ contém variação máxima nos dados. Aplicando PCA usando $prcomp()$.
+
+```{r}
+pca <- prcomp(crimtab)
+pca
+```
+
+**Nota**: os componentes resultantes do objeto pca do código acima correspondem aos desvios padrão e Rotação. A partir dos desvios padrão acima podemos observar que a 1ª componente do PCA explicou a maior parte da variação, seguida por outros pcas. Rotação contém os valores da matriz de carga de componentes principais que explica a proporção de cada variável ao longo de cada componente principal.
+
+Vamos plotar todos os componentes principais e ver como a variação é contabilizada com cada componente.
+
+```{r}
+par(mar = rep(2, 4))
+plot(pca)
+```
+
+
+Claramente, o primeiro componente principal é responsável pela máxima informação.
+Vamos interpretar os resultados do pca usando o gráfico $biplot$. Biplot é usado para mostrar as proporções de cada variável ao longo dos dois componentes principais.
+
+Abaixo do código muda as direções do $biplot$, se não incluirmos as duas linhas abaixo, o enredo será imagem espelhada para o abaixo.
+
+```{r message=FALSE,warning=FALSE}
+pca$rotation=-pca$rotation
+pca$x=-pca$x
+biplot(pca , scale = 0)
+```
+
+Na imagem anterior, conhecida como biplot, podemos ver os dois componentes principais ($PC_1$ e $PC_2$) do conjunto de dados *crimtab*. As setas vermelhas representam os vetores de carga, que representam como o espaço característico varia ao longo dos vetores de componentes principais.
+
+A partir da trama, podemos ver que o primeiro vetor de componente principal, PC1, mais ou menos coloca igual peso em três características: *165.1, 167.64* e *170.18*. **Isto significa que estas três características estão mais correlacionadas entre si do que as características** *160.02* e *162.56*.
+
+O segundo componente principal, $PC_2$ coloca mais peso em *160,02, 162,56* do que os 3 recursos, *165,1, 167,64* e *170,18*, que são menos correlacionados com eles.
+
+
+
+
+
+
+[The Scientist](http://www.thescientist.com.br)
