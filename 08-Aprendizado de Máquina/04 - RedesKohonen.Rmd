@@ -1,0 +1,227 @@
+---
+title: "Aprendizado de Máquina"
+subtitle: "Redes Neurais - SOM Kohonen"
+author: "Delermando Branquinho Filho"
+date: "4 de março de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Introdução
+
+Mapas auto-organizáveis (**SOM**) são técnicas de visualização de dados não supervisionada que pode ser usada para visualizar conjuntos de dados de alta dimensão em representações menores (tipicamente 2) dimensões. Vamos usar dados sintéticos de uma rede de computadores hipotética, onde dois conjunto de dados *normais* são comparados a um conjunto de dados com anomalias, ou dados divergentes dos ditos *normais*.
+
+## A Grid SOM
+
+A visualização do SOM é composta por múltiplos "nós". Cada vetor de nó tem:
+
+Uma posição fixa na grelha SOM
+Um vetor de peso da mesma dimensão que o espaço de entrada. (Por exemplo, se seus dados de entrada representam pessoas, ele pode ter variáveis "idade", "sexo", "altura" e "peso", cada nó na grade também terá valores para essas variáveis).
+
+Amostras associadas dos dados de entrada. Cada amostra no espaço de entrada é "mapeada" ou "ligada" a um nó na grade do mapa. Um nó pode representar várias amostras de entrada.
+O recurso chave para os SOMs é que as características topológicas dos dados de entrada originais são preservadas no mapa. O que isto significa é que as amostras de entrada semelhantes (onde a similaridade é definida em termos das variáveis de entrada (idade, sexo, altura, peso)) são colocadas juntas na grelha SOM. Por exemplo, todas as fêmeas de 55 anos de idade que são aproximadamente 1,6 m de altura serão mapeadas para nós na mesma área da grade. Pessoas mais altas e menores serão mapeadas em outros lugares, levando em conta todas as variáveis. Os machos pesados altos estarão mais próximos no mapa para fêmeas altas e pesadas do que os pequenos homens leves, pois são mais "semelhantes".
+
+### SOM Heatmaps
+
+As visualizações SOM típicas são de "heatmaps". Um heatmap mostra a distribuição de uma variável no SOM. Se imaginarmos o nosso SOM como um quarto cheio de pessoas que estamos olhando para baixo, e que foram para obter cada pessoa na sala para sustentar um cartão colorido que representa a sua idade - o resultado seria um SOM heatmap. Pessoas de idades semelhantes, idealmente, seriam agregadas na mesma área. O mesmo pode ser repetido para a idade, peso, etc. A visualização de diferentes heatmaps permite explorar a relação entre as variáveis de entrada.
+
+A figura abaixo demonstra a relação entre o nível médio de educação ea porcentagem de desemprego usando dois heatmaps. O SOM para estes diagramas foi gerado usando áreas ao redor da Irlanda como amostras.
+
+<center>![SOM Hitmap](imagens/SOM_heatmaps.png)</center>
+
+## Algoritmo SOM
+
+O algoritmo para produzir um SOM a partir de um conjunto de dados de amostra pode ser resumido da seguinte forma:
+
+1. Selecione o tamanho e o tipo do mapa. A forma pode ser hexagonal ou quadrada, dependendo da forma dos nós que você precisar. Tipicamente, as grelhas hexagonais são preferidas uma vez que cada nó tem então 6 vizinhos imediatos.
+2. Inicializar todos os vetores de peso de nó aleatoriamente.
+3. Escolha um ponto de dados aleatório a partir dos dados de treinamento e apresente-o ao SOM.
+4. Encontre a "melhor unidade correspondente" (BMU) no mapa - o nó mais semelhante. A similaridade é calculada usando a fórmula de distância euclidiana.
+5. Determine os nós dentro da "vizinhança" da BMU.
+- O tamanho do bairro diminui com cada iteração.
+6. Ajustar pesos de nós na vizinhança BMU para o ponto de dados escolhido.
+- A taxa de aprendizagem diminui com cada iteração.
+- A magnitude do ajuste é proporcional à proximidade do nó à BMU.
+7. Repita os passos 2-5 para N iterações / convergência.
+
+## SOMs em R
+
+**Treinamento**
+
+O pacote **kohonen** é um pacote bem documentado em R que facilita a criação e visualização de SOMs. Para iniciar, você só precisará do conhecimento de um pequeno número de funções-chave, o processo geral em R é o seguinte:
+
+```{r}
+# Carregar o pacote kohonen
+library("kohonen")
+library(readr)
+```
+
+Vamos criar nossas bases de dados sintéticas, duas com dados ditos normais e uma com dados espúrios. Obserem que as sementes são as mesmas para os três dataset sintéticos, ou seja, estamos querendo manter as variáveis sob controle.
+
+```{r}
+set.seed(1)
+normal1 <- data.frame(trafic = rnorm(1000,25,3), 
+                     prot = rep(c(80,443,21,22,23),c(100,100,100,100,100)),
+                     user = rep(c(1,2,3,4,5),c(200,200,200,200,200)))
+set.seed(1)
+normal2 <- data.frame(trafic = rnorm(1000,30,5), 
+                     prot = rep(c(21,22,80,443,23),c(100,100,100,100,100)),
+                     user = rep(c(3,1,7,9,2),c(200,200,200,200,200)))
+set.seed(1)
+anormal <- data.frame(trafic = rnorm(1000,25,3), 
+                     prot = rep(c(21,80,22,443,23),c(100,100,100,100,100)),
+                     user = rep(c(5,2,7,4,9),c(200,200,200,200,200)))
+anormal[125:135,]$trafic <- 100  # inserimos aqui 1% de dados espúrios no tráfego 
+```
+
+## Criando os Mapas dos dados *normais* e *anomalo*
+
+A matriz de treinamento está divida entre os dados *normais* e *anomalo*, *n1* e *n2* para normais e *a* para o anomalo.
+
+```{r}
+data_train_matrix_n1 <- as.matrix(scale(normal1))
+data_train_matrix_n2 <- as.matrix(scale(normal2))
+data_train_matrix_a <- as.matrix(scale(anormal))
+
+som_grid_n1 <- somgrid(xdim = 20, ydim=20, topo="hexagonal")
+som_grid_n2 <- somgrid(xdim = 20, ydim=20, topo="hexagonal")
+som_grid_a <- somgrid(xdim = 20, ydim=20, topo="hexagonal")
+
+som_model_n1 <- som(data_train_matrix_n1, 
+                 grid=som_grid_n1, rlen=1000, 
+                 alpha=c(0.05,0.01), keep.data = TRUE)
+som_model_n2 <- som(data_train_matrix_n2, 
+                 grid=som_grid_n1, rlen=1000, 
+                 alpha=c(0.05,0.01), keep.data = TRUE)
+som_model_a <- som(data_train_matrix_a, 
+                 grid=som_grid_a, rlen=1000, 
+                 alpha=c(0.05,0.01), keep.data = TRUE)
+```
+
+## Plotando os Mapas
+
+Vários tipos diferentes de gráficos são suportados:
+
+Changes
+:       Mostra a distância média ao vetor de código mais próximo durante o treinamento.
+
+
+```{r}
+par(mfrow=c(1,3),mar=c(1, 0.5, 1.5, 0.5))
+plot(som_model_n1, type="changes")
+plot(som_model_n2, type="changes")
+plot(som_model_a, type="changes")
+```
+
+
+Count
+:       Mostra o número de objetos mapeados para as unidades individuais. 
+        As unidades vazias são representadas em cinza.
+
+
+```{r}
+par(mfrow=c(1,3),mar=c(0.1, 0.5, 0.1, 0.1))
+plot(som_model_n1, type="count")
+plot(som_model_n2, type="count")
+plot(som_model_a, type="count")
+```
+
+Não há grandes diferenças na contagem, os mapas parecem estar todos normais. Apesar das contagens do terceiro conter mais cores cinzas do que os dois anteriores. 
+
+
+Dist.neighbours
+:       Mostra a soma das distâncias para todos os vizinhos imediatos. Esse tipo de visualização também é conhecido como um gráfico de U-matrix. As unidades perto de um limite de classe podem ser esperadas para ter distâncias médias mais elevadas para seus vizinhos. Apenas disponível para os mapas "som" e "supersom", por enquanto.
+
+
+
+```{r}
+par(mfrow=c(1,3),mar=c(0, 0.5, 0, 0))
+plot(som_model_n1, type="dist.neighbours")
+plot(som_model_n2, type="dist.neighbours")
+plot(som_model_a, type="dist.neighbours")
+```
+
+Codes
+:       Mostra os vetores da tabela de códigos.
+
+
+```{r}
+par(mfrow=c(1,3),mar=c(0, 0.5, 0, 0))
+plot(som_model_n1, type="codes")
+plot(som_model_n2, type="codes")
+plot(som_model_a, type="codes")
+
+```
+
+Observem as faixas nos dois primeiros (*normais*), e apenas um conjunto diferente no terceiro. aqui são mostradas as distâncias entre os neurônios.
+
+
+"property"
+:       
+As propriedades de cada unidade podem ser calculadas e mostradas no código de cores. Pode ser usado para visualizar a semelhança de um objeto particular com todas as unidades no mapa, para mostrar a similaridade média de todas as unidades e os objetos mapeados a elas, etc. A propriedade parâmetro contém os valores numéricos. Veja exemplos abaixo.
+Aqui são as *Matrizes* dos desvios médios de vetores de código; Cada mapa corresponde a uma coluna. Observa-se no gráfico acima que o processo de treinamento dos dados anomalos são diferentes dos outros dois. 
+
+```{r}
+par(mfrow=c(1,3),mar=c(0, 0.5, 0, 0))
+plot(som_model_n1, type = "property", property = som_model_n1$codes[[1]][,1], 
+     main=names(som_model_n1$data)[4])
+plot(som_model_n2, type = "property", property = som_model_n2$codes[[1]][,1], 
+     main=names(som_model_n2$data)[4])
+plot(som_model_a, type = "property", property = som_model_a$codes[[1]][,1], 
+     main=names(som_model_a$data)[4])
+
+```
+
+Neste mapa de propriedades vamos explorar os dados com as propriedades de suas colunas: Tráfego, protocolos e usuáios.
+
+**Para os dados normais #1**
+
+```{r message=FALSE, warning=FALSE}
+par(mfrow=c(1,3),mar=c(0, 0.5, 0, 0))
+for(var in 1:3) {
+var_unscaled <- aggregate(as.numeric(normal1[,var]), 
+                          by=list(som_model_n1$unit.classif), 
+                          FUN=mean, simplify=TRUE)[,2] 
+
+plot(som_model_n1, type = "property", property=var_unscaled, 
+     main=names(normal1)[var])
+}
+```
+
+**Para os dados normais #2**
+
+```{r message=FALSE, warning=FALSE}
+par(mfrow=c(1,3),mar=c(0, 0.5, 0, 0))
+for(var in 1:3) {
+var_unscaled <- aggregate(as.numeric(normal2[,var]), 
+                          by=list(som_model_n2$unit.classif), 
+                          FUN=mean, simplify=TRUE)[,2] 
+
+plot(som_model_n2, type = "property", property=var_unscaled, 
+     main=names(normal2)[var])
+}
+```
+
+
+**Para os dados anômalos**
+
+```{r message=FALSE, warning=FALSE}
+par(mfrow=c(1,3),mar=c(0, 0.5, 0, 0))
+for(var in 1:3) {
+var_unscaled <- aggregate(as.numeric(anormal[,var]), 
+                          by=list(som_model_a$unit.classif), 
+                          FUN=mean, simplify=TRUE)[,2] 
+
+plot(som_model_a, type = "property", property=var_unscaled, 
+     main=names(anormal)[var])
+}
+```
+
+Observe que apenas o mapa do tráfego é diferente dos demais, ou seja, é possível verificar qual variável é espúria dentre as váriaveis do modelo.
+
+[The Scientist](http://www.thescientist.com.br)
+
