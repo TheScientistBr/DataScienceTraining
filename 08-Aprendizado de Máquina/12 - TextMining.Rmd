@@ -1,0 +1,163 @@
+---
+title: "Aprendizado de Máquina"
+subtitle: "Mineração e Classificação de Textos"
+author: "Delermando Branquinho Filho"
+date: "17 de maio de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Introdução
+
+A classificação de documentos ou categorização de documentos consiste em classificar documentos em uma ou mais classes / categorias manualmente ou algoritmicamente. Hoje tentamos classificar algoritmicamente. A classificação de documentos cai na Técnica de Aprendizagem Supervisionada pela Máquina.
+
+Tecnicamente falando, criamos um modelo de aprendizagem de máquina usando um número de documentos de texto (chamado Corpus) como entrada e sua correspondente classe / categoria (chamado Labels) como saída. O modelo assim gerado será capaz de classificar em classes quando um novo texto é fornecido.
+
+![Modelo de Mineração de Textos](imagens/Text_Classification_1.png)
+
+**Dentro da caixa preta:**
+
+Vamos dar uma olhada no que acontece dentro da caixa preta na figura acima. Podemos dividir os passos em:
+
+- Criação de Corpus
+- Pré-processamento de Corpus
+- Criação da Matriz de Documentos de Termo
+- Preparando recursos e etiquetas para o modelo
+- Criando dados de trem e teste
+- Executando o modelo
+- Testando o modelo
+
+
+Neste exemplo vamos usar um modelo KNN para classificar o texto em R. Usamos o aprendizado de máquina, o que significa que treinamos o modelo com dados "conhecidos" (isto é, dados que já estão categorizados) e testamos em "desconhecido" Dados (ou seja, dados onde o modelo deve nos dizer a categoria).
+
+Eu criei um conjunto de dados com fragmentos de texto em carros de Ford e de Mazda (de carbuyer.co.uk). Os fragmentos de texto são armazenados na coluna Texto e na marca de carro na Categoria. Para fazer o download dos dados, [clique aqui](https://github.com/TheScientistBr/DataScienceTraining).
+
+Você pode usar o modelo para qualquer tipo de previsão de categoria, colocando sua própria escolha de texto nas colunas de texto e categoria. Basicamente, ao categorizar algumas observações de texto, você pode executar o modelo em grandes conjuntos de dados e classificar ou categorizar rapidamente grandes quantidades de texto de forma livre.
+
+## Exemplo
+
+O primeiro passo é carregar os pacotes necessários. Vamos usar tm para a mineração de texto, classe para o modelo $KNN$ e $SnowballC$ para o stemming das palavras.
+
+**stemming** - Em morfologia linguística e recuperação de informação a stemização (do inglês, stemming) é o processo de reduzir palavras flexionadas (ou às vezes derivadas) ao seu tronco (stem), base ou raiz, geralmente uma forma da palavra escrita.
+
+```{r LoadLibs, message=FALSE}
+library(tm) # Mineração de Texto: Matriz de Termo de Corpus e Documentos
+library(class) # modelo KNN 
+library(SnowballC) # Stemming words
+```
+
+É possível usar este modelo para todos os tipos de classificação de texto, o arquivo csv modelo contém duas colunas: Texto e Categoria. Se você usar o código para seu próprio modelo, você pode colocar qualquer tipo de texto no texto e qualquer tipo de categoria na categoria.
+
+Então, abaixo lemos o arquivo csv knn.csv em dataframe df especificando que o separador é ponto-e-vírgula e que o arquivo contém um cabeçalho (texto e categoria)
+
+```{r}
+df <- read.csv("data/knn.csv", sep =";", header = TRUE)
+```
+
+Agora, carregamos os dados de texto em um $Corpus$. Pense em um corpus como uma coleção de documentos ou trechos de texto. No nosso exemplo, cada linha no arquivo csv representa um documento que categorizamos.
+
+Então, criamos um Corpus chamado $docs$ que consiste na coluna Text em nosso $df$ de dataframe. Especificamos que a fonte é um vetor (ou seja, lista de elementos)
+
+```{r}
+docs <- Corpus(VectorSource(df$Text))
+```
+
+O próximo passo é **limpar** nosso corpus. Basicamente, tiramos todo o ruído do texto e deixamos apenas as partes importantes. A maioria do código abaixo é bastante auto-explicativo. Primeiro, convertemos todo o texto para minúsculas. Em seguida, removemos todos os números, pontuação e espaço em branco extra.
+Então, eu removo **Stopwords**. Estas são palavras comuns como *then*, *I*,  *it*, *there* etc. E finalmente, nós provemos palavras. Isso significa remover terminações comuns das palavras. Por exemplo. Em vez de ter as duas palavras *bicycle* e *bicycles*, acabamos com uma palavra "bicycl" porque só mantivemos o caule da palavra.)
+
+```{r}
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeNumbers)
+docs <- tm_map(docs, removePunctuation)
+docs <- tm_map(docs, stripWhitespace)
+docs <- tm_map(docs, removeWords, stopwords("english"))
+docs <- tm_map(docs, stemDocument, language = "english")
+```
+
+Agora, criamos a matriz de termos do documento. Esta é uma matriz com cada documento no eixo x e cada termo no eixo y. Em seguida, contamos quantas vezes cada termo está presente em cada documento. Assim, basicamente uma representação numérica da frequência de cada palavra em cada documento. Usaremos esta matriz para executar nosso modelo em.
+
+```{r}
+dtm <- DocumentTermMatrix(docs)
+```
+
+Depois de ter criado o DTM, converte-lo para um data Frame mat.df.
+
+```{r}
+mat.df <- as.data.frame(data.matrix(dtm), stringsAsfactors = FALSE)
+```
+
+O próximo passo é criar uma nova coluna com a categoria conhecida de cada texto. Usamos *cbind* para vincular uma nova coluna a mat.df. Posteriormente, alteramos o nome da última coluna de mat.df para "category"
+
+```{r}
+mat.df <- cbind(mat.df, df$Category)
+colnames(mat.df)[ncol(mat.df)] <- "category"
+```
+
+Lembre-se que o modelo **KNN** leva três conjuntos de dados: Treinar, testar e classificar. Todos os três conjuntos devem ter o mesmo número de linhas.
+
+Vamos criar esses três conjuntos de dados.
+
+Tomamos uma amostra aleatória com um tamanho de 50% dos dados completos e chamar este **treino**.
+
+O **teste** manterá todo o resto dos dados.
+
+**Treinar** e **testar** contêm apenas os números de linha, para que possamos usar os números de linha para indexar nossos dados, quando criamos o modelo $KNN$.
+
+A última etapa é criar o classificador. Vamos isolar todas as categorias conhecidas e colocá-los em **cl**.
+
+```{r}
+# Divide dados por número de linha em duas porções iguais
+train <- sample(nrow(mat.df), ceiling(nrow(mat.df) * .50))
+test <- (1:nrow(mat.df))[- train]
+# Isolar classificador
+cl <- mat.df[, "category"]
+```
+
+Para usar nossos dados no modelo *KNN*, precisamos dele sem as categorias. As categorias são o que estamos tentando prever.
+Criamos um modelo de dados modeldata com todas as colunas de *mat.df*, exceto a categoria.
+
+```{r}
+# Criar dados do modelo e remover "categoria"
+modeldata <- mat.df[,!colnames(mat.df) %in% "category"]
+```
+
+Agora estamos finalmente prontos para criar o modelo! Assim, a partir de nosso *modelo*, tomamos as linhas que decidimos usar para treinamento e teste. E, também alimentamos as categorias conhecidas dos dados de treinamento para o modelo. Chamamos o modelo **knn.pred**.
+
+```{r}
+# Criando os modelos: training set, test set, training set classifier
+knn.pred <- knn(modeldata[train, ], modeldata[test, ], cl[train])
+```
+
+E agora vem a parte legal: **A matriz de confusão.**
+Esta é uma matriz que informa quais documentos o modelo previu corretamente, e quais documentos não previu corretamente.
+
+
+```{r}
+# Confusion matrix
+(conf.mat <- table("Predictions" = knn.pred, Actual = cl[test]))
+```
+
+E aqui está como calcular a precisão do modelo usando a matriz de confusão.
+
+```{r}
+# Accuracy
+(accuracy <- sum(diag(conf.mat))/length(test) * 100)
+```
+
+Esta última etapa é opcional, mas pode ser útil exportar um Data Frame com os dados de teste e as previsões do modelo.
+
+```{r}
+# Criar Data Frame com dados de teste e categoria prevista
+df.pred <- cbind(knn.pred, modeldata[test, ])
+write.table(df.pred, file="output.csv", sep=";")
+```
+
+
+
+
+
+[The Scientist](http://www.thescientist.com.br)

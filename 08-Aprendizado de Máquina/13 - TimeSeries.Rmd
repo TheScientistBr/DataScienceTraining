@@ -1,0 +1,95 @@
+---
+title: "Aprendizado de Máquina"
+subtitle: "Sérioes Temporais"
+author: "Delermando Branquinho Filho"
+date: "4 de março de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+A detecção precoce de anomalias desempenha um papel fundamental na prevenção de acidentes, organização comercial, assim como em detecção em segurança da informação. 
+
+Estamos avaliando um dataset fornecido pelo Twitter, o pacote R também foi desenvolvido por eles. Este pacote nos ajuda a monitorar os picos no envolvimento do usuário na plataforma em torno de feriados, grandes eventos esportivos ou durante as últimas notícias.
+
+Além dos aumentos no envolvimento social, fatores exógenos - como bots ou spammers - podem causar uma anomalia no número de favoritos ou seguidores. O pacote pode ser usado para encontrar esses bots ou spam, bem como detectar anomalias nas métricas do sistema após uma nova versão de software. Estamos usando o AnomalyDetection porque queremos que a comunidade pública desenvolva o pacote e aprenda com ele como temos.
+
+### Como funciona esse pacote
+
+O algoritmo principal, Seasonal Hybrid ESD (S-H-ESD), baseia-se no teste ESD generalizado para a detecção de anomalias. A S-H-ESD pode ser utilizada para detectar anomalias globais e locais. Isto é conseguido empregando-se a decomposição de séries de tempo e usando métricas estatísticas robustas, como por exemplo, Mediana junto com ESD. Além disso, para longas séries temporais, tais como 6 meses de dados minuciosos, o algoritmo emprega a aproximação por partes. Isso está enraizado no fato de que a extração de tendência na presença de anomalias não é trivial para a detecção de anomalias.
+
+**ESD** - Em 9 de janeiro de 2015, a equipe de engenharia do Twitter lançou outro pacote Open Source R muito interessante para trabalhar com dados de séries temporais:
+
+**"AnomalyDetection"** - Este pacote utiliza o algoritmo ESD (S-H-ESD) para identificar anomalias locais (= variações dentro de padrões sazonais) e anomalias globais (= variações que não podem ser explicadas com padrões sazonais).
+
+### Iniciando o código
+
+Uma função para verificar se os pacotes necessários estão instalados.
+Ao final, as bibliotecas são carregadas.
+
+```{r,warning=FALSE,message=FALSE}
+is.installed <- function(mypkg) is.element(mypkg, installed.packages()[,1]) 
+
+if(!is.installed("devtools"))
+        install.packages("devtools", dep = TRUE)
+
+if(!is.installed("AnomalyDetection"))
+        devtools::install_github("twitter/AnomalyDetection")
+
+if(!is.installed("stringi"))
+        install.packages("stringi")
+
+if(!is.installed("magrittr"))
+        install.packages("magrittr")
+
+library("devtools")
+library("AnomalyDetection")
+```
+
+Recomenda-se ao usuário usar o conjunto de dados de exemplo que acompanha os pacotes. Execute os seguintes comandos:
+
+```{r}
+data(raw_data)
+res = AnomalyDetectionTs(raw_data, max_anoms=0.02, direction='both', plot=TRUE)
+res$plot
+```
+
+
+A partir da trama, podemos dizer que a série de tempo de entrada com as experiências, tanto anomalias positivas e negativas. Além disso, muitas das anomalias das séries temporais são anomalias locais dentro dos limites da sazonalidade da série temporal.
+
+Portanto, essas anomalias não podem ser detectadas usando os métodos tradicionais. As anomalias detectadas utilizando a técnica proposta são anotadas na plotagem. Caso os timestamps para o gráfico acima não estivessem disponíveis, a detecção de anomalias poderia ser realizada usando a função AnomalyDetectionVec. Especificamente, você pode usar o seguinte comando:
+
+```{r}
+AnomalyDetectionVec(raw_data[,2], max_anoms=0.02, period=1440, 
+                    direction='both', only_last=FALSE, plot=TRUE)
+```
+
+Frequentemente, a detecção de anomalias é efectuada em uma base periódica. Por exemplo, você pode estar interessado em determinar se houve alguma anomalia ontem. Para este fim, apoiamos uma flag only_last onde se pode subconjugar as anomalias que ocorreram durante o último dia ou última hora. O seguite comando:
+
+```{r}
+res = AnomalyDetectionTs(raw_data, max_anoms=0.02, direction='both', 
+                         only_last="day", plot=TRUE)
+res$plot
+```
+
+A partir do gráfico acima, observamos que apenas as anomalias ocorridas durante o último dia foram anotadas. Além disso, os seis dias anteriores são incluídos para expor a natureza sazonal da série de tempo, mas são colocados no fundo como a janela de interesse principal é o último dia.
+
+A detecção de anomalias para séries temporais de longa duração pode ser realizada configurando o argumento de longo prazo para T. Um gráfico de exemplo correspondente a este (para um conjunto de dados diferente) é mostrado abaixo:
+
+```{r}
+res = AnomalyDetectionTs(raw_data, max_anoms=0.02, direction='both', longterm = T,
+                         plot=TRUE)
+res$plot
+```
+
+
+.
+
+
+
+[The Scientist](http://www.thescientist.com.br)
+
