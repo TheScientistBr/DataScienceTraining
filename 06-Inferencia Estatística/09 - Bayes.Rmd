@@ -116,7 +116,7 @@ $$
 
 ---
 
-```
+```r
 pvals <- seq(0.01, 0.99, length = 1000)
 x <- 13; n <- 20
 myPlot <- function(alpha, beta){
@@ -166,7 +166,7 @@ binom.bayes(13, 20, type = "highest")
 
 ---
 
-```
+```r
 pvals <- seq(0.01, 0.99, length = 1000)
 x <- 13; n <- 20
 myPlot2 <- function(alpha, beta, cl){

@@ -33,9 +33,9 @@ Gera números aleatórios baseados na distribuição definida. O nome da funçã
 O histograma, abaixo por simulação, também pode ser facilmente obtido usando-se dnorm:
 
 ```{r}
-  x <- seq(-6, 6, by=0.1)
-  y <- dnorm(x)
-  plot(x, y, type="l")
+x <- seq(-6, 6, by=0.1)
+y <- dnorm(x)
+plot(x, y, type="l")
 ```
 
 **pnorm** é a função que dá a função de probabilidade acumulada da normal. Por exemplo, pnorm(1.96) é aproximadamente 97,5%. **pnorm** também recebe um vetor, ou seja, a sequência abaixo gera uma curva-S:
@@ -167,5 +167,27 @@ col="lightgreen",main="Exponencial
 com média=2500",ylab="Densidade")
 curve(dexp(x,1/2500),add=T) 
 
+```
+
+
+Cálculos de probabilidades usuais, para os quais utilizávamos tabelas estatísticas podem ser facilmente obtidos como a seguir.
+
+Seja X uma v.a. com distribuição N(100, 100). 
+
+Calcular as probabilidades:
+
+- P[X < 95] 
+- P[90 < X < 110] 
+- P[X > 95] 
+
+```{r}
+# P[X < 95] 
+pnorm(95, 100, 10)
+#P[90 < X < 110]
+pnorm(110, 100, 10) - pnorm(90, 100, 10)
+#P[X > 95] 
+1 - pnorm(95, 100, 10)
+# ou
+pnorm(95, 100, 10, lower=F)
 ```
 
