@@ -27,7 +27,7 @@ b. Resolver a probabilidade de que o pivô esteja entre os limites do parâmetro
 
 `Para que serve?`
 
-**Quiq-uadrado**, simbolizado por χ2 é um teste de hipóteses que se destina a encontrar um valor da **dispersão** para duas variáveis nominais, avaliando a associação existente entre variáveis qualitativas. É um teste não paramétrico, ou seja, não depende dos parâmetros populacionais, como média e variância.
+**Chi-quadrado**, simbolizado por χ2 é um teste de hipóteses que se destina a encontrar um valor da **dispersão** para duas variáveis nominais, avaliando a associação existente entre variáveis qualitativas. É um teste não paramétrico, ou seja, não depende dos parâmetros populacionais, como média e variância.
 
 `Variáveis Qualitativas` (ou categóricas): são as características que não possuem valores quantitativos, mas, ao contrário, são definidas por várias categorias, ou seja, representam uma classificação dos indivíduos. Podem ser nominais ou ordinais.  
 `Variáveis nominais`: não existe ordenação dentre as categorias.
