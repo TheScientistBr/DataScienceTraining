@@ -223,5 +223,7 @@ plot(som_model_a, type = "property", property=var_unscaled,
 
 Observe que apenas o mapa do tráfego é diferente dos demais, ou seja, é possível verificar qual variável é espúria dentre as váriaveis do modelo.
 
+Agradedimentos e coautoria de [Marcos Dalton](https://www.linkedin.com/in/marcos-dalton-884773a7/)
+
 [The Scientist](http://www.thescientist.com.br)
 
